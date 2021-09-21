@@ -1,0 +1,91 @@
+<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/libs/highlight/github.min.css"> <link href="/css/bootstrap.min.css" rel=stylesheet  crossorigin=anonymous > <link rel=icon  href="/images/logo.png"> <link rel=stylesheet  href="/css/code-katex.css"> <link rel=stylesheet  href="/css/custom.css"> <link rel=stylesheet  href="/css/dark-mode.css"> <link rel=preconnect  href="https://fonts.gstatic.com"> <link href="https://fonts.googleapis.com/css2?family=Cinzel&family=Montserrat&display=swap" rel=stylesheet > <title>Structures aka composite types</title> <meta property="og:title" content="Julia Tutorial at NLeSC"> <meta name="twitter:title" content="Julia Tutorial at NLeSC"> <meta property="og:description" content="Structures aka composite types"> <meta name="twitter:description" content="Structures aka composite types"> <meta property="og:image" content="https://abelsiqueira.github.io/images/abel-banner.jpg"> <meta name="twitter:image" content="https://abelsiqueira.github.io/images/abel-banner.jpg"> <meta property="og:url" content=abelsiqueira.github.io > <meta name="twitter:card" content=summary_large_image > <header> <nav class="navbar navbar-expand-lg"> <div class=container-fluid > <a class="navbar-brand text-end" href="/"></a> <button class=navbar-toggler  type=button  data-bs-toggle=collapse  data-bs-target="#navbarSupportedContent" aria-controls=navbarSupportedContent  aria-expanded=false  aria-label="Toggle navigation"> <span class=navbar-toggler-icon ></span> </button> <div class="collapse navbar-collapse" id=navbarSupportedContent > <ul class="navbar-nav ms-auto mb-2 mb-lg-0"> <li class=nav-item ><a class=nav-link  href="/">Home</a> <li class=nav-item ><a class=nav-link  href="/blog/">Blog</a> <li class=nav-item ><a class=nav-link  href="/julia/">Julia</a> <li class=nav-item ><a class=nav-link  href="/research/">Research</a> <li class=nav-item ><a class=nav-link  href="/ufpr/">UFPR</a> </ul> <div class="dark-switch form-check form-switch"> <input type=checkbox  class=form-check-input  id=darkSwitch  /> <label class=custom-control-label  for=darkSwitch >Dark Mode</label> </div> <script src="/libs/dark-mode-switch.min.js"></script> </div> </div> </nav> </header> <div class=container-fluid > <div class="container main-text"> <div class=franklin-content ><h1 id=fill_title ><a href="#fill_title" class=header-anchor >Structures aka composite types</a></h1> <p>Julia doesn&#39;t have classes, nor inheritance. In fact, you can only derive a type from an abstract type.</p> <pre><code class=language-julia >struct MyComplex &lt;: Number
+  real :: Real
+  img :: Real
+end</code></pre> <pre><code class=language-julia >MyComplex&#40;1, 2.0&#41;</code></pre><pre><code class="plaintext code-output">MyComplex(1, 2.0)</code></pre>
+<ul>
+<li><p>Notice that <code>real</code> and <code>img</code> don&#39;t need to be the same type. This can be considered a bug.</p>
+
+<li><p>We can parametrize the struct.</p>
+
+</ul>
+<pre><code class=language-julia >struct MyComplexT&#123;T &lt;: Real&#125; &lt;: Number
+  real :: T
+  img :: T
+end
+
+MyComplexT&#123;Int&#125;&#40;2, 3&#41;, MyComplexT&#123;Float64&#125;&#40;2, 3&#41;</code></pre><pre><code class="plaintext code-output">(MyComplexT{Int64}(2, 3), MyComplexT{Float64}(2.0, 3.0))</code></pre>
+<ul>
+<li><p>If possible, the type is inferred</p>
+
+</ul>
+<pre><code class=language-julia >MyComplexT&#40;2, 3&#41;</code></pre><pre><code class="plaintext code-output">MyComplexT{Int64}(2, 3)</code></pre>
+<ul>
+<li><p>But remember that there is not automatic conversion</p>
+
+</ul>
+<pre><code class=language-julia >MyComplexT&#40;2, 3.0&#41;</code></pre><pre><code class="plaintext code-output">MethodError: no method matching Main.FD_SANDBOX_15039737759437663856.MyComplexT(::Int64, ::Float64)
+Closest candidates are:
+  Main.FD_SANDBOX_15039737759437663856.MyComplexT(::T, !Matched::T) where T<:Real at none:2
+  (::Type{T})(::T) where T<:Number at boot.jl:760
+</code></pre>
+<ul>
+<li><p>We can define functions with the same name as the type, which work as contructors:</p>
+
+</ul>
+<pre><code class=language-julia >MyComplexT&#40;x :: Real&#41; &#61; MyComplexT&#40;x, zero&#40;x&#41;&#41;
+
+MyComplexT&#40;1.0&#41;</code></pre><pre><code class="plaintext code-output">MyComplexT{Float64}(1.0, 0.0)</code></pre>
+<ul>
+<li><p>The basic operations can be imported and extended for our type:</p>
+
+</ul>
+<pre><code class=language-julia >import Base.&#43;
+function &#43;&#40;z1 :: MyComplexT&#123;T&#125;, z2 :: MyComplexT&#123;T&#125;&#41; where &#123;T&#125;
+  return MyComplexT&#123;T&#125;&#40;z1.real &#43; z2.real, z1.img &#43; z2.img&#41;
+end
+
+z1 &#61; MyComplexT&#40;1.0, 2.0&#41;
+z2 &#61; MyComplexT&#40;-3.0, 3.0&#41;
+z1 &#43; z2
+&#43;&#40;z1 :: MyComplexT&#123;T&#125;, x :: Real&#41; where &#123;T&#125; &#61; z1 &#43; MyComplexT&#40;x&#41;
+&#43;&#40;x :: Real, z1 :: MyComplexT&#123;T&#125;&#41; where &#123;T&#125; &#61; z1 &#43; MyComplexT&#40;x&#41;
+z1 &#43; 3.0</code></pre><pre><code class="plaintext code-output">MyComplexT{Float64}(4.0, 2.0)</code></pre>
+<hr />
+<h2 id=exercises ><a href="#exercises" class=header-anchor >Exercises</a></h2>
+<ol>
+<li><p>Import <code>Base.*</code> and implement the product of two <code>MyComplexT</code> numbers as well as the product of one real number and a complex number.</p>
+
+</ol>
+
+</div>
+</div>
+</div>
+</div>
+
+<footer>
+<div class="container text-center social-footer">
+    <a href="mailto:abel.s.siqueira@gmail.com">
+        <i class="fas fa-2x fa-envelope" aria-hidden=true ></i>
+    </a><a href="https://github.com/abelsiqueira">
+        <i class="fab fa-2x fa-github-square" aria-hidden=true ></i>
+    </a><a href="https://linkedin.com/in/abel-siqueira/">
+        <i class="fab fa-2x fa-linkedin" aria-hidden=true ></i>
+    </a><a href="https://twitter.com/abel_siqueira">
+        <i class="fab fa-2x fa-twitter-square" aria-hidden=true ></i>
+    </a><a href="https://www.researchgate.net/profile/Abel_Siqueira">
+        <i class="fab fa-2x fa-researchgate" aria-hidden=true ></i>
+    </a><a href="http://orcid.org/0000-0003-4451-281X">
+        <i class="fab fa-2x fa-orcid" aria-hidden=true ></i>
+    </a>
+</div>
+</footer>
+
+
+
+<script src="/libs/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();hljs.configure({tabReplace: '    '});</script>
+
+
+<script src="/libs/bootstrap.bundle.min.js" crossorigin=anonymous ></script>
+<script src="https://kit.fontawesome.com/d17d5e5245.js" crossorigin=anonymous ></script>
+<script type="text/javascript" src="https://cdn.rawgit.com/pcooksey/bibtex-js/ef59e62c/src/bibtex_js.js"></script>

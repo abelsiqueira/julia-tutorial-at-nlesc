@@ -1,0 +1,53 @@
+<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/libs/highlight/github.min.css"> <link href="/css/bootstrap.min.css" rel=stylesheet  crossorigin=anonymous > <link rel=icon  href="/images/logo.png"> <link rel=stylesheet  href="/css/code-katex.css"> <link rel=stylesheet  href="/css/custom.css"> <link rel=stylesheet  href="/css/dark-mode.css"> <link rel=preconnect  href="https://fonts.gstatic.com"> <link href="https://fonts.googleapis.com/css2?family=Cinzel&family=Montserrat&display=swap" rel=stylesheet > <title>Type inference is hard</title> <meta property="og:title" content="Julia Tutorial at NLeSC"> <meta name="twitter:title" content="Julia Tutorial at NLeSC"> <meta property="og:description" content="Type inference is hard"> <meta name="twitter:description" content="Type inference is hard"> <meta property="og:image" content="https://abelsiqueira.github.io/images/abel-banner.jpg"> <meta name="twitter:image" content="https://abelsiqueira.github.io/images/abel-banner.jpg"> <meta property="og:url" content=abelsiqueira.github.io > <meta name="twitter:card" content=summary_large_image > <header> <nav class="navbar navbar-expand-lg"> <div class=container-fluid > <a class="navbar-brand text-end" href="/"></a> <button class=navbar-toggler  type=button  data-bs-toggle=collapse  data-bs-target="#navbarSupportedContent" aria-controls=navbarSupportedContent  aria-expanded=false  aria-label="Toggle navigation"> <span class=navbar-toggler-icon ></span> </button> <div class="collapse navbar-collapse" id=navbarSupportedContent > <ul class="navbar-nav ms-auto mb-2 mb-lg-0"> <li class=nav-item ><a class=nav-link  href="/">Home</a> <li class=nav-item ><a class=nav-link  href="/blog/">Blog</a> <li class=nav-item ><a class=nav-link  href="/julia/">Julia</a> <li class=nav-item ><a class=nav-link  href="/research/">Research</a> <li class=nav-item ><a class=nav-link  href="/ufpr/">UFPR</a> </ul> <div class="dark-switch form-check form-switch"> <input type=checkbox  class=form-check-input  id=darkSwitch  /> <label class=custom-control-label  for=darkSwitch >Dark Mode</label> </div> <script src="/libs/dark-mode-switch.min.js"></script> </div> </div> </nav> </header> <div class=container-fluid > <div class="container main-text"> <div class=franklin-content ><h1 id=fill_title ><a href="#fill_title" class=header-anchor >Type inference is hard</a></h1> <p>Julia is great because you don&#39;t have to specify types in many situations, but also, if you need or want, you can specify the types and they will be enforced. Each time a function is used, the compiler compiles a specific version for that given signature. To provide specialized code, the compiler needs to figure out the types of everything from the types of the input. If that is not possible, the code is said to be &quot;type unstable&quot;, and the performance of the code is hit.</p> <pre><code class=language-julia >function bad_relu&#40;x&#41;
+  if x &gt; 0
+    return x
+  else
+    return 0
+  end
+end</code></pre><pre><code class="plaintext code-output">bad_relu (generic function with 1 method)</code></pre>
+<pre><code class=language-julia >@code_warntype bad_relu&#40;1.0&#41;</code></pre>
+<pre><code class="plaintext code-output">Variables
+  #self#::Core.Const(Main.FD_SANDBOX_15428212874016598724.bad_relu)
+  x::Float64
+
+Body::UNION{FLOAT64, INT64}
+1 ─ %1 = (x > 0)::Bool
+└──      goto #3 if not %1
+2 ─      return x
+3 ─      return 0
+</code></pre>
+<p>You should be able to see in color in your REPL the issue with this function &#40;<code>::Union&#123;Float64, Int64&#125;</code>&#41;. The compiler can&#39;t determine the type of the output given an output of type <code>Float64</code>. If <code>x</code> is positive, then the return is of type <code>Float64</code>. Otherwise, the type will be an <code>Int</code>.</p>
+<p>Figuring out whether there are type instabilities and fixing them are one of the main difficulties of Julia. It is also one of the main reasons that the compiler is always being improved.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<footer>
+<div class="container text-center social-footer">
+    <a href="mailto:abel.s.siqueira@gmail.com">
+        <i class="fas fa-2x fa-envelope" aria-hidden=true ></i>
+    </a><a href="https://github.com/abelsiqueira">
+        <i class="fab fa-2x fa-github-square" aria-hidden=true ></i>
+    </a><a href="https://linkedin.com/in/abel-siqueira/">
+        <i class="fab fa-2x fa-linkedin" aria-hidden=true ></i>
+    </a><a href="https://twitter.com/abel_siqueira">
+        <i class="fab fa-2x fa-twitter-square" aria-hidden=true ></i>
+    </a><a href="https://www.researchgate.net/profile/Abel_Siqueira">
+        <i class="fab fa-2x fa-researchgate" aria-hidden=true ></i>
+    </a><a href="http://orcid.org/0000-0003-4451-281X">
+        <i class="fab fa-2x fa-orcid" aria-hidden=true ></i>
+    </a>
+</div>
+</footer>
+
+
+
+<script src="/libs/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();hljs.configure({tabReplace: '    '});</script>
+
+
+<script src="/libs/bootstrap.bundle.min.js" crossorigin=anonymous ></script>
+<script src="https://kit.fontawesome.com/d17d5e5245.js" crossorigin=anonymous ></script>
+<script type="text/javascript" src="https://cdn.rawgit.com/pcooksey/bibtex-js/ef59e62c/src/bibtex_js.js"></script>

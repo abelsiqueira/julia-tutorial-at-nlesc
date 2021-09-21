@@ -1,0 +1,240 @@
+<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/libs/katex/katex.min.css"> <link rel=stylesheet  href="/libs/highlight/github.min.css"> <link href="/css/bootstrap.min.css" rel=stylesheet  crossorigin=anonymous > <link rel=icon  href="/images/logo.png"> <link rel=stylesheet  href="/css/code-katex.css"> <link rel=stylesheet  href="/css/custom.css"> <link rel=stylesheet  href="/css/dark-mode.css"> <link rel=preconnect  href="https://fonts.gstatic.com"> <link href="https://fonts.googleapis.com/css2?family=Cinzel&family=Montserrat&display=swap" rel=stylesheet > <title>Main syntax differences</title> <meta property="og:title" content="Julia Tutorial at NLeSC"> <meta name="twitter:title" content="Julia Tutorial at NLeSC"> <meta property="og:description" content="Main syntax differences"> <meta name="twitter:description" content="Main syntax differences"> <meta property="og:image" content="https://abelsiqueira.github.io/images/abel-banner.jpg"> <meta name="twitter:image" content="https://abelsiqueira.github.io/images/abel-banner.jpg"> <meta property="og:url" content=abelsiqueira.github.io > <meta name="twitter:card" content=summary_large_image > <header> <nav class="navbar navbar-expand-lg"> <div class=container-fluid > <a class="navbar-brand text-end" href="/"></a> <button class=navbar-toggler  type=button  data-bs-toggle=collapse  data-bs-target="#navbarSupportedContent" aria-controls=navbarSupportedContent  aria-expanded=false  aria-label="Toggle navigation"> <span class=navbar-toggler-icon ></span> </button> <div class="collapse navbar-collapse" id=navbarSupportedContent > <ul class="navbar-nav ms-auto mb-2 mb-lg-0"> <li class=nav-item ><a class=nav-link  href="/">Home</a> <li class=nav-item ><a class=nav-link  href="/blog/">Blog</a> <li class=nav-item ><a class=nav-link  href="/julia/">Julia</a> <li class=nav-item ><a class=nav-link  href="/research/">Research</a> <li class=nav-item ><a class=nav-link  href="/ufpr/">UFPR</a> </ul> <div class="dark-switch form-check form-switch"> <input type=checkbox  class=form-check-input  id=darkSwitch  /> <label class=custom-control-label  for=darkSwitch >Dark Mode</label> </div> <script src="/libs/dark-mode-switch.min.js"></script> </div> </div> </nav> </header> <div class=container-fluid > <div class="container main-text"> <div class=franklin-content ><h1 id=fill_title ><a href="#fill_title" class=header-anchor >Main syntax differences</a></h1> <ul> <li><p>Julia&#39;s arrays default to column vector behaviour</p> <li><p>Julia uses brackets to access elements and indices start at 1</p> <li><p>Slices are inclusive of endpoints, and <code>end</code> means end.</p> <li><p>Steps can be passed in the middle</p> </ul> <pre><code class=language-julia >x &#61; &#91;1, 2, 3, 4, 5&#93;
+x * 2
+ones&#40;5&#41; &#43; x
+x&#91;2&#93;
+x&#91;1:2&#93;
+x&#91;2:end&#93;
+x&#91;1:2:end&#93;
+length&#40;x&#41;</code></pre><pre><code class="plaintext code-output">5</code></pre>
+<ul>
+<li><p>Matrices are first-class citizens.</p>
+
+<li><p>Create with brackets, spaces change columns, and <code>;</code> change lines.</p>
+
+<li><p>Only in vectors <code>,</code> can be used instead of spaces &#40;compat. Python&#41;.</p>
+
+<li><p>You can concatenate matrices, vectors and numbers with the same syntax.</p>
+
+</ul>
+<pre><code class=language-julia >A &#61; &#91;3 2 4; -1 0 1&#93;
+A * ones&#40;3&#41;
+B &#61; rand&#40;3, 3&#41;
+A * B
+B * A&#39;
+A&#91;1:2, 1:2&#93;
+&#91;
+  B A&#39;;
+  A ones&#40;2,2&#41;
+&#93;</code></pre><pre><code class="plaintext code-output">5×5 Matrix{Float64}:
+  0.451172  0.227035  0.338141  3.0  -1.0
+  0.372935  0.43115   0.718831  2.0   0.0
+  0.986483  0.239257  0.446742  4.0   1.0
+  3.0       2.0       4.0       1.0   1.0
+ -1.0       0.0       1.0       1.0   1.0</code></pre>
+<ul>
+<li><p>Linear systems can be solved with <code>\</code></p>
+
+<li><p>the LinearAlgebra stdlib module contains useful linear algebra tools, functions and elements.</p>
+
+</ul>
+<pre><code class=language-julia >A &#61; randn&#40;50, 50&#41;
+b &#61; A * ones&#40;50&#41;
+x &#61; A \ b
+using LinearAlgebra
+norm&#40;b - A * x&#41;
+norm&#40;x .- 1&#41;</code></pre><pre><code class="plaintext code-output">2.2017432915986275e-14</code></pre>
+<ul>
+<li><p>Everything has a concrete type, every type derives from some abstract type.</p>
+
+<li><p>There is no implicit conversion, but sometimes it looks like there is.</p>
+
+</ul>
+<pre><code class=language-julia >typeof&#40;2&#41;
+typeof&#40;2.0&#41;
+Float64 |&gt; supertype
+Float64 |&gt; supertype |&gt; supertype
+typeof&#40;2 &#43; 2.0&#41;
+typeof&#40;&#91;2, 2.0&#93;&#41;
+typeof&#40;&#91;2, true&#93;&#41;
+typeof&#40;&#91;2, &quot;a&quot;&#93;&#41;</code></pre><pre><code class="plaintext code-output">Vector{Any} (alias for Array{Any, 1})</code></pre>
+<ul>
+<li><p>There are 3 ways to write functions</p>
+
+</ul>
+<pre><code class=language-julia >function foo&#40;a, b&#41;
+  return &#40;a &#43; 1&#41; * &#40;b - 1&#41;
+end
+foo&#40;2, 3&#41;
+bar&#40;x&#41; &#61; x^2 - 2
+bar&#40;5&#41;
+anon &#61; &#40;a, b, c&#41; -&gt; sqrt&#40;a^2 &#43; b^2 &#43; c^2&#41;
+anon&#40;-1, 0, 1&#41;</code></pre><pre><code class="plaintext code-output">1.4142135623730951</code></pre>
+<ul>
+<li><p><code>if CONDITION ... elseif ... else ... end</code></p>
+
+<li><p><code>while CONDITION ... end</code></p>
+
+<li><p><code>for VARIABLE in SET|RANGE|ITERATOR ... end</code></p>
+
+<li><p>You can specify types</p>
+
+</ul>
+<pre><code class=language-julia >function myfactorial&#40;n::Int&#41;
+  if n &lt; 0
+    error&#40;&quot;Nay nay&quot;&#41;
+  end
+  prod &#61; 1
+  for i &#61; 2:n
+    prod *&#61; i
+  end
+  return prod
+end
+myfactorial&#40;4&#41;</code></pre><pre><code class="plaintext code-output">24</code></pre>
+<ul>
+<li><p>You can insert unicode characters with <code>\something&#91;TAB&#93;</code>.</p>
+
+</ul>
+<pre><code class=language-julia >function machine_eps&#40;x::AbstractFloat&#41;
+  ϵ &#61; x
+  while x &#43; ϵ &#33;&#61; x
+    ϵ /&#61; 2
+  end
+  return 2ϵ
+end
+machine_eps&#40;1.0&#41;, machine_eps&#40;1e4&#41;, machine_eps&#40;Float16&#40;1.0&#41;&#41;, machine_eps&#40;1.0f0&#41;</code></pre><pre><code class="plaintext code-output">(2.220446049250313e-16, 1.1102230246251565e-12, Float16(0.000977), 1.1920929f-7)</code></pre>
+<ul>
+<li><p>you can create a different signature</p>
+
+</ul>
+<pre><code class=language-julia >function machine_eps&#40;x::Integer&#41;
+  return zero&#40;x&#41;
+end
+machine_eps&#40;1&#41;, machine_eps&#40;0x05&#41;, machine_eps&#40;typemax&#40;1&#41;&#41;</code></pre><pre><code class="plaintext code-output">(0, 0x00, 0)</code></pre>
+<ul>
+<li><p>you can set default positional arguments and keyword arguments</p>
+
+</ul>
+<pre><code class=language-julia >function newton&#40;f, fder, x &#61; 0.0; atol &#61; 1e-6, rtol &#61; 1e-6, max_iter &#61; 1000&#41;
+  fx &#61; f&#40;x&#41;
+  iter &#61; 0
+  ϵ &#61; atol &#43; rtol * abs&#40;fx&#41;
+  solved &#61; abs&#40;fx&#41; &lt; ϵ
+  tired &#61; iter ≥ max_iter
+  while &#33;&#40;solved || tired&#41;
+    slope &#61; fder&#40;x&#41;
+    if abs&#40;slope&#41; &lt; 1e-12
+      error&#40;&quot;0 derivative at x &#61; &#36;x&quot;&#41;
+    end
+    x -&#61; fx / slope
+    fx &#61; f&#40;x&#41;
+    iter &#43;&#61; 1
+    solved &#61; abs&#40;fx&#41; &lt; ϵ
+    tired &#61; iter ≥ max_iter
+  end
+  return x, fx, iter
+end
+newton&#40;x -&gt; x - exp&#40;-x&#41;, x -&gt; 1 &#43; exp&#40;-x&#41;, 1.0&#41;</code></pre><pre><code class="plaintext code-output">(0.567143285989123, -6.927808993140161e-9, 3)</code></pre>
+<ul>
+<li><p>You can use parametric types</p>
+
+<li><p>The type must be inferred from somewhere, so <code>x</code> is not optional anymore</p>
+
+</ul>
+<pre><code class=language-julia >function newton_parametric&#40;f, fder, x :: T; atol :: T &#61; √eps&#40;T&#41;, rtol :: T &#61; √eps&#40;T&#41;, max_iter :: Int &#61; 1000&#41; where T
+  fx &#61; f&#40;x&#41;
+  iter &#61; 0
+  ϵ &#61; atol &#43; rtol * abs&#40;fx&#41;
+  slope_ϵ &#61; &#40;√√eps&#40;T&#41;&#41;^3 # ϵₘ^&#40;3/4&#41;
+  solved &#61; abs&#40;fx&#41; &lt; ϵ
+  tired &#61; iter ≥ max_iter
+  while &#33;&#40;solved || tired&#41;
+    slope &#61; fder&#40;x&#41;
+    if abs&#40;slope&#41; &lt; slope_ϵ
+      error&#40;&quot;0 derivative at x &#61; &#36;x&quot;&#41;
+    end
+    x -&#61; fx / slope
+    fx &#61; f&#40;x&#41;
+    iter &#43;&#61; 1
+    solved &#61; abs&#40;fx&#41; &lt; ϵ
+    tired &#61; iter ≥ max_iter
+  end
+  return x, fx, iter
+end
+for T in &#91;Float16, Float32, Float64, BigFloat&#93;
+  x, fx, iter &#61; newton_parametric&#40;x -&gt; x^2 - 2, x -&gt; 2x, one&#40;T&#41;&#41;
+  println&#40;&quot;√2 ≈ &#36;x&quot;&#41;
+end</code></pre><pre><code class="plaintext code-output">√2 ≈ 1.417
+√2 ≈ 1.4142157
+√2 ≈ 1.4142135623746899
+√2 ≈ 1.41421356237309504880168872420969807856967187537723400156101313311326525563035
+</code></pre>
+<ul>
+<li><p>Formatted printing is possible with the <code>Printf</code> stdlib</p>
+
+<li><p><code>@printf</code> is a macro. Interpolation &#40;<code>&quot;&#36;x&quot;</code>&#41; is not possible.</p>
+
+</ul>
+<pre><code class=language-julia >using Printf
+for T in &#91;Float16, Float32, Float64, BigFloat&#93;
+  x, fx, iter &#61; newton_parametric&#40;x -&gt; x^2 - 2, x -&gt; 2x, one&#40;T&#41;&#41;
+  @printf&#40;&quot;√2 ≈ &#37;20.16e, &#40;√2&#41;² - 2 ≈ &#37;20.16e\n&quot;, x, x^2 - 2&#41;
+end</code></pre><pre><code class="plaintext code-output">√2 ≈ 1.4169921875000000e+00, (√2)² - 2 ≈ 7.8125000000000000e-03
+√2 ≈ 1.4142156839370728e+00, (√2)² - 2 ≈ 5.9604644775390625e-06
+√2 ≈ 1.4142135623746899e+00, (√2)² - 2 ≈ 4.5106141044470860e-12
+√2 ≈ 1.4142135623730950e+00, (√2)² - 2 ≈ 8.0872759798342835e-49
+</code></pre>
+<ul>
+<li><p>In the REPL, <code>?</code> enters help mode.</p>
+
+<li><p><code>apropos</code> can be used to search among the docstrings</p>
+
+</ul>
+<hr />
+<h2 id=exercises ><a href="#exercises" class=header-anchor >Exercises</a></h2>
+<ol>
+<li><p>Verify that if <code>v</code> and <code>w</code> are vectors, then <code>&#91;v w&#93;</code> and <code>&#91;v, w&#93;</code> are different. Notice the type of the second object.</p>
+
+<li><p>Search for &quot;dot product&quot; using the <code>apropos</code> function.</p>
+
+<li><p>Create a function that orthogonalizes a <em>list of vectors</em> following the given theorem:</p>
+
+</ol>
+<p><strong>Theorem</strong>: Given \(n\) linear independent vector \(v_1, v_2, \dots, v_n\), define \(\displaystyle q_i = v_i - \sum_{j = 1}^{i-1} (v_i \cdot q_j) q_j, \ \forall \ i = 1,\dots,n\). The vectors \(q_1, q_2, \dots, q_n\) are orthogonal.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<footer>
+<div class="container text-center social-footer">
+    <a href="mailto:abel.s.siqueira@gmail.com">
+        <i class="fas fa-2x fa-envelope" aria-hidden=true ></i>
+    </a><a href="https://github.com/abelsiqueira">
+        <i class="fab fa-2x fa-github-square" aria-hidden=true ></i>
+    </a><a href="https://linkedin.com/in/abel-siqueira/">
+        <i class="fab fa-2x fa-linkedin" aria-hidden=true ></i>
+    </a><a href="https://twitter.com/abel_siqueira">
+        <i class="fab fa-2x fa-twitter-square" aria-hidden=true ></i>
+    </a><a href="https://www.researchgate.net/profile/Abel_Siqueira">
+        <i class="fab fa-2x fa-researchgate" aria-hidden=true ></i>
+    </a><a href="http://orcid.org/0000-0003-4451-281X">
+        <i class="fab fa-2x fa-orcid" aria-hidden=true ></i>
+    </a>
+</div>
+</footer>
+
+
+<script src="/libs/katex/katex.min.js"></script>
+<script src="/libs/katex/auto-render.min.js"></script>
+<script>renderMathInElement(document.body)</script>
+
+
+
+<script src="/libs/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();hljs.configure({tabReplace: '    '});</script>
+
+
+<script src="/libs/bootstrap.bundle.min.js" crossorigin=anonymous ></script>
+<script src="https://kit.fontawesome.com/d17d5e5245.js" crossorigin=anonymous ></script>
+<script type="text/javascript" src="https://cdn.rawgit.com/pcooksey/bibtex-js/ef59e62c/src/bibtex_js.js"></script>
