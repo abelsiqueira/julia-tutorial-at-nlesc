@@ -42,6 +42,7 @@ This tutorial assumes you know some Python so that we can freely compare to it.
   - VSCode
   - Vim/Emacs
 - [Main syntax differences]({{fill prepath}}/pages/syntax/)
+- [Structures, not classes]({{fill prepath}}/pages/structures/)
 - Speed demonstration against Python
   - Example should be short
 - Calling Fortran and C code
