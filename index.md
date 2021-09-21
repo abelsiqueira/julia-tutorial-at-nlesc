@@ -47,7 +47,7 @@ This tutorial assumes you know some Python so that we can freely compare to it.
 - Speed demonstration against Python
   - Example should be short
 - Calling Fortran and C code
-- Good practices
+- [Good practices]({{fill prepath}}/pages/good-practices/)
   - PkgTemplates
   - Documenting
   - Unit tests
