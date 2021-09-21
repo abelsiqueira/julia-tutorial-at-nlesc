@@ -43,6 +43,7 @@ This tutorial assumes you know some Python so that we can freely compare to it.
   - Vim/Emacs
 - [Main syntax differences]({{fill prepath}}/pages/syntax/)
 - [Structures, not classes]({{fill prepath}}/pages/structures/)
+- [Type inference is hard]({{fill prepath}}/pages/type-inference/)
 - Speed demonstration against Python
   - Example should be short
 - Calling Fortran and C code
