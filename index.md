@@ -42,20 +42,23 @@ This tutorial assumes you know some Python so that we can freely compare to it.
 - IDE
   - VSCode
   - Vim/Emacs
-- [Main syntax differences]({{fill prepath}}/pages/syntax/)
-- [Structures, not classes]({{fill prepath}}/pages/structures/)
-- [Type inference is hard]({{fill prepath}}/pages/type-inference/)
-- Speed demonstration against Python
-  - Example should be short
-- Calling Fortran and C code
-- [Good practices]({{fill prepath}}/pages/good-practices/)
+- Main features and bugs
+  - [Main syntax differences]({{fill prepath}}/pages/syntax/)
+  - [Structures, not classes]({{fill prepath}}/pages/structures/)
+  - [Type inference is hard]({{fill prepath}}/pages/type-inference/)
+- [Creating a package: SequGen.jl - demonstration of good practices]({{fill prepath}}/pages/sequgen/)
   - PkgTemplates
   - Documenting
   - Unit tests
   - JuliaFormatter
   - Registering a package
+- Calling Fortran and C code
+- [A more complicated example of multiple dispatch]({{fill prepath}}/pages/multiple-dispatch/)
+- [Python's scipy.optimize vs Julia]({{fill prepath}}/pages/optimization/)
+- Speed demonstration against Python
+  - Example should be short
+
 - Parallel computing
-- GPU computing
 - Package examples
   - JuMP
   - DrWatson
@@ -68,3 +71,6 @@ This tutorial assumes you know some Python so that we can freely compare to it.
   - When should I use Julia instead of Python?
   - When should I use Python instead of Julia?
   - Can I use Rest API to talk with other applications?
+
+- Left out/maybe if there's more time
+  - GPU computing
