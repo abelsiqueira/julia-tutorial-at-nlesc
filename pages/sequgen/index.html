@@ -1,0 +1,228 @@
+<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/libs/highlight/github.min.css"> <link href="/css/bootstrap.min.css" rel=stylesheet  crossorigin=anonymous > <link rel=icon  href="/images/logo.png"> <link rel=stylesheet  href="/css/code-katex.css"> <link rel=stylesheet  href="/css/custom.css"> <link rel=stylesheet  href="/css/dark-mode.css"> <link rel=preconnect  href="https://fonts.gstatic.com"> <link href="https://fonts.googleapis.com/css2?family=Cinzel&family=Montserrat&display=swap" rel=stylesheet > <title>Creating a package: SequGen.jl - demonstration of good practices</title> <meta property="og:title" content="Julia Tutorial at NLeSC"> <meta name="twitter:title" content="Julia Tutorial at NLeSC"> <meta property="og:description" content="Creating a package: SequGen.jl - demonstration of good practices"> <meta name="twitter:description" content="Creating a package: SequGen.jl - demonstration of good practices"> <meta property="og:image" content="https://abelsiqueira.github.io/images/abel-banner.jpg"> <meta name="twitter:image" content="https://abelsiqueira.github.io/images/abel-banner.jpg"> <meta property="og:url" content=abelsiqueira.github.io > <meta name="twitter:card" content=summary_large_image > <header> <nav class="navbar navbar-expand-lg"> <div class=container-fluid > <a class="navbar-brand text-end" href="/"></a> <button class=navbar-toggler  type=button  data-bs-toggle=collapse  data-bs-target="#navbarSupportedContent" aria-controls=navbarSupportedContent  aria-expanded=false  aria-label="Toggle navigation"> <span class=navbar-toggler-icon ></span> </button> <div class="collapse navbar-collapse" id=navbarSupportedContent > <ul class="navbar-nav ms-auto mb-2 mb-lg-0"> <li class=nav-item ><a class=nav-link  href="/">Home</a> <li class=nav-item ><a class=nav-link  href="/blog/">Blog</a> <li class=nav-item ><a class=nav-link  href="/julia/">Julia</a> <li class=nav-item ><a class=nav-link  href="/research/">Research</a> <li class=nav-item ><a class=nav-link  href="/ufpr/">UFPR</a> </ul> <div class="dark-switch form-check form-switch"> <input type=checkbox  class=form-check-input  id=darkSwitch  /> <label class=custom-control-label  for=darkSwitch >Dark Mode</label> </div> <script src="/libs/dark-mode-switch.min.js"></script> </div> </div> </nav> </header> <div class=container-fluid > <div class="container main-text"> <div class=franklin-content ><h1 id=fill_title ><a href="#fill_title" class=header-anchor >Creating a package: SequGen.jl - demonstration of good practices</a></h1> <p>In this section we&#39;ll look into implementing and registering a package, following some good practices.</p> <div class=franklin-toc ><ol><li><a href="#what_iswill_be_sequgen">What is/will be SequGen</a><li><a href="#create_the_package_skeleton">Create the package skeleton</a><li><a href="#uploading_and_checking">Uploading and checking</a><li><a href="#the_basics">The basics</a></ol></div> <hr /> <h2 id=what_iswill_be_sequgen ><a href="#what_iswill_be_sequgen" class=header-anchor >What is/will be SequGen</a></h2> <p>SequGen.jl will be a package to implement time series/sequences generation on Julia. It is based on the homonymous NLeSC project <a href="https://github.com/sequgen/sequgen">sequgen</a>.</p> <p>In this tutorial, our package will generate simple time series that we&#39;ll be able to add up and create useful synthetic data. We&#39;ll work with <code>struct</code>s and showcase <em>multiple dispatch</em> in the process.</p> <h2 id=create_the_package_skeleton ><a href="#create_the_package_skeleton" class=header-anchor >Create the package skeleton</a></h2> <p>Not much is needed to create a proper package in Julia. It needs to follow a basic structure of the form</p> <pre><code class="julia hljs">PackageName.jl
+- src/
+  - PackageName.jl
+- test/
+  - runtests.jl
+- Project.toml</code></pre> <p>The entry point of the package is the <code>src/PackageName.jl</code> file. The <code>test/runtests.jl</code> file is run when you try to <code>pkg&gt; test</code> a package. Finally, the <code>Project.toml</code> file contains several information about the package:</p> <ul> <li><p><code>name</code>: Name</p> <li><p><code>uuid</code>: A unique identifier</p> <li><p><code>authors</code>: A list of authors</p> <li><p><code>version</code>: A SemVer version.</p> <li><p><code>&#91;deps&#93;</code>: A list of packages and their UUIDs.</p> <li><p><code>&#91;compat&#93;</code>: A list of packages and the versions needed for this package.</p> <li><p><code>&#91;extras&#93;</code>: A list of additional packages used for testing.</p> <li><p><code>&#91;targets&#93;</code>: Additional targets &#40;and their required packages&#41;. Currently only supports <code>test</code> for the testing packages.</p> </ul> <p>An easy way to generate a basic skeleton for pacakges is using the built-in <code>pkg&gt; generate PackageName</code>. However, since we usually want a bunch of other <em>goodies</em>, we can use the package <code>PkgTemplates</code> instead.</p> <p>First, <code>pkg&gt; add PkgTemplates</code> and <code>julia&gt; using PkgTemplates</code>. Then simply run</p> <pre><code class="julia hljs">julia&gt; generate(<span class=hljs-string >&quot;SequGen&quot;</span>)</code></pre>
+<p>A list of options will appear to allow customization. Fow now, select <code>dir</code> and <code>plugins</code>.</p>
+<p>The first option, <code>dir</code>, allows us to choose where to save our package. Julia&#39;s default <code>dev</code> environment is inside <code>.julia/dev/</code> in the home folder. To avoid having to look for it, simply enter <code>.</code> &#40;a single dot&#41;.</p>
+<p>The second option gives as a wide range of plugins, many of which we want. In addition to the ones that are already selected, choose <code>Citation</code>, <code>Coveralls</code>, <code>Documenter</code>, <code>GitHubActions</code> and <code>RegisterAction</code>. Their meaning are as follows:</p>
+<ul>
+<li><p><code>Citation</code>: Creates a <code>CITATION.bib</code> file for citing package repositories.</p>
+
+<li><p><code>CompatHelper</code>: Integrates your packages with CompatHelper via GitHub Actions. This automatically checks for updates on the dependencies and creates a pull request updating the version bounds.</p>
+
+<li><p><code>Coveralls</code>: Sets up code coverage submission from CI to Coveralls.</p>
+
+<li><p><code>Documenter</code>: Sets up documentation generation via Documenter.jl. The deploy depends on a CI, and in this case we&#39;re choosing GitHub Actions.</p>
+
+<li><p><code>Git</code>: Creates a Git repository and a <code>.gitignore</code> file.</p>
+
+<li><p><code>GitHubActions</code>: Integrates your packages with GitHub Actions. Currently the most used CI for Julia packages after Travis CI support for open source software went downhill.</p>
+
+<li><p><code>License</code>: Creates a license file &#40;defaults to using MIT&#41;.</p>
+
+<li><p><code>ProjectFile</code>: Creates a default <code>Project.toml</code>.</p>
+
+<li><p><code>Readme</code>: Creates a <code>README</code> file that contains badges for other included plugins.</p>
+
+<li><p><code>RegisterAction</code>: Add a GitHub Actions workflow for registering a package with the General registry via workflow dispatch. See here for more information.</p>
+
+<li><p><code>SrcDir</code>: Creates a module entrypoint.</p>
+
+<li><p><code>TagBot</code>: Adds GitHub release support via TagBot. This automatically creates a git tag and a GitHub release.</p>
+
+<li><p><code>Tests</code>: Sets up testing for packages.</p>
+
+</ul>
+<p>After selecting these, simply accept the default options for the plugins using <code>d</code>.</p>
+<p><strong>Warning</strong>: When the process arrives at <code>Documenter</code>, you&#39;ll need to select how to deploy the documentation. We&#39;re using GitHub Actions, so select that.</p>
+<p>The current default &#40;2021-09-23&#41; leaves us with the following structure:</p>
+<ul>
+<li><p>.github/</p>
+<ul>
+<li><p>workflows/</p>
+<ul>
+<li><p>CI.yml</p>
+
+<li><p>CompatHelper.yml</p>
+
+<li><p>register.yml</p>
+
+<li><p>TagBot.yml</p>
+
+</ul>
+
+</ul>
+
+<li><p>docs</p>
+<ul>
+<li><p>src</p>
+<ul>
+<li><p>index.md</p>
+
+</ul>
+
+<li><p>make.jl</p>
+
+<li><p>Manifest.toml</p>
+
+<li><p>Project.toml</p>
+
+</ul>
+
+<li><p>src</p>
+<ul>
+<li><p>PackageName.jl</p>
+
+</ul>
+
+<li><p>test</p>
+<ul>
+<li><p>runtests.jl</p>
+
+</ul>
+
+<li><p>.gitignore</p>
+
+<li><p>CITATION.bib</p>
+
+<li><p>LICENSE</p>
+
+<li><p>Manifest.toml</p>
+
+<li><p>Project.toml</p>
+
+<li><p>README.md</p>
+
+</ul>
+<p>A <code>.git</code> folder is also present, but we&#39;ll ignore it. TODO: Explain Manifest.toml somewhere.</p>
+<h2 id=uploading_and_checking ><a href="#uploading_and_checking" class=header-anchor >Uploading and checking</a></h2>
+<p>The repo starts with a commit and the repo setup &#40;if you have setup <code>git</code>&#41;. Your next steps:</p>
+<ul>
+<li><p>Create the repo on GitHub;</p>
+
+<li><p>&#40;optional&#41; Go to <a href="https://coveralls.io/repos/new">Coveralls</a>, find the repo an turn coverage ON;</p>
+
+<li><p>&#40;optional&#41; Copy the repo <strong>token</strong> on Coveralls, and go to your github repo -&gt; settings -&gt; secrets; create a new secret called <code>COVERALLS_TOKEN</code> and paste your token there.</p>
+
+<li><p>&#40;alternative to above&#41; Remove/comment out the lines 39-40 on <code>CI.yml</code>;</p>
+
+<li><p><code>git push</code>, and check your CI.</p>
+
+</ul>
+<h2 id=the_basics ><a href="#the_basics" class=header-anchor >The basics</a></h2>
+<p>The basic idea of our package will be:</p>
+<ul>
+<li><p>We have different types of <em>sequences</em>;</p>
+
+<li><p>We want to <em>sample</em> these sequences at different <em>intervals</em> or <em>ranges</em>.</p>
+
+</ul>
+<p>For instance, to describe the average temperature of a city per day we might say we need:</p>
+<ul>
+<li><p>A constant value to set the mean value;</p>
+
+<li><p>A sine wave for the yearly oscillation;</p>
+
+<li><p>A random noise generator.</p>
+
+</ul>
+<p>With this description, we can ask for sample of <code>N</code> points in the interval starting at <em>60 days</em> and ending at <em>120 days</em>. If we ask for a new sample, we&#39;ll get different noise, but the rest will be the same.</p>
+<p>In Python, we could create a base class <code>Sequence</code> and a method <code>sample&#40;interval&#41;</code>, or <code>sample&#40;start, end, length&#41;</code>. We would then implement classes <code>Constant</code>, <code>SineWave</code>, <code>GaussianNoise</code> deriving from <code>Sequence</code> as specialize the <code>sample</code> method for these cases.</p>
+<p>In Julia, it won&#39;t be so different in practice. We&#39;ll start by creating an abstract type for <code>Sequence</code> and the function <code>sample</code>.</p>
+<pre><code class="julia hljs"><span class=hljs-comment ># File src/SequGen.jl</span>
+<span class=hljs-keyword >module</span> SequGen
+
+<span class=hljs-keyword >export</span> Sequence
+<span class=hljs-keyword >export</span> sample
+
+<span class=hljs-keyword >abstract type</span> Sequence <span class=hljs-keyword >end</span>
+
+<span class=hljs-keyword >function</span> sample <span class=hljs-keyword >end</span>
+
+<span class=hljs-comment ># includes will go here</span>
+
+<span class=hljs-keyword >end</span> <span class=hljs-comment ># module</span></code></pre>
+<p>Here, <code>export</code>ing only gives visibility to the user that uses our package. Otherwise, he would have to write <code>SequGen.sample</code> to specify where <code>sample</code> comes from.</p>
+<p>The <code>function sample end</code> simply declares that the <code>sample</code> function exists. This line is not really necessary, but it&#39;s useful to centralize the basic API information. We&#39;ll also add docstrings to this function, instead of somewhere else.</p>
+<p>Next, create a file <code>constant.jl</code> and add the line <code>include&#40;&quot;constant.jl&quot;&#41;</code> on <code>src/SequGen.jl</code>.</p>
+<pre><code class="julia hljs"><span class=hljs-comment ># File constant.jl</span>
+<span class=hljs-keyword >export</span> Constant
+
+<span class=hljs-keyword >struct</span> Constant &lt;: Sequence
+  x
+<span class=hljs-keyword >end</span>
+
+sample(seq::Constant, t::<span class=hljs-built_in >AbstractVector</span>) = fill(seq.x, length(t))</code></pre>
+<p>TODO: What&#39;s the word instead of field? Now, <code>Constant</code> is a subtype of <code>Sequence</code> that contains a field <code>x</code> of indeterminate type &#40;<code>Any</code>&#41;. We also defined how the <code>sample</code> function behaves for a <code>Constant</code> and an <code>AbstractVector</code>: it returns a vector of size <code>length&#40;t&#41;</code> filled with <code>seq.x</code>.</p>
+<p>This should already run on our REPL, so let&#39;s check.</p>
+<ul>
+<li><p>Open a Julia REPL inside the SequGen.jl base folder.</p>
+
+<li><p>Press <code>&#93;</code> to enter <code>pkg&gt;</code> mode.</p>
+
+<li><p>Change to the general environment with <code>pkg&gt; activate</code> without arguments.</p>
+
+<li><p>It should read <code>&#40;@v1.6&#41; pkg&gt;</code> &#40;or a newest version&#41;.</p>
+
+<li><p><code>pkg&gt; add Revise, Plots, Unitful, UnitfulRecipes</code>.</p>
+
+<li><p>Activate the current environment with <code>pkg&gt; activate .</code>.</p>
+
+<li><p>It should have changed to <code>&#40;SequGen&#41; pkg&gt;</code>.</p>
+
+<li><p>Return to <code>julia&gt;</code> mode by pressing the <em>backspace</em>.</p>
+
+<li><p>Enter <code>using Revise</code>.</p>
+
+<li><p>Enter <code>using SequGen</code>.</p>
+
+<li><p>Enter <code>s &#61; Constant&#40;2.3&#41;</code>.</p>
+
+<li><p>Enter <code>sample&#40;s, 1:3&#41;</code>. It should output</p>
+
+</ul>
+<pre><code class="julia hljs"><span class=hljs-number >3</span>-element <span class=hljs-built_in >Vector</span>{<span class=hljs-built_in >Float64</span>}:
+ <span class=hljs-number >2.3</span>
+ <span class=hljs-number >2.3</span>
+ <span class=hljs-number >2.3</span></code></pre>
+<ul>
+<li><p>Rejoice.</p>
+
+</ul>
+<p>TODO: Example: docstrings &#43; docs</p>
+<p>You might have noticed that your Documentation action passes, but no documentation is available. That is because the action needs a GitHub token to push to your repo</p>
+<p>TODO: Example: dev&#39;ing the package, running tests TODO: Example: uploading, creating a pull request</p>
+</div>
+</div>
+</div>
+</div>
+
+<footer>
+<div class="container text-center social-footer">
+    <a href="mailto:abel.s.siqueira@gmail.com">
+        <i class="fas fa-2x fa-envelope" aria-hidden=true ></i>
+    </a><a href="https://github.com/abelsiqueira">
+        <i class="fab fa-2x fa-github-square" aria-hidden=true ></i>
+    </a><a href="https://linkedin.com/in/abel-siqueira/">
+        <i class="fab fa-2x fa-linkedin" aria-hidden=true ></i>
+    </a><a href="https://twitter.com/abel_siqueira">
+        <i class="fab fa-2x fa-twitter-square" aria-hidden=true ></i>
+    </a><a href="https://www.researchgate.net/profile/Abel_Siqueira">
+        <i class="fab fa-2x fa-researchgate" aria-hidden=true ></i>
+    </a><a href="http://orcid.org/0000-0003-4451-281X">
+        <i class="fab fa-2x fa-orcid" aria-hidden=true ></i>
+    </a>
+</div>
+</footer>
+
+
+
+
+
+
+
+<script src="/libs/bootstrap.bundle.min.js" crossorigin=anonymous ></script>
+<script src="https://kit.fontawesome.com/d17d5e5245.js" crossorigin=anonymous ></script>
+<script type="text/javascript" src="https://cdn.rawgit.com/pcooksey/bibtex-js/ef59e62c/src/bibtex_js.js"></script>
