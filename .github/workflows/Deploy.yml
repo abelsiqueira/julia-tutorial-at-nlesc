@@ -40,6 +40,7 @@ jobs:
         rm -rf abelsiqueira.github.io-main main.zip
     - run: julia -e '
             using Pkg; Pkg.activate("."); Pkg.instantiate();
+            Pkg.add(url="https://github.com/abelsiqueira/SequGen.jl");
             using NodeJS; run(`$(npm_cmd()) install highlight.js`);
             using Franklin;
             optimize()'
