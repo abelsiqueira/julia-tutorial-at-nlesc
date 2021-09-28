@@ -1,9 +1,9 @@
-<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/libs/highlight/github.min.css"> <link href="/css/bootstrap.min.css" rel=stylesheet  crossorigin=anonymous > <link rel=icon  href="/images/logo.png"> <link rel=stylesheet  href="/css/code-katex.css"> <link rel=stylesheet  href="/css/custom.css"> <link rel=stylesheet  href="/css/dark-mode.css"> <link rel=preconnect  href="https://fonts.gstatic.com"> <link href="https://fonts.googleapis.com/css2?family=Cinzel&family=Montserrat&display=swap" rel=stylesheet > <title>Creating a package: SequGen.jl - demonstration of good practices</title> <meta property="og:title" content="Julia Tutorial at NLeSC"> <meta name="twitter:title" content="Julia Tutorial at NLeSC"> <meta property="og:description" content="Creating a package: SequGen.jl - demonstration of good practices"> <meta name="twitter:description" content="Creating a package: SequGen.jl - demonstration of good practices"> <meta property="og:image" content="https://abelsiqueira.github.io/images/abel-banner.jpg"> <meta name="twitter:image" content="https://abelsiqueira.github.io/images/abel-banner.jpg"> <meta property="og:url" content=abelsiqueira.github.io > <meta name="twitter:card" content=summary_large_image > <header> <nav class="navbar navbar-expand-lg"> <div class=container-fluid > <a class="navbar-brand text-end" href="/"></a> <button class=navbar-toggler  type=button  data-bs-toggle=collapse  data-bs-target="#navbarSupportedContent" aria-controls=navbarSupportedContent  aria-expanded=false  aria-label="Toggle navigation"> <span class=navbar-toggler-icon ></span> </button> <div class="collapse navbar-collapse" id=navbarSupportedContent > <ul class="navbar-nav ms-auto mb-2 mb-lg-0"> <li class=nav-item ><a class=nav-link  href="/">Home</a> <li class=nav-item ><a class=nav-link  href="/blog/">Blog</a> <li class=nav-item ><a class=nav-link  href="/julia/">Julia</a> <li class=nav-item ><a class=nav-link  href="/research/">Research</a> <li class=nav-item ><a class=nav-link  href="/ufpr/">UFPR</a> </ul> <div class="dark-switch form-check form-switch"> <input type=checkbox  class=form-check-input  id=darkSwitch  /> <label class=custom-control-label  for=darkSwitch >Dark Mode</label> </div> <script src="/libs/dark-mode-switch.min.js"></script> </div> </div> </nav> </header> <div class=container-fluid > <div class="container main-text"> <div class=franklin-content ><h1 id=fill_title ><a href="#fill_title" class=header-anchor >Creating a package: SequGen.jl - demonstration of good practices</a></h1> <p>In this section we&#39;ll look into implementing and registering a package, following some good practices.</p> <div class=franklin-toc ><ol><li><a href="#what_iswill_be_sequgen">What is/will be SequGen</a><li><a href="#create_the_package_skeleton">Create the package skeleton</a><li><a href="#uploading_and_checking">Uploading and checking</a><li><a href="#the_basics">The basics</a></ol></div> <hr /> <h2 id=what_iswill_be_sequgen ><a href="#what_iswill_be_sequgen" class=header-anchor >What is/will be SequGen</a></h2> <p>SequGen.jl will be a package to implement time series/sequences generation on Julia. It is based on the homonymous NLeSC project <a href="https://github.com/sequgen/sequgen">sequgen</a>.</p> <p>In this tutorial, our package will generate simple time series that we&#39;ll be able to add up and create useful synthetic data. We&#39;ll work with <code>struct</code>s and showcase <em>multiple dispatch</em> in the process.</p> <h2 id=create_the_package_skeleton ><a href="#create_the_package_skeleton" class=header-anchor >Create the package skeleton</a></h2> <p>Not much is needed to create a proper package in Julia. It needs to follow a basic structure of the form</p> <pre><code class="julia hljs">PackageName.jl
+<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/libs/katex/katex.min.css"> <link rel=stylesheet  href="/libs/highlight/github.min.css"> <link href="/css/bootstrap.min.css" rel=stylesheet  crossorigin=anonymous > <link rel=icon  href="/images/logo.png"> <link rel=stylesheet  href="/css/code-katex.css"> <link rel=stylesheet  href="/css/custom.css"> <link rel=stylesheet  href="/css/dark-mode.css"> <link rel=preconnect  href="https://fonts.gstatic.com"> <link href="https://fonts.googleapis.com/css2?family=Cinzel&family=Montserrat&display=swap" rel=stylesheet > <title>Creating a package: SequGen.jl - demonstration of good practices</title> <meta property="og:title" content="Julia Tutorial at NLeSC"> <meta name="twitter:title" content="Julia Tutorial at NLeSC"> <meta property="og:description" content="Creating a package: SequGen.jl - demonstration of good practices"> <meta name="twitter:description" content="Creating a package: SequGen.jl - demonstration of good practices"> <meta property="og:image" content="https://abelsiqueira.github.io/images/abel-banner.jpg"> <meta name="twitter:image" content="https://abelsiqueira.github.io/images/abel-banner.jpg"> <meta property="og:url" content=abelsiqueira.github.io > <meta name="twitter:card" content=summary_large_image > <header> <nav class="navbar navbar-expand-lg"> <div class=container-fluid > <a class="navbar-brand text-end" href="/"></a> <button class=navbar-toggler  type=button  data-bs-toggle=collapse  data-bs-target="#navbarSupportedContent" aria-controls=navbarSupportedContent  aria-expanded=false  aria-label="Toggle navigation"> <span class=navbar-toggler-icon ></span> </button> <div class="collapse navbar-collapse" id=navbarSupportedContent > <ul class="navbar-nav ms-auto mb-2 mb-lg-0"> <li class=nav-item ><a class=nav-link  href="/">Home</a> <li class=nav-item ><a class=nav-link  href="/blog/">Blog</a> <li class=nav-item ><a class=nav-link  href="/julia/">Julia</a> <li class=nav-item ><a class=nav-link  href="/research/">Research</a> <li class=nav-item ><a class=nav-link  href="/ufpr/">UFPR</a> </ul> <div class="dark-switch form-check form-switch"> <input type=checkbox  class=form-check-input  id=darkSwitch  /> <label class=custom-control-label  for=darkSwitch >Dark Mode</label> </div> <script src="/libs/dark-mode-switch.min.js"></script> </div> </div> </nav> </header> <div class=container-fluid > <div class="container main-text"> <div class=franklin-content ><h1 id=fill_title ><a href="#fill_title" class=header-anchor >Creating a package: SequGen.jl - demonstration of good practices</a></h1> <p>In this section we&#39;ll look into implementing and registering a package, following some good practices.</p> <div class=franklin-toc ><ol><li><a href="#what_iswill_be_sequgen">What is/will be SequGen</a><li><a href="#create_the_package_skeleton">Create the package skeleton</a><li><a href="#uploading_and_checking">Uploading and checking</a><li><a href="#the_basics">The basics</a><ol><li><a href="#advanced_structures_with_multiple_dispatch">Advanced structures with multiple dispatch</a></ol></ol></div> <hr /> <h2 id=what_iswill_be_sequgen ><a href="#what_iswill_be_sequgen" class=header-anchor >What is/will be SequGen</a></h2> <p>SequGen.jl will be a package to implement time series/sequences generation on Julia. It is based on the homonymous NLeSC project <a href="https://github.com/sequgen/sequgen">sequgen</a>.</p> <p>In this tutorial, our package will generate simple time series that we&#39;ll be able to add up and create useful synthetic data. We&#39;ll work with <code>struct</code>s and showcase <em>multiple dispatch</em> in the process.</p> <h2 id=create_the_package_skeleton ><a href="#create_the_package_skeleton" class=header-anchor >Create the package skeleton</a></h2> <p>Not much is needed to create a proper package in Julia. It needs to follow a basic structure of the form</p> <pre><code class=language-julia >PackageName.jl
 - src/
   - PackageName.jl
 - test/
   - runtests.jl
-- Project.toml</code></pre> <p>The entry point of the package is the <code>src/PackageName.jl</code> file. The <code>test/runtests.jl</code> file is run when you try to <code>pkg&gt; test</code> a package. Finally, the <code>Project.toml</code> file contains several information about the package:</p> <ul> <li><p><code>name</code>: Name</p> <li><p><code>uuid</code>: A unique identifier</p> <li><p><code>authors</code>: A list of authors</p> <li><p><code>version</code>: A SemVer version.</p> <li><p><code>&#91;deps&#93;</code>: A list of packages and their UUIDs.</p> <li><p><code>&#91;compat&#93;</code>: A list of packages and the versions needed for this package.</p> <li><p><code>&#91;extras&#93;</code>: A list of additional packages used for testing.</p> <li><p><code>&#91;targets&#93;</code>: Additional targets &#40;and their required packages&#41;. Currently only supports <code>test</code> for the testing packages.</p> </ul> <p>An easy way to generate a basic skeleton for pacakges is using the built-in <code>pkg&gt; generate PackageName</code>. However, since we usually want a bunch of other <em>goodies</em>, we can use the package <code>PkgTemplates</code> instead.</p> <p>First, <code>pkg&gt; add PkgTemplates</code> and <code>julia&gt; using PkgTemplates</code>. Then simply run</p> <pre><code class="julia hljs">julia&gt; generate(<span class=hljs-string >&quot;SequGen&quot;</span>)</code></pre>
+- Project.toml</code></pre> <p>The entry point of the package is the <code>src/PackageName.jl</code> file. The <code>test/runtests.jl</code> file is run when you try to <code>pkg&gt; test</code> a package. Finally, the <code>Project.toml</code> file contains several information about the package:</p> <ul> <li><p><code>name</code>: Name</p> <li><p><code>uuid</code>: A unique identifier</p> <li><p><code>authors</code>: A list of authors</p> <li><p><code>version</code>: A SemVer version.</p> <li><p><code>&#91;deps&#93;</code>: A list of packages and their UUIDs.</p> <li><p><code>&#91;compat&#93;</code>: A list of packages and the versions needed for this package.</p> <li><p><code>&#91;extras&#93;</code>: A list of additional packages used for testing.</p> <li><p><code>&#91;targets&#93;</code>: Additional targets &#40;and their required packages&#41;. Currently only supports <code>test</code> for the testing packages.</p> </ul> <p>An easy way to generate a basic skeleton for pacakges is using the built-in <code>pkg&gt; generate PackageName</code>. However, since we usually want a bunch of other <em>goodies</em>, we can use the package <code>PkgTemplates</code> instead.</p> <p>First, <code>pkg&gt; add PkgTemplates</code> and <code>julia&gt; using PkgTemplates</code>. Then simply run</p> <pre><code class=language-julia >julia&gt; generate&#40;&quot;SequGen&quot;&#41;</code></pre>
 <p>A list of options will appear to allow customization. Fow now, select <code>dir</code> and <code>plugins</code>.</p>
 <p>The first option, <code>dir</code>, allows us to choose where to save our package. Julia&#39;s default <code>dev</code> environment is inside <code>.julia/dev/</code> in the home folder. To avoid having to look for it, simply enter <code>.</code> &#40;a single dot&#41;.</p>
 <p>The second option gives as a wide range of plugins, many of which we want. In addition to the ones that are already selected, choose <code>Citation</code>, <code>Coveralls</code>, <code>Documenter</code>, <code>GitHubActions</code> and <code>RegisterAction</code>. Their meaning are as follows:</p>
@@ -131,30 +131,30 @@
 <p>With this description, we can ask for sample of <code>N</code> points in the interval starting at <em>60 days</em> and ending at <em>120 days</em>. If we ask for a new sample, we&#39;ll get different noise, but the rest will be the same.</p>
 <p>In Python, we could create a base class <code>Sequence</code> and a method <code>sample&#40;interval&#41;</code>, or <code>sample&#40;start, end, length&#41;</code>. We would then implement classes <code>Constant</code>, <code>SineWave</code>, <code>GaussianNoise</code> deriving from <code>Sequence</code> as specialize the <code>sample</code> method for these cases.</p>
 <p>In Julia, it won&#39;t be so different in practice. We&#39;ll start by creating an abstract type for <code>Sequence</code> and the function <code>sample</code>.</p>
-<pre><code class="julia hljs"><span class=hljs-comment ># File src/SequGen.jl</span>
-<span class=hljs-keyword >module</span> SequGen
+<pre><code class=language-julia ># File src/SequGen.jl
+module SequGen
 
-<span class=hljs-keyword >export</span> Sequence
-<span class=hljs-keyword >export</span> sample
+export Sequence
+export sample
 
-<span class=hljs-keyword >abstract type</span> Sequence <span class=hljs-keyword >end</span>
+abstract type Sequence end
 
-<span class=hljs-keyword >function</span> sample <span class=hljs-keyword >end</span>
+function sample end
 
-<span class=hljs-comment ># includes will go here</span>
+# includes will go here
 
-<span class=hljs-keyword >end</span> <span class=hljs-comment ># module</span></code></pre>
+end # module</code></pre>
 <p>Here, <code>export</code>ing only gives visibility to the user that uses our package. Otherwise, he would have to write <code>SequGen.sample</code> to specify where <code>sample</code> comes from.</p>
 <p>The <code>function sample end</code> simply declares that the <code>sample</code> function exists. This line is not really necessary, but it&#39;s useful to centralize the basic API information. We&#39;ll also add docstrings to this function, instead of somewhere else.</p>
 <p>Next, create a file <code>constant.jl</code> and add the line <code>include&#40;&quot;constant.jl&quot;&#41;</code> on <code>src/SequGen.jl</code>.</p>
-<pre><code class="julia hljs"><span class=hljs-comment ># File constant.jl</span>
-<span class=hljs-keyword >export</span> Constant
+<pre><code class=language-julia ># File constant.jl
+export Constant
 
-<span class=hljs-keyword >struct</span> Constant &lt;: Sequence
+struct Constant &lt;: Sequence
   x
-<span class=hljs-keyword >end</span>
+end
 
-sample(seq::Constant, t::<span class=hljs-built_in >AbstractVector</span>) = fill(seq.x, length(t))</code></pre>
+sample&#40;seq::Constant, t::AbstractVector&#41; &#61; fill&#40;seq.x, length&#40;t&#41;&#41;</code></pre>
 <p>TODO: What&#39;s the word instead of field? Now, <code>Constant</code> is a subtype of <code>Sequence</code> that contains a field <code>x</code> of indeterminate type &#40;<code>Any</code>&#41;. We also defined how the <code>sample</code> function behaves for a <code>Constant</code> and an <code>AbstractVector</code>: it returns a vector of size <code>length&#40;t&#41;</code> filled with <code>seq.x</code>.</p>
 <p>This should already run on our REPL, so let&#39;s check.</p>
 <ul>
@@ -183,17 +183,464 @@ sample(seq::Constant, t::<span class=hljs-built_in >AbstractVector</span>) = fil
 <li><p>Enter <code>sample&#40;s, 1:3&#41;</code>. It should output</p>
 
 </ul>
-<pre><code class="julia hljs"><span class=hljs-number >3</span>-element <span class=hljs-built_in >Vector</span>{<span class=hljs-built_in >Float64</span>}:
- <span class=hljs-number >2.3</span>
- <span class=hljs-number >2.3</span>
- <span class=hljs-number >2.3</span></code></pre>
+<pre><code class=language-julia >3-element Vector&#123;Float64&#125;:
+ 2.3
+ 2.3
+ 2.3</code></pre>
 <ul>
 <li><p>Rejoice.</p>
 
 </ul>
-<p>TODO: Example: docstrings &#43; docs</p>
-<p>You might have noticed that your Documentation action passes, but no documentation is available. That is because the action needs a GitHub token to push to your repo</p>
-<p>TODO: Example: dev&#39;ing the package, running tests TODO: Example: uploading, creating a pull request</p>
+<p>Now, we can add the <code>Trend</code> struct, to correspond to the function \(\phi(t) = \alpha (t - t_0)\).</p>
+<pre><code class=language-julia ># File trend.jl
+export Trend
+
+mutable struct Trend &lt;: Sequence
+  start
+  slope
+end
+
+sample&#40;seq::Trend, t::AbstractVector&#41; &#61; &#40;t .- seq.start&#41; * seq.slope</code></pre>
+<p>You must <code>include&#40;&quot;trend.jl&quot;&#41;</code> on <code>SequGen.jl</code>. Notice that because of <code>Revise</code>, the package is reloaded and <code>Trend</code> is already available. So <code>s &#61; Trend&#40;1.0, 0.2&#41;</code>, <code>sample&#40;s, 1:3&#41;</code> works, and returns <code>0.0:0.2:0.4</code>.</p>
+<p>TODO: talk about dispatch on <code>sample</code></p>
+<p>Now, before continuing, we should add some tests. Edit <code>test/runtests.jl</code> as follows:</p>
+<pre><code class=language-julia >using SequGen
+using Test
+
+@testset &quot;Constant&quot; begin
+  t &#61; 1:10
+  for c in &#40;5, 1.23&#41;
+    s &#61; Constant&#40;c&#41;
+    @test sample&#40;s, t&#41; &#61;&#61; fill&#40;c, 10&#41;
+  end
+end
+
+@testset &quot;Trend&quot; begin
+  for Δt in &#40;1, 1.0&#41;,
+      t₀ in &#40;0.0, 1.0&#41;,
+      Δx in &#40;3, 3.14&#41;
+    t &#61; collect&#40;range&#40;t₀, t₀ &#43; Δt, length&#61;101&#41;&#41;
+    s &#61; Trend&#40;t₀, Δx / Δt&#41;
+    x &#61; collect&#40;range&#40;zero&#40;Δx&#41;, Δx, length&#61;101&#41;&#41;
+    @test sample&#40;s, t&#41; ≈ x
+  end
+end</code></pre>
+<p>These tests simply verify that the output of sample is correct. Notice that we use <code>\isapprox&#91;TAB&#93;</code> to compare <code>sample&#40;s, t&#41;</code> and <code>x</code>, so we have to <code>collect</code> the ranges so they become vectors.</p>
+<p>To test the package,</p>
+<ul>
+<li><p>enter <code>pkg&gt;</code> &#40;press <code>&#93;</code>&#41;;</p>
+
+<li><p><code>pkg&gt; test</code>.</p>
+
+</ul>
+<p>The test will create a separate environment and install necessary packages, if they are declared. This happens for the package <code>Test</code>. He is declared on <code>Project.toml</code> under <code>&#91;extras&#93;</code> and on the list <code>test &#61; &#91;&quot;Test&quot;&#93;</code> under <code>&#91;targets&#93;</code>. Don&#39;t worry about finding out the <code>UUID</code> of the package. When you <code>add</code> it, it automatically appears on <code>Project.toml</code> under <code>&#91;deps&#93;</code>. you just have to, if necessary, move it to <code>&#91;extras&#93;</code>.</p>
+<p>Now it should be a good time to commit and push. TODO: Check if LTS changed</p>
+<p>It is also a good time to add docstrings and configure the <code>Documenter.jl</code>. A docstring is the information that appears when you ask for the help of a function. You can add docstrings by simply adding strings right before the function or struct definition.</p>
+<p>We can add a docstring for <code>sample</code> like the following:</p>
+<pre><code class=language-julia >&quot;Compute a sample of a given sequence on a given range.&quot;
+sample&#40;seq::Constant, t::AbstractVector&#41; &#61; fill&#40;seq.x, length&#40;t&#41;&#41;</code></pre>
+<p>Now you can go to the REPL, press <code>?</code> to change your REPL to <code>help?&gt;</code>, and then enter <code>sample</code>. If <code>Revise</code> is loaded you should see the information you just wrote printed on the screen.</p>
+<p>Notice that there is no signature information from the function <code>sample</code>. That&#39;s because this help will apply to <strong>all</strong> <code>sample</code> functions that are defined, even if we wildly change the signature.</p>
+<p>The docstring is helpful already, but we can better inform the user of what&#39;s going on. Since a single line will not be sufficient, we can use multiline strings &#40;<code>&quot;&quot;&quot;...&quot;&quot;&quot;</code>&#41; for the job. You should also now that the docstring is parsed as Markdown, so you can format it accordingly. The following is a better docstring:</p>
+<pre><code class=language-julia >&quot;&quot;&quot;
+    x &#61; sample&#40;sequence, range&#41;
+
+Compute a sample of the given &#96;sequence&#96; in the given &#96;range&#96;.
+&quot;&quot;&quot;
+sample&#40;seq::Constant, t::AbstractVector&#41; &#61; fill&#40;seq.x, length&#40;t&#41;&#41;</code></pre>
+<p>By entering <code>help?&gt; sample</code> again, you should see a better message, with properly colored words. Since the REPL already uses monospace fonts, the &quot;code&quot; bits just change in color, but the documentation that we&#39;ll produce next will properly show the difference.</p>
+<p>In the folder <code>docs</code> you will see all the basic information you need to have a documentation with the package <code>Documenter.jl</code>, which is the Julia main package for this. The <code>docs</code> are themselves a different project, and as such they have a <code>Project.toml</code> and a <code>Manifest.toml</code> file. We can &#40;and some say, should&#41; constrain the Documenter version that will be run, or add additional packages that are not needed for our SequGen, but that would be intersting &#40;like Plots&#41;. It is also important to know that we want to use the development version of our package, so we would need to tell the environment to use the relative package at <code>..</code> &#40;from the <code>docs</code> folder&#41;. The generated environment already has that setup, but keep it in mind if you have to install Documenter.jl manually.</p>
+<p>Inside the <code>docs</code> folder you have a <code>src</code> folder, with all files that will be parsed into docs, and a <code>make.jl</code> file that runs the <code>Documenter</code> package that processes these files. The <code>make.jl</code> file can be a bit complicated, specially for our first usage, so I&#39;ll just point out the general idea:</p>
+<ul>
+<li><p><code>makedocs</code> is responsible for parsing the <code>src</code> folder;</p>
+<ul>
+<li><p><code>pages</code> is a list of &quot;pairs&quot; declaring the page names and their corresponding sources;</p>
+
+</ul>
+
+<li><p><code>deploydocs</code> is responsible for pushing our documentation to the site, but it will only do so while running on the CI.</p>
+
+</ul>
+<p>TODO: Check if they fixed this. One thing that&#39;s missing from the <code>make.jl</code> file is the information on which branch is our development being done. This can be informed with <code>devbranch&#61;&quot;main&quot;</code>:</p>
+<pre><code class=language-julia ># File make.jl
+# ...
+
+deploydocs&#40;;
+    repo&#61;&quot;github.com/abelsiqueira/SequGen.jl&quot;,
+    devbranch&#61;&quot;main&quot;,
+&#41;</code></pre>
+<p>To run the documentation locally, we have to change folders and environments, so instead, it might be better to open another terminal on the project root and run</p>
+<pre><code class=language-julia >julia --project&#61;docs/ -e &#39;include&#40;&quot;docs/make.jl&quot;&#41;&#39;</code></pre>
+<p>Don&#39;t worry about the Warnings. The folder <code>docs/build</code> is created. Look for <code>index.html</code> and open it on your browser. For instance, running</p>
+<pre><code class=language-julia >firefox docs/build/index.html</code></pre>
+<p>or a different browser.</p>
+<p>You should see a page with very little information about <code>SequGen</code> and our docstring for <code>sample</code>. To see how that appeared there, check <code>docs/src/index.md</code>:</p>
+<pre><code class=language-plaintext ># File docs/src/index.md
+&#96;&#96;&#96;@meta
+CurrentModule &#61; SequGen
+&#96;&#96;&#96;
+
+# SequGen
+
+Documentation for &#91;SequGen&#93;&#40;https://github.com/abelsiqueira/SequGen.jl&#41;.
+
+&#96;&#96;&#96;@index
+&#96;&#96;&#96;
+
+&#96;&#96;&#96;@autodocs
+Modules &#61; &#91;SequGen&#93;
+&#96;&#96;&#96;</code></pre>
+<p>The first <code>@meta</code> states what is the module for this file, and is overkill for many packages, since they only have a single module &#40;as do we&#41;. Then you have a title in Markdown <code># SequGen</code> and a line of information with a link for our repo. This can and should be updated to better describe the package, but not now.</p>
+<p>The next commands are specific to Documenter.jl. Documenter uses the triple ticks with specific commands to parse our docs. The <code>@index</code> command generates a list of links for the docstrings. The <code>@autodocs</code> command looks for all docstrings in the given modules and prints them. That means that for we already have a basic documentation to start. All our documented docstrings will be printed on this single page and linked on the top. We can definitely do better, for instance creating separate pages and using <code>@docs</code> to explicitly tell which docstrings to print.</p>
+<p>Now we want to publish this documentation. On the <code>CI.yml</code> workflow you&#39;ll see a section <code>docs</code>. It</p>
+<ul>
+<li><p>Checkout the package;</p>
+
+<li><p>Downloads the latest <code>1</code> julia;</p>
+
+<li><p>Activates the environment and includes the SequGen package in development;</p>
+
+<li><p>Runs the doctests;</p>
+
+<li><p>Runs the <code>make.jl</code> file.</p>
+
+</ul>
+<p>Make a commit and push the changes to check what happens in the CI. If nothing went wrong, it should pass, and in that case you will be able to see the documentation. Go to github repo page and click on the <code>dev</code> badge.</p>
+<p>When registering our package, things get a bit more convoluted. After your package is registered, the <code>TagBot</code> action will create a tag and release for it on GitHub to match the registered version. It will also try to build the documentation for this tagged version &#40;stable docs&#41;. However, for security reasons, TagBot can&#39;t use the <code>GITHUB_TOKEN</code> secret that is readily available. Instead, you need to create a <code>DOCUMENTER_KEY</code>. It is better to deal with that now, to avoid headaches in the future. Feel free to skip this part, because we won&#39;t be registering our package today.</p>
+<ul>
+<li><p>Open a REPL &#40;or reuse&#41; on the folder with the package;</p>
+
+<li><p><code>pkg&gt; activate</code> &#40;no arguments&#41; to change the environment to home;</p>
+
+<li><p><code>pkg&gt; add DocumenterTools</code></p>
+
+<li><p><code>julia&gt; using DocumenterTools</code></p>
+
+<li><p><code>pkg&gt; activate .</code> to change the environment to SequGen;</p>
+
+<li><p>If it&#39;s a new REPL, <code>julia&gt; using SequGen</code>;</p>
+
+<li><p><code>julia&gt; DocumenterTools.genkeys&#40;SequGen&#41;</code></p>
+
+<li><p>You&#39;re gonna see something like:</p>
+
+</ul>
+<pre><code class=language-julia >&#91; Info: add the public key below to https://github.com/abelsiqueira/SequGen.jl/settings/keys with read/write access:
+
+ssh-rsa ONE-LINE-OF-HASH Documenter
+
+&#91; Info: add a secure environment variable named &#39;DOCUMENTER_KEY&#39; to https://travis-ci.com/abelsiqueira/SequGen.jl/settings &#40;if you deploy using Travis CI&#41; or https://github.com/abelsiqueira/SequGen.jl/settings/secrets &#40;if you deploy using GitHub Actions&#41; with value:
+
+VERY-BIG-HASH</code></pre>
+<ul>
+<li><p>Follow the first link, add the key, <strong>mark the write access check</strong>. The name doesn&#39;t matter.</p>
+
+<li><p>Follow the <strong>third</strong> link - we&#39;re not using Travis CI. Name the variable <code>DOCUMENTER_KEY</code> and paste the <strong>full</strong> hash in there.</p>
+
+<li><p>That&#39;s it.</p>
+
+</ul>
+<p>Now we should have tests and documentation, so we can go back to improving our package. The next two <code>Sequence</code>s that we&#39;ll add are the <code>SineWave</code> and the <code>GaussianNoise</code>. The sine wave is given by</p>
+\[\phi(t) = A \sin\left( \frac{2\pi t}{T} + \theta_0\right),\]
+<p>where \(A\) is the amplitude of the wave, \(T\) is the period, and \(\theta_0\) is the phase.</p>
+<p>Therefore, we can create the following file:</p>
+<pre><code class=language-julia ># File sinewave.jl
+export SineWave
+
+struct SineWave &lt;: Sequence
+  amplitude
+  period
+  phase
+end
+
+function sample&#40;seq::SineWave, t::AbstractVector&#41;
+  return seq.amplitude * sin.&#40;2π * t / seq.period .&#43; seq.phase&#41;
+end</code></pre>
+<p>Notice that <code>sin.</code> is the function <code>sin</code> with a dot &#40;<code>.</code>&#41;, i.e., is applies the sine function all elements of the argument. Likewise with <code>.&#43;</code>.</p>
+<p>Assuming you have <code>Plots</code> installed, you can run the following lines in your REPL and see the result:</p>
+<pre><code class=language-julia >t &#61; range&#40;0, 10, length&#61;50&#41;
+s &#61; SineWave&#40;2.0, 7.0, pi / 3&#41;
+y &#61; sample&#40;s, t&#41;
+plot&#40;t, y&#41;</code></pre><pre><code class="plaintext code-output">ArgumentError: Package Plots not found in current path:
+- Run `import Pkg; Pkg.add("Plots")` to install the Plots package.
+
+</code></pre>
+<p><span style="color:red;">// Image matching '/assets/pages/sequgen/sinewave-1.png' not found. //</span></p>
+<p>On the other hand, it would be nice to be able to create a sine wave by stating where the peak happens, instead of the phase &#40;which is less obvious&#41;. To do that, we can create a <em>constructor</em> like the following:</p>
+<pre><code class=language-julia ># File sinewave .jl
+# ... struct SineWave defined above
+function SineWave&#40;type::Symbol, amplitude, period, phase_or_peak&#41;
+  if type &#61;&#61; :from_phase
+    return SineWave&#40;amplitude, period, phase_or_peak&#41;
+  elseif type &#61;&#61; :from_peak
+    phase &#61; pi / 2 - 2 * pi * phase_or_peak / period
+    return SineWave&#40;amplitude, period, phase&#41;
+  end
+end
+# ...</code></pre>
+<pre><code class=language-julia >t &#61; range&#40;0, 10, length&#61;50&#41;
+s &#61; SineWave&#40;:from_peak, 2.0, 7.0, 1.0&#41;
+y &#61; sample&#40;s, t&#41;
+plot&#40;t, y&#41;</code></pre><pre><code class="plaintext code-output">ArgumentError: Package Plots not found in current path:
+- Run `import Pkg; Pkg.add("Plots")` to install the Plots package.
+
+</code></pre>
+<p><span style="color:red;">// Image matching '/assets/pages/sequgen/sinewave-2.png' not found. //</span></p>
+<p>As for the Gaussian noise, we&#39;ll create a simple version that simply adds a noise for each data point during sampling.</p>
+<pre><code class=language-julia ># File gaussiannoise.jl
+export GaussianNoise
+
+struct GaussianNoise &lt;: Sequence
+  std
+end
+
+GaussianNoise&#40;&#41; &#61; GaussianNoise&#40;1.0&#41;
+
+sample&#40;seq::GaussianNoise, t::AbstractVetor&#41; &#61; seq.std * randn&#40;length&#40;t&#41;&#41;</code></pre>
+<pre><code class=language-julia >t &#61; range&#40;0, 10, length&#61;50&#41;
+s &#61; GaussianNoise&#40;0.2&#41;
+y &#61; sample&#40;s, t&#41;
+plot&#40;t, y&#41;</code></pre><pre><code class="plaintext code-output">ArgumentError: Package Plots not found in current path:
+- Run `import Pkg; Pkg.add("Plots")` to install the Plots package.
+
+</code></pre>
+<p>Now we can finally combine all of these for an example:</p>
+<ul>
+<li><p>Let&#39;s use a timeframe of of 12 months of 30 days;</p>
+<ul>
+<li><p>Since we don&#39;t have units, we can choose \(t = 0\) for the start of the year and for each month we add \(1\), i.e., December starts at \(t = 11\).</p>
+
+</ul>
+
+<li><p>An average mean temperature of \(15^\circ C\);</p>
+
+<li><p>A sine wave addition</p>
+<ul>
+<li><p>with \(15 K\) &#40;temperature differences should be in Kelvin&#41; amplitude;</p>
+
+<li><p>period of a year \(T = 12\);</p>
+
+<li><p>peak temperature at noon of 21/June, the Summer solstice for 2022 in the Northern Hemisphere;</p>
+
+</ul>
+
+<li><p>A Gaussian noise of standard deviation \(0.5 K\).</p>
+
+</ul>
+<p><span style="color:red;">// Image matching '/assets/pages/sequgen/gaussiannoise-1.png' not found. //</span></p>
+<pre><code class=language-julia >t &#61; range&#40;0, 11, length&#61;12&#41;
+seqs &#61; &#91;
+  Constant&#40;15.0&#41;,
+  SineWave&#40;:from_peak, 15.0, 12.0, &#40;6 &#43; 22 / 30&#41;&#41;,
+  GaussianNoise&#40;0.5&#41;,
+&#93;
+ys &#61; sample.&#40;seqs, Ref&#40;t&#41;&#41;
+y &#61; sum&#40;ys&#41;
+plot&#40;t, y, leg&#61;false&#41;
+title&#33;&#40;&quot;Average temperature of 2022 in some city&quot;&#41;
+xticks&#33;&#40;0:11&#41;
+xlabel&#33;&#40;&quot;Months since 01/Jan/2022&quot;&#41;
+ylabel&#33;&#40;&quot;Temperature &#40;in degrees Celsius&#41;&quot;&#41;</code></pre><pre><code class="plaintext code-output">ArgumentError: Package Plots not found in current path:
+- Run `import Pkg; Pkg.add("Plots")` to install the Plots package.
+
+</code></pre>
+<p><span style="color:red;">// Image matching '/assets/pages/sequgen/example-1.png' not found. //</span></p>
+<p>Our example is cool, and our package is working, so we&#39;re happy. If you&#39;re not happy, you should try seeing the Pagliacci clown. Anyway, although cool, we can make it cooler. For that, there is a package called <code>Unitful</code>, which allows the automatic usage and propagation of units in Julia. You should <code>pkg&gt; add Unitful</code> inside the environment, because we should use it on the tests.</p>
+<p>After installing, enter <code>julia&gt; using Unitful</code>. You can add units to number by appending them with <code>u&quot;THE-UNIT&quot;</code>. For instance,</p>
+<pre><code class=language-julia >using Unitful
+
+1u&quot;d&quot;, 2u&quot;m&quot; * 3u&quot;m&quot;, 2u&quot;hr&quot;, 9u&quot;m&quot; / 4u&quot;s&quot;</code></pre><pre><code class="plaintext code-output">ArgumentError: Package Unitful not found in current path:
+- Run `import Pkg; Pkg.add("Unitful")` to install the Unitful package.
+
+</code></pre>
+<p>When different units for the same quantity are summed, they are converted to a SI unit. When different units for the same quantity are multiplied or divided, they don&#39;t simplify automatically, though.</p>
+<pre><code class=language-julia >println&#40;&quot;width &#61; &quot;, 30u&quot;cm&quot; &#43; 0.8u&quot;m&quot;&#41;
+println&#40;&quot;area &#61; &quot;, 30u&quot;cm&quot; * 0.8u&quot;m&quot;&#41;
+println&#40;&quot;area &#61; &quot;, uconvert&#40;u&quot;m^2&quot;, 30u&quot;cm&quot; * 0.8u&quot;m&quot;&#41;&#41;
+println&#40;&quot;ratio1 &#61; &quot;, 12u&quot;m&quot; / 30u&quot;m&quot;&#41;
+println&#40;&quot;ratio2 &#61; &quot;, 12u&quot;m&quot; / 3000u&quot;cm&quot;&#41;
+println&#40;&quot;ratio2 &#61; &quot;, uconvert&#40;NoUnits, 12u&quot;m&quot; / 3000u&quot;cm&quot;&#41;&#41;</code></pre><pre><code class="plaintext code-output">ArgumentError: Package Unitful not found in current path:
+- Run `import Pkg; Pkg.add("Unitful")` to install the Unitful package.
+
+</code></pre>
+<p>Most of our code is not restricted by type, so much of it works directly with <code>Unitful</code>. A few things should be changed, though. First, <code>Unitful</code> doesn&#39;t accept non-fixed periods, like months or years. So instead of using months, we can change to days and use 30-day months. Additionally, the <code>plot</code> function doesn&#39;t allow <code>Unitful</code> by default. So we should add the <code>UnitfulRecipes</code> package as well.</p>
+<pre><code class=language-julia >using Unitful, UnitfulRecipes, Plots
+month &#61; 30u&quot;d&quot;
+t &#61; range&#40;0 * month, 11 * month, length&#61;12&#41;
+seqs &#61; &#91;
+  Constant&#40;15.0u&quot;°C&quot;&#41;,
+  SineWave&#40;:from_peak, 15.0u&quot;K&quot;, 12month, &#40;6 &#43; 22 / 30&#41; * month&#41;,
+  GaussianNoise&#40;0.5u&quot;K&quot;&#41;,
+&#93;
+ys &#61; sample.&#40;seqs, Ref&#40;t&#41;&#41;
+y &#61; uconvert.&#40;u&quot;°C&quot;, sum&#40;ys&#41;&#41;
+plot&#40;t, y, leg&#61;false&#41;
+title&#33;&#40;&quot;Average temperature of 2022 in some city&quot;&#41;
+xlabel&#33;&#40;&quot;Days since 01/Jan/2022&quot;&#41;
+ylabel&#33;&#40;&quot;Temperature &#40;in degrees Celsius&#41;&quot;&#41;</code></pre><pre><code class="plaintext code-output">ArgumentError: Package Unitful not found in current path:
+- Run `import Pkg; Pkg.add("Unitful")` to install the Unitful package.
+
+</code></pre>
+<p><span style="color:red;">// Image matching '/assets/pages/sequgen/example-2.png' not found. //</span></p>
+<p>We can refine the interval to see it daily, but notice that the range must change to include the extra time after the beginning of the month. The correct way to define the range with \(n\) points is to split the interval \([0,T]\) into \(n+1\) equally spaced points, and take the first \(n\).</p>
+<pre><code class=language-julia >using Unitful, UnitfulRecipes, Plots
+n &#61; 360
+month &#61; 30u&quot;d&quot;
+t &#61; range&#40;0 * month, 12 * month, length&#61;n&#43;1&#41;&#91;1:n&#93;
+seqs &#61; &#91;
+  Constant&#40;15.0u&quot;°C&quot;&#41;,
+  SineWave&#40;:from_peak, 15.0u&quot;K&quot;, 12month, &#40;6 &#43; 22 / 30&#41; * month&#41;,
+  GaussianNoise&#40;0.5u&quot;K&quot;&#41;,
+&#93;
+ys &#61; sample.&#40;seqs, Ref&#40;t&#41;&#41;
+y &#61; uconvert.&#40;u&quot;°C&quot;, sum&#40;ys&#41;&#41;
+plot&#40;t, y, leg&#61;false&#41;
+title&#33;&#40;&quot;Average temperature of 2022 in some city&quot;&#41;
+xlabel&#33;&#40;&quot;Days since 01/Jan/2022&quot;&#41;
+ylabel&#33;&#40;&quot;Temperature &#40;in degrees Celsius&#41;&quot;&#41;</code></pre><pre><code class="plaintext code-output">ArgumentError: Package Unitful not found in current path:
+- Run `import Pkg; Pkg.add("Unitful")` to install the Unitful package.
+
+</code></pre>
+<p><span style="color:red;">// Image matching '/assets/pages/sequgen/example-3.png' not found. //</span></p>
+<p>Using units, it&#39;s easy to add a new sine wave for daily variations. Let&#39;s say for an amplitude of 2 Kelvin with peak at noon. Let&#39;s ignore the noise term and focus on shorter period of 3 days starting at the third month.</p>
+<pre><code class=language-julia >using Unitful, UnitfulRecipes, Plots
+n &#61; 100
+month &#61; 30u&quot;d&quot;
+t &#61; range&#40;3month, 3month &#43; 3u&quot;d&quot;, length&#61;n&#43;1&#41;&#91;1:n&#93;
+seqs &#61; &#91;
+  Constant&#40;15.0u&quot;°C&quot;&#41;,
+  SineWave&#40;:from_peak, 15.0u&quot;K&quot;, 12month, &#40;6 &#43; 22 / 30&#41; * month&#41;,
+  SineWave&#40;:from_peak, 2.0u&quot;K&quot;, 24u&quot;hr&quot;, 12u&quot;hr&quot;&#41;
+&#93;
+ys &#61; sample.&#40;seqs, Ref&#40;t&#41;&#41;
+y &#61; uconvert.&#40;u&quot;°C&quot;, sum&#40;ys&#41;&#41;
+ticks &#61; range&#40;3month, 3month &#43; 3u&quot;d&quot;, step&#61;12u&quot;hr&quot;&#41;
+plot&#40;t, y, leg&#61;false, xticks&#61;ticks&#41;
+title&#33;&#40;&quot;Average temperature of 2022 in some city&quot;&#41;
+xlabel&#33;&#40;&quot;Days since 01/Jan/2022&quot;&#41;
+ylabel&#33;&#40;&quot;Temperature &#40;in degrees Celsius&#41;&quot;&#41;</code></pre><pre><code class="plaintext code-output">ArgumentError: Package Unitful not found in current path:
+- Run `import Pkg; Pkg.add("Unitful")` to install the Unitful package.
+
+</code></pre>
+<p><span style="color:red;">// Image matching '/assets/pages/sequgen/example-4.png' not found. //</span></p>
+<h3 id=advanced_structures_with_multiple_dispatch ><a href="#advanced_structures_with_multiple_dispatch" class=header-anchor >Advanced structures with multiple dispatch</a></h3>
+<p>Now that we have some basic structures, we can start thinking about how they should interact. To obtain a sample of the sum of sequences, we used the sum of the samples. An easier way would be to define a structure to hold the sum of these sequences and do that operation internally. Or better, an operation between sequences. Here&#39;s an implementation of that:</p>
+<pre><code class=language-julia ># File operation.jl
+export OperationOnSequences
+
+struct OperationOnSequences &lt;: Sequence
+  seq1
+  seq2
+  op
+end
+
+function sample&#40;seq::OperationOnSequences, t::AbstractVector&#41;
+  seq.op.&#40;sample&#40;seq.seq1, t&#41;, sample&#40;seq.seq2, t&#41;&#41;
+end</code></pre>
+<p>The <code>OperationOnSequences</code> struct holds two <code>Sequence</code>s and an operation <code>op</code>. There&#39;s nothing explicitly constraining what that operation is, and that allows us to define whatever we need in the future. The implicit contraint is given by <code>sample</code>. Here, <code>op</code> is applied <em>element-wise</em> to two samples, since Julia allows the <code>.</code> to be used with any function. That means that <code>op</code> must receive two number and return a number.</p>
+<p>This is enough to allows us to define the sum of sequences. Test the following:</p>
+<pre><code class=language-julia >seqsum &#61; OperationOnSequences&#40;
+  SineWave&#40;1.0, 1.0, 0.0&#41;,
+  SineWave&#40;0.5, 0.25, 0.0&#41;,
+  &#43;,
+&#41;
+seqprod &#61; OperationOnSequences&#40;
+  SineWave&#40;1.0, 0.2, 0.0&#41;,
+  Trend&#40;0.5, 2.0&#41;,
+  *,
+&#41;
+seqquad &#61; OperationOnSequences&#40;
+  Trend&#40;0.25, 4.0&#41;,
+  Trend&#40;0.8, 2.0&#41;,
+  *,
+&#41;
+t &#61; range&#40;0, 1, length&#61;100&#41;
+y1 &#61; sample&#40;seqsum, t&#41;
+y2 &#61; sample&#40;seqprod, t&#41;
+y3 &#61; sample&#40;seqquad, t&#41;
+plot&#40;t, y1&#41;
+plot&#33;&#40;t, y2&#41;
+plot&#33;&#40;t, y3&#41;</code></pre><pre><code class="plaintext code-output">UndefVarError: plot not defined
+</code></pre>
+<p><span style="color:red;">// Image matching '/assets/pages/sequgen/test-sum-of-sequences-1.png' not found. //</span></p>
+<p>Now, we can define how the basic operations <code>&#43;</code>, <code>-</code> and <code>*</code> apply to these sequences. That is, we can define <code>SineWave&#40;...&#41; &#43; SineWave&#40;...&#41;</code> to call the constructor to <code>OperationOnSequences</code>. Not only that, but we can define a sum of an operator and a number to construct a <code>Constant</code> sequence and create an <code>OperationOnSequences</code>. This can be done by importing the operators from <code>Base</code> and defining <code>&#43;&#40;x::Type1, y::Type2&#41;</code> for each of these types. Since we&#39;re repeating the same code for each operator, we can use <strong>Metaprogamming</strong> to generate the code that we need.</p>
+<pre><code class=language-julia ># File operations.jl
+# ...
+import Base.&#43;, Base.-, Base.*
+for op in &#40;:&#43;, :-, :*&#41;
+  @eval begin
+    &#36;op&#40;s1::Sequence, s2::Sequence&#41; &#61; OperationOnSequences&#40;s1, s2, &#36;op&#41;
+    &#36;op&#40;s::Sequence, x::Number&#41; &#61; &#36;op&#40;s, Constant&#40;x&#41;&#41;
+    &#36;op&#40;x::Number, s::Sequence&#41; &#61; &#36;op&#40;Constant&#40;x&#41;, s&#41;
+  end
+end</code></pre>
+<p>Here, first we import the <em>functions</em> <code>&#43;</code>, <code>-</code> and <code>*</code>. Then, <code>op</code> iterates over <em>Symbols</em> storing <code>&#43;</code>, <code>-</code> and <code>*</code>. These are different, note the preceding <code>:</code>. Then, the <code>@eval</code> macro takes the block defined by <code>begin ... end</code>, interpolates the value of <code>op</code> and creates that code for us. This code is equivalent to writing these lines:</p>
+<pre><code class=language-julia >&#43;&#40;s1::Sequence, s2::Sequence&#41; &#61; OperationOnSequences&#40;s1, s2, &#43;&#41;
+&#43;&#40;s::Sequence, x::Number&#41; &#61; &#43;&#40;s, Constant&#40;x&#41;&#41;
+&#43;&#40;x::Number, s::Sequence&#41; &#61; &#43;&#40;Constant&#40;x&#41;, s&#41;
+-&#40;s1::Sequence, s2::Sequence&#41; &#61; OperationOnSequences&#40;s1, s2, -&#41;
+-&#40;s::Sequence, x::Number&#41; &#61; -&#40;s, Constant&#40;x&#41;&#41;
+-&#40;x::Number, s::Sequence&#41; &#61; -&#40;Constant&#40;x&#41;, s&#41;
+*&#40;s1::Sequence, s2::Sequence&#41; &#61; OperationOnSequences&#40;s1, s2, *&#41;
+*&#40;s::Sequence, x::Number&#41; &#61; *&#40;s, Constant&#40;x&#41;&#41;
+*&#40;x::Number, s::Sequence&#41; &#61; *&#40;Constant&#40;x&#41;, s&#41;</code></pre>
+<p>Use Metaprogamming sparingly, as the code becomes harder to read.</p>
+<p>Here&#39;s the same code as before.</p>
+<pre><code class=language-julia >seqsum &#61; SineWave&#40;1.0, 1.0, 0.0&#41; &#43; SineWave&#40;0.5, 0.25, 0.0&#41;
+seqprod &#61; SineWave&#40;1.0, 0.2, 0.0&#41; * Trend&#40;0.5, 2.0&#41;
+seqquad &#61; Trend&#40;0.25, 4.0&#41; * Trend&#40;0.8, 2.0&#41;
+t &#61; range&#40;0, 1, length&#61;100&#41;
+y1 &#61; sample&#40;seqsum, t&#41;
+y2 &#61; sample&#40;seqprod, t&#41;
+y3 &#61; sample&#40;seqquad, t&#41;
+plot&#40;t, y1&#41;
+plot&#33;&#40;t, y2&#41;
+plot&#33;&#40;t, y3&#41;</code></pre><pre><code class="plaintext code-output">UndefVarError: plot not defined
+</code></pre>
+<p><span style="color:red;">// Image matching '/assets/pages/sequgen/test-sum-of-sequences-2.png' not found. //</span></p>
+<p>Here&#39;s another example:</p>
+<pre><code class=language-julia >seq &#61; sum&#40;
+  SineWave&#40;1 / &#40;2k &#43; 1&#41;, 1 / &#40;2k &#43; 1&#41;, 0.0&#41; for k &#61; 0:6
+&#41;
+t &#61; range&#40;0, 1, length&#61;300&#41;
+y &#61; sample&#40;seq, t&#41;
+plot&#40;t, y&#41;</code></pre><pre><code class="plaintext code-output">UndefVarError: plot not defined
+</code></pre>
+<p><span style="color:red;">// Image matching '/assets/pages/sequgen/test-sum-of-sequences-3.png' not found. //</span></p>
+<p>Another useful feature would be the ability to apply functions to sequences. Similarly, we can define a <code>TransformedSequence</code> struct for that:</p>
+<pre><code class=language-julia ># File transformation.jl
+export TransformedSequence
+
+struct TransformedSequence &lt;: Sequence
+  seq
+  f
+end
+
+function sample&#40;seq::TransformedSequence, t::AbstractVector&#41;
+  seq.f.&#40;sample&#40;seq.seq, t&#41;&#41;
+end
+
+for f in &#40;:exp, :log, :sin, :cos&#41;
+  @eval begin
+    function Base.&#36;f&#40;s::Sequence&#41;
+      TransformedSequence&#40;s, &#36;f&#41;
+    end
+  end
+end</code></pre>
+<p>This code is very similar to the previous one. The main difference being that instead of <code>import</code>ing the functions, we define the function with the prefix <code>Base.</code> to inform the compiler where it was originally defined. This is an alternative syntax, but for operators, it&#39;s a little bit more finnicky.</p>
+<pre><code class=language-julia >seqsin &#61; 2 * sin&#40;Trend&#40;0, 2pi&#41;&#41;
+seqlog &#61; log&#40;1.1 &#43; SineWave&#40;1.0, 1.0, 0.0&#41; &#43; 0.05 * exp&#40;GaussianNoise&#40;&#41;&#41;&#41;
+f&#40;t&#41; &#61; 1 / &#40;1 &#43; exp&#40;-t&#41;&#41;
+seqf &#61; 5 * TransformedSequence&#40;Trend&#40;0.5, 10&#41;, f&#41; - 2
+t &#61; range&#40;0, 1, length&#61;100&#41;
+y1 &#61; sample&#40;seqsin, t&#41;
+y2 &#61; sample&#40;seqlog, t&#41;
+y3 &#61; sample&#40;seqf, t&#41;
+plot&#40;t, y1&#41;
+plot&#33;&#40;t, y2&#41;
+plot&#33;&#40;t, y3&#41;</code></pre><pre><code class="plaintext code-output">UndefVarError: plot not defined
+</code></pre>
+<p><span style="color:red;">// Image matching '/assets/pages/sequgen/test-transform-1.png' not found. //</span></p>
 </div>
 </div>
 </div>
@@ -218,9 +665,14 @@ sample(seq::Constant, t::<span class=hljs-built_in >AbstractVector</span>) = fil
 </footer>
 
 
+<script src="/libs/katex/katex.min.js"></script>
+<script src="/libs/katex/auto-render.min.js"></script>
+<script>renderMathInElement(document.body)</script>
 
 
 
+<script src="/libs/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();hljs.configure({tabReplace: '    '});</script>
 
 
 <script src="/libs/bootstrap.bundle.min.js" crossorigin=anonymous ></script>
