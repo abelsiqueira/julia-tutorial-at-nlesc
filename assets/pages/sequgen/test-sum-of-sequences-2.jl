@@ -9,4 +9,4 @@ y3 = sample(seqquad, t)
 plot(t, y1)
 plot!(t, y2)
 plot!(t, y3)
-savefig(joinpath(@OUTPUT, "test-sum-of-sequences-2.png")) # hide
+png(joinpath(@OUTPUT, "test-sum-of-sequences-2")) # hide

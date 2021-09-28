@@ -191,7 +191,7 @@ sample&#40;seq::Constant, t::AbstractVector&#41; &#61; fill&#40;seq.x, length&#4
 <li><p>Rejoice.</p>
 
 </ul>
-<p>Now, we can add the <code>Trend</code> struct, to correspond to the function \(\phi(t) = \alpha (t - t_0)\).</p>
+<p>Now, we can add the <code>Trend</code> struct, to correspond to the function <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ϕ</mi><mo stretchy=false >(</mo><mi>t</mi><mo stretchy=false >)</mo><mo>=</mo><mi>α</mi><mo stretchy=false >(</mo><mi>t</mi><mo>−</mo><msub><mi>t</mi><mn>0</mn></msub><mo stretchy=false >)</mo></mrow><annotation encoding="application/x-tex">\phi(t) = \alpha (t - t_0)</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">ϕ</span><span class=mopen >(</span><span class="mord mathnormal">t</span><span class=mclose >)</span><span class=mspace  style="margin-right:0.2777777777777778em;"></span><span class=mrel >=</span><span class=mspace  style="margin-right:0.2777777777777778em;"></span></span><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class=mopen >(</span><span class="mord mathnormal">t</span><span class=mspace  style="margin-right:0.2222222222222222em;"></span><span class=mbin >−</span><span class=mspace  style="margin-right:0.2222222222222222em;"></span></span><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class=mord ><span class="mord mathnormal">t</span><span class=msupsub ><span class="vlist-t vlist-t2"><span class=vlist-r ><span class=vlist  style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class=vlist-s >​</span></span><span class=vlist-r ><span class=vlist  style="height:0.15em;"><span></span></span></span></span></span></span><span class=mclose >)</span></span></span></span>.</p>
 <pre><code class=language-julia ># File trend.jl
 export Trend
 
@@ -341,8 +341,8 @@ VERY-BIG-HASH</code></pre>
 
 </ul>
 <p>Now we should have tests and documentation, so we can go back to improving our package. The next two <code>Sequence</code>s that we&#39;ll add are the <code>SineWave</code> and the <code>GaussianNoise</code>. The sine wave is given by</p>
-\[\phi(t) = A \sin\left( \frac{2\pi t}{T} + \theta_0\right),\]
-<p>where \(A\) is the amplitude of the wave, \(T\) is the period, and \(\theta_0\) is the phase.</p>
+<span class=katex-display ><span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML" display=block ><semantics><mrow><mi>ϕ</mi><mo stretchy=false >(</mo><mi>t</mi><mo stretchy=false >)</mo><mo>=</mo><mi>A</mi><mi>sin</mi><mo>⁡</mo><mrow><mo fence=true >(</mo><mfrac><mrow><mn>2</mn><mi>π</mi><mi>t</mi></mrow><mi>T</mi></mfrac><mo>+</mo><msub><mi>θ</mi><mn>0</mn></msub><mo fence=true >)</mo></mrow><mo separator=true >,</mo></mrow><annotation encoding="application/x-tex">\phi(t) = A \sin\left( \frac{2\pi t}{T} + \theta_0\right),</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">ϕ</span><span class=mopen >(</span><span class="mord mathnormal">t</span><span class=mclose >)</span><span class=mspace  style="margin-right:0.2777777777777778em;"></span><span class=mrel >=</span><span class=mspace  style="margin-right:0.2777777777777778em;"></span></span><span class=base ><span class=strut  style="height:2.40003em;vertical-align:-0.95003em;"></span><span class="mord mathnormal">A</span><span class=mspace  style="margin-right:0.16666666666666666em;"></span><span class=mop >sin</span><span class=mspace  style="margin-right:0.16666666666666666em;"></span><span class=minner ><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size3">(</span></span><span class=mord ><span class="mopen nulldelimiter"></span><span class=mfrac ><span class="vlist-t vlist-t2"><span class=vlist-r ><span class=vlist  style="height:1.32144em;"><span style="top:-2.314em;"><span class=pstrut  style="height:3em;"></span><span class=mord ><span class="mord mathnormal" style="margin-right:0.13889em;">T</span></span></span><span style="top:-3.23em;"><span class=pstrut  style="height:3em;"></span><span class=frac-line  style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class=pstrut  style="height:3em;"></span><span class=mord ><span class=mord >2</span><span class="mord mathnormal" style="margin-right:0.03588em;">π</span><span class="mord mathnormal">t</span></span></span></span><span class=vlist-s >​</span></span><span class=vlist-r ><span class=vlist  style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class=mspace  style="margin-right:0.2222222222222222em;"></span><span class=mbin >+</span><span class=mspace  style="margin-right:0.2222222222222222em;"></span><span class=mord ><span class="mord mathnormal" style="margin-right:0.02778em;">θ</span><span class=msupsub ><span class="vlist-t vlist-t2"><span class=vlist-r ><span class=vlist  style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.02778em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class=vlist-s >​</span></span><span class=vlist-r ><span class=vlist  style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size3">)</span></span></span><span class=mspace  style="margin-right:0.16666666666666666em;"></span><span class=mpunct >,</span></span></span></span></span>
+<p>where <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi></mrow><annotation encoding="application/x-tex">A</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal">A</span></span></span></span> is the amplitude of the wave, <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi></mrow><annotation encoding="application/x-tex">T</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span></span></span></span> is the period, and <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>θ</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">\theta_0</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.84444em;vertical-align:-0.15em;"></span><span class=mord ><span class="mord mathnormal" style="margin-right:0.02778em;">θ</span><span class=msupsub ><span class="vlist-t vlist-t2"><span class=vlist-r ><span class=vlist  style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.02778em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class=vlist-s >​</span></span><span class=vlist-r ><span class=vlist  style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> is the phase.</p>
 <p>Therefore, we can create the following file:</p>
 <pre><code class=language-julia ># File sinewave.jl
 export SineWave
@@ -361,11 +361,8 @@ end</code></pre>
 <pre><code class=language-julia >t &#61; range&#40;0, 10, length&#61;50&#41;
 s &#61; SineWave&#40;2.0, 7.0, pi / 3&#41;
 y &#61; sample&#40;s, t&#41;
-plot&#40;t, y&#41;</code></pre><pre><code class="plaintext code-output">ArgumentError: Package Plots not found in current path:
-- Run `import Pkg; Pkg.add("Plots")` to install the Plots package.
-
-</code></pre>
-<p><span style="color:red;">// Image matching '/assets/pages/sequgen/sinewave-1.png' not found. //</span></p>
+plot&#40;t, y&#41;</code></pre>
+<img src="/assets/pages/sequgen/output/sinewave-1.png" alt="">
 <p>On the other hand, it would be nice to be able to create a sine wave by stating where the peak happens, instead of the phase &#40;which is less obvious&#41;. To do that, we can create a <em>constructor</em> like the following:</p>
 <pre><code class=language-julia ># File sinewave .jl
 # ... struct SineWave defined above
@@ -381,11 +378,8 @@ end
 <pre><code class=language-julia >t &#61; range&#40;0, 10, length&#61;50&#41;
 s &#61; SineWave&#40;:from_peak, 2.0, 7.0, 1.0&#41;
 y &#61; sample&#40;s, t&#41;
-plot&#40;t, y&#41;</code></pre><pre><code class="plaintext code-output">ArgumentError: Package Plots not found in current path:
-- Run `import Pkg; Pkg.add("Plots")` to install the Plots package.
-
-</code></pre>
-<p><span style="color:red;">// Image matching '/assets/pages/sequgen/sinewave-2.png' not found. //</span></p>
+plot&#40;t, y&#41;</code></pre>
+<img src="/assets/pages/sequgen/output/sinewave-2.png" alt="">
 <p>As for the Gaussian noise, we&#39;ll create a simple version that simply adds a noise for each data point during sampling.</p>
 <pre><code class=language-julia ># File gaussiannoise.jl
 export GaussianNoise
@@ -400,34 +394,31 @@ sample&#40;seq::GaussianNoise, t::AbstractVetor&#41; &#61; seq.std * randn&#40;l
 <pre><code class=language-julia >t &#61; range&#40;0, 10, length&#61;50&#41;
 s &#61; GaussianNoise&#40;0.2&#41;
 y &#61; sample&#40;s, t&#41;
-plot&#40;t, y&#41;</code></pre><pre><code class="plaintext code-output">ArgumentError: Package Plots not found in current path:
-- Run `import Pkg; Pkg.add("Plots")` to install the Plots package.
-
-</code></pre>
+plot&#40;t, y&#41;</code></pre>
 <p>Now we can finally combine all of these for an example:</p>
 <ul>
 <li><p>Let&#39;s use a timeframe of of 12 months of 30 days;</p>
 <ul>
-<li><p>Since we don&#39;t have units, we can choose \(t = 0\) for the start of the year and for each month we add \(1\), i.e., December starts at \(t = 11\).</p>
+<li><p>Since we don&#39;t have units, we can choose <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">t = 0</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathnormal">t</span><span class=mspace  style="margin-right:0.2777777777777778em;"></span><span class=mrel >=</span><span class=mspace  style="margin-right:0.2777777777777778em;"></span></span><span class=base ><span class=strut  style="height:0.64444em;vertical-align:0em;"></span><span class=mord >0</span></span></span></span> for the start of the year and for each month we add <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.64444em;vertical-align:0em;"></span><span class=mord >1</span></span></span></span>, i.e., December starts at <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>=</mo><mn>11</mn></mrow><annotation encoding="application/x-tex">t = 11</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathnormal">t</span><span class=mspace  style="margin-right:0.2777777777777778em;"></span><span class=mrel >=</span><span class=mspace  style="margin-right:0.2777777777777778em;"></span></span><span class=base ><span class=strut  style="height:0.64444em;vertical-align:0em;"></span><span class=mord >11</span></span></span></span>.</p>
 
 </ul>
 
-<li><p>An average mean temperature of \(15^\circ C\);</p>
+<li><p>An average mean temperature of <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><msup><mn>5</mn><mo>∘</mo></msup><mi>C</mi></mrow><annotation encoding="application/x-tex">15^\circ C</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.68333em;vertical-align:0em;"></span><span class=mord >1</span><span class=mord ><span class=mord >5</span><span class=msupsub ><span class=vlist-t ><span class=vlist-r ><span class=vlist  style="height:0.674115em;"><span style="top:-3.063em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mbin mtight">∘</span></span></span></span></span></span></span></span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span></span></span></span>;</p>
 
 <li><p>A sine wave addition</p>
 <ul>
-<li><p>with \(15 K\) &#40;temperature differences should be in Kelvin&#41; amplitude;</p>
+<li><p>with <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>15</mn><mi>K</mi></mrow><annotation encoding="application/x-tex">15 K</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.68333em;vertical-align:0em;"></span><span class=mord >15</span><span class="mord mathnormal" style="margin-right:0.07153em;">K</span></span></span></span> &#40;temperature differences should be in Kelvin&#41; amplitude;</p>
 
-<li><p>period of a year \(T = 12\);</p>
+<li><p>period of a year <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo>=</mo><mn>12</mn></mrow><annotation encoding="application/x-tex">T = 12</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class=mspace  style="margin-right:0.2777777777777778em;"></span><span class=mrel >=</span><span class=mspace  style="margin-right:0.2777777777777778em;"></span></span><span class=base ><span class=strut  style="height:0.64444em;vertical-align:0em;"></span><span class=mord >12</span></span></span></span>;</p>
 
 <li><p>peak temperature at noon of 21/June, the Summer solstice for 2022 in the Northern Hemisphere;</p>
 
 </ul>
 
-<li><p>A Gaussian noise of standard deviation \(0.5 K\).</p>
+<li><p>A Gaussian noise of standard deviation <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0.5</mn><mi>K</mi></mrow><annotation encoding="application/x-tex">0.5 K</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.68333em;vertical-align:0em;"></span><span class=mord >0.5</span><span class="mord mathnormal" style="margin-right:0.07153em;">K</span></span></span></span>.</p>
 
 </ul>
-<p><span style="color:red;">// Image matching '/assets/pages/sequgen/gaussiannoise-1.png' not found. //</span></p>
+<img src="/assets/pages/sequgen/output/gaussiannoise-1.png" alt="">
 <pre><code class=language-julia >t &#61; range&#40;0, 11, length&#61;12&#41;
 seqs &#61; &#91;
   Constant&#40;15.0&#41;,
@@ -440,28 +431,25 @@ plot&#40;t, y, leg&#61;false&#41;
 title&#33;&#40;&quot;Average temperature of 2022 in some city&quot;&#41;
 xticks&#33;&#40;0:11&#41;
 xlabel&#33;&#40;&quot;Months since 01/Jan/2022&quot;&#41;
-ylabel&#33;&#40;&quot;Temperature &#40;in degrees Celsius&#41;&quot;&#41;</code></pre><pre><code class="plaintext code-output">ArgumentError: Package Plots not found in current path:
-- Run `import Pkg; Pkg.add("Plots")` to install the Plots package.
-
-</code></pre>
-<p><span style="color:red;">// Image matching '/assets/pages/sequgen/example-1.png' not found. //</span></p>
+ylabel&#33;&#40;&quot;Temperature &#40;in degrees Celsius&#41;&quot;&#41;</code></pre>
+<img src="/assets/pages/sequgen/output/example-1.png" alt="">
 <p>Our example is cool, and our package is working, so we&#39;re happy. If you&#39;re not happy, you should try seeing the Pagliacci clown. Anyway, although cool, we can make it cooler. For that, there is a package called <code>Unitful</code>, which allows the automatic usage and propagation of units in Julia. You should <code>pkg&gt; add Unitful</code> inside the environment, because we should use it on the tests.</p>
 <p>After installing, enter <code>julia&gt; using Unitful</code>. You can add units to number by appending them with <code>u&quot;THE-UNIT&quot;</code>. For instance,</p>
 <pre><code class=language-julia >using Unitful
 
-1u&quot;d&quot;, 2u&quot;m&quot; * 3u&quot;m&quot;, 2u&quot;hr&quot;, 9u&quot;m&quot; / 4u&quot;s&quot;</code></pre><pre><code class="plaintext code-output">ArgumentError: Package Unitful not found in current path:
-- Run `import Pkg; Pkg.add("Unitful")` to install the Unitful package.
-
-</code></pre>
+1u&quot;d&quot;, 2u&quot;m&quot; * 3u&quot;m&quot;, 2u&quot;hr&quot;, 9u&quot;m&quot; / 4u&quot;s&quot;</code></pre><pre><code class="plaintext code-output">(1 d, 6 m^2, 2 hr, 2.25 m s^-1)</code></pre>
 <p>When different units for the same quantity are summed, they are converted to a SI unit. When different units for the same quantity are multiplied or divided, they don&#39;t simplify automatically, though.</p>
 <pre><code class=language-julia >println&#40;&quot;width &#61; &quot;, 30u&quot;cm&quot; &#43; 0.8u&quot;m&quot;&#41;
 println&#40;&quot;area &#61; &quot;, 30u&quot;cm&quot; * 0.8u&quot;m&quot;&#41;
 println&#40;&quot;area &#61; &quot;, uconvert&#40;u&quot;m^2&quot;, 30u&quot;cm&quot; * 0.8u&quot;m&quot;&#41;&#41;
 println&#40;&quot;ratio1 &#61; &quot;, 12u&quot;m&quot; / 30u&quot;m&quot;&#41;
 println&#40;&quot;ratio2 &#61; &quot;, 12u&quot;m&quot; / 3000u&quot;cm&quot;&#41;
-println&#40;&quot;ratio2 &#61; &quot;, uconvert&#40;NoUnits, 12u&quot;m&quot; / 3000u&quot;cm&quot;&#41;&#41;</code></pre><pre><code class="plaintext code-output">ArgumentError: Package Unitful not found in current path:
-- Run `import Pkg; Pkg.add("Unitful")` to install the Unitful package.
-
+println&#40;&quot;ratio2 &#61; &quot;, uconvert&#40;NoUnits, 12u&quot;m&quot; / 3000u&quot;cm&quot;&#41;&#41;</code></pre><pre><code class="plaintext code-output">width = 1.1 m
+area = 24.0 cm m
+area = 0.24 m^2
+ratio1 = 0.4
+ratio2 = 0.004 m cm^-1
+ratio2 = 0.4
 </code></pre>
 <p>Most of our code is not restricted by type, so much of it works directly with <code>Unitful</code>. A few things should be changed, though. First, <code>Unitful</code> doesn&#39;t accept non-fixed periods, like months or years. So instead of using months, we can change to days and use 30-day months. Additionally, the <code>plot</code> function doesn&#39;t allow <code>Unitful</code> by default. So we should add the <code>UnitfulRecipes</code> package as well.</p>
 <pre><code class=language-julia >using Unitful, UnitfulRecipes, Plots
@@ -477,12 +465,9 @@ y &#61; uconvert.&#40;u&quot;°C&quot;, sum&#40;ys&#41;&#41;
 plot&#40;t, y, leg&#61;false&#41;
 title&#33;&#40;&quot;Average temperature of 2022 in some city&quot;&#41;
 xlabel&#33;&#40;&quot;Days since 01/Jan/2022&quot;&#41;
-ylabel&#33;&#40;&quot;Temperature &#40;in degrees Celsius&#41;&quot;&#41;</code></pre><pre><code class="plaintext code-output">ArgumentError: Package Unitful not found in current path:
-- Run `import Pkg; Pkg.add("Unitful")` to install the Unitful package.
-
-</code></pre>
-<p><span style="color:red;">// Image matching '/assets/pages/sequgen/example-2.png' not found. //</span></p>
-<p>We can refine the interval to see it daily, but notice that the range must change to include the extra time after the beginning of the month. The correct way to define the range with \(n\) points is to split the interval \([0,T]\) into \(n+1\) equally spaced points, and take the first \(n\).</p>
+ylabel&#33;&#40;&quot;Temperature &#40;in degrees Celsius&#41;&quot;&#41;</code></pre>
+<img src="/assets/pages/sequgen/output/example-2.png" alt="">
+<p>We can refine the interval to see it daily, but notice that the range must change to include the extra time after the beginning of the month. The correct way to define the range with <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">n</span></span></span></span> points is to split the interval <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy=false >[</mo><mn>0</mn><mo separator=true >,</mo><mi>T</mi><mo stretchy=false >]</mo></mrow><annotation encoding="application/x-tex">[0,T]</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class=mopen >[</span><span class=mord >0</span><span class=mpunct >,</span><span class=mspace  style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class=mclose >]</span></span></span></span> into <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">n+1</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathnormal">n</span><span class=mspace  style="margin-right:0.2222222222222222em;"></span><span class=mbin >+</span><span class=mspace  style="margin-right:0.2222222222222222em;"></span></span><span class=base ><span class=strut  style="height:0.64444em;vertical-align:0em;"></span><span class=mord >1</span></span></span></span> equally spaced points, and take the first <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">n</span></span></span></span>.</p>
 <pre><code class=language-julia >using Unitful, UnitfulRecipes, Plots
 n &#61; 360
 month &#61; 30u&quot;d&quot;
@@ -497,11 +482,8 @@ y &#61; uconvert.&#40;u&quot;°C&quot;, sum&#40;ys&#41;&#41;
 plot&#40;t, y, leg&#61;false&#41;
 title&#33;&#40;&quot;Average temperature of 2022 in some city&quot;&#41;
 xlabel&#33;&#40;&quot;Days since 01/Jan/2022&quot;&#41;
-ylabel&#33;&#40;&quot;Temperature &#40;in degrees Celsius&#41;&quot;&#41;</code></pre><pre><code class="plaintext code-output">ArgumentError: Package Unitful not found in current path:
-- Run `import Pkg; Pkg.add("Unitful")` to install the Unitful package.
-
-</code></pre>
-<p><span style="color:red;">// Image matching '/assets/pages/sequgen/example-3.png' not found. //</span></p>
+ylabel&#33;&#40;&quot;Temperature &#40;in degrees Celsius&#41;&quot;&#41;</code></pre>
+<img src="/assets/pages/sequgen/output/example-3.png" alt="">
 <p>Using units, it&#39;s easy to add a new sine wave for daily variations. Let&#39;s say for an amplitude of 2 Kelvin with peak at noon. Let&#39;s ignore the noise term and focus on shorter period of 3 days starting at the third month.</p>
 <pre><code class=language-julia >using Unitful, UnitfulRecipes, Plots
 n &#61; 100
@@ -518,11 +500,8 @@ ticks &#61; range&#40;3month, 3month &#43; 3u&quot;d&quot;, step&#61;12u&quot;hr
 plot&#40;t, y, leg&#61;false, xticks&#61;ticks&#41;
 title&#33;&#40;&quot;Average temperature of 2022 in some city&quot;&#41;
 xlabel&#33;&#40;&quot;Days since 01/Jan/2022&quot;&#41;
-ylabel&#33;&#40;&quot;Temperature &#40;in degrees Celsius&#41;&quot;&#41;</code></pre><pre><code class="plaintext code-output">ArgumentError: Package Unitful not found in current path:
-- Run `import Pkg; Pkg.add("Unitful")` to install the Unitful package.
-
-</code></pre>
-<p><span style="color:red;">// Image matching '/assets/pages/sequgen/example-4.png' not found. //</span></p>
+ylabel&#33;&#40;&quot;Temperature &#40;in degrees Celsius&#41;&quot;&#41;</code></pre>
+<img src="/assets/pages/sequgen/output/example-4.png" alt="">
 <h3 id=advanced_structures_with_multiple_dispatch ><a href="#advanced_structures_with_multiple_dispatch" class=header-anchor >Advanced structures with multiple dispatch</a></h3>
 <p>Now that we have some basic structures, we can start thinking about how they should interact. To obtain a sample of the sum of sequences, we used the sum of the samples. An easier way would be to define a structure to hold the sum of these sequences and do that operation internally. Or better, an operation between sequences. Here&#39;s an implementation of that:</p>
 <pre><code class=language-julia ># File operation.jl
@@ -560,9 +539,8 @@ y2 &#61; sample&#40;seqprod, t&#41;
 y3 &#61; sample&#40;seqquad, t&#41;
 plot&#40;t, y1&#41;
 plot&#33;&#40;t, y2&#41;
-plot&#33;&#40;t, y3&#41;</code></pre><pre><code class="plaintext code-output">UndefVarError: plot not defined
-</code></pre>
-<p><span style="color:red;">// Image matching '/assets/pages/sequgen/test-sum-of-sequences-1.png' not found. //</span></p>
+plot&#33;&#40;t, y3&#41;</code></pre>
+<img src="/assets/pages/sequgen/output/test-sum-of-sequences-1.png" alt="">
 <p>Now, we can define how the basic operations <code>&#43;</code>, <code>-</code> and <code>*</code> apply to these sequences. That is, we can define <code>SineWave&#40;...&#41; &#43; SineWave&#40;...&#41;</code> to call the constructor to <code>OperationOnSequences</code>. Not only that, but we can define a sum of an operator and a number to construct a <code>Constant</code> sequence and create an <code>OperationOnSequences</code>. This can be done by importing the operators from <code>Base</code> and defining <code>&#43;&#40;x::Type1, y::Type2&#41;</code> for each of these types. Since we&#39;re repeating the same code for each operator, we can use <strong>Metaprogamming</strong> to generate the code that we need.</p>
 <pre><code class=language-julia ># File operations.jl
 # ...
@@ -595,18 +573,16 @@ y2 &#61; sample&#40;seqprod, t&#41;
 y3 &#61; sample&#40;seqquad, t&#41;
 plot&#40;t, y1&#41;
 plot&#33;&#40;t, y2&#41;
-plot&#33;&#40;t, y3&#41;</code></pre><pre><code class="plaintext code-output">UndefVarError: plot not defined
-</code></pre>
-<p><span style="color:red;">// Image matching '/assets/pages/sequgen/test-sum-of-sequences-2.png' not found. //</span></p>
+plot&#33;&#40;t, y3&#41;</code></pre>
+<img src="/assets/pages/sequgen/output/test-sum-of-sequences-2.png" alt="">
 <p>Here&#39;s another example:</p>
 <pre><code class=language-julia >seq &#61; sum&#40;
   SineWave&#40;1 / &#40;2k &#43; 1&#41;, 1 / &#40;2k &#43; 1&#41;, 0.0&#41; for k &#61; 0:6
 &#41;
 t &#61; range&#40;0, 1, length&#61;300&#41;
 y &#61; sample&#40;seq, t&#41;
-plot&#40;t, y&#41;</code></pre><pre><code class="plaintext code-output">UndefVarError: plot not defined
-</code></pre>
-<p><span style="color:red;">// Image matching '/assets/pages/sequgen/test-sum-of-sequences-3.png' not found. //</span></p>
+plot&#40;t, y&#41;</code></pre>
+<img src="/assets/pages/sequgen/output/test-sum-of-sequences-3.png" alt="">
 <p>Another useful feature would be the ability to apply functions to sequences. Similarly, we can define a <code>TransformedSequence</code> struct for that:</p>
 <pre><code class=language-julia ># File transformation.jl
 export TransformedSequence
@@ -638,9 +614,8 @@ y2 &#61; sample&#40;seqlog, t&#41;
 y3 &#61; sample&#40;seqf, t&#41;
 plot&#40;t, y1&#41;
 plot&#33;&#40;t, y2&#41;
-plot&#33;&#40;t, y3&#41;</code></pre><pre><code class="plaintext code-output">UndefVarError: plot not defined
-</code></pre>
-<p><span style="color:red;">// Image matching '/assets/pages/sequgen/test-transform-1.png' not found. //</span></p>
+plot&#33;&#40;t, y3&#41;</code></pre>
+<img src="/assets/pages/sequgen/output/test-transform-1.png" alt="">
 </div>
 </div>
 </div>
@@ -665,9 +640,9 @@ plot&#33;&#40;t, y3&#41;</code></pre><pre><code class="plaintext code-output">Un
 </footer>
 
 
-<script src="/libs/katex/katex.min.js"></script>
-<script src="/libs/katex/auto-render.min.js"></script>
-<script>renderMathInElement(document.body)</script>
+
+
+
 
 
 

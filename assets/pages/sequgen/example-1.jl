@@ -1,5 +1,6 @@
 # This file was generated, do not modify it. # hide
 using Plots, SequGen # hide
+pyplot() # hide
 t = range(0, 11, length=12)
 seqs = [
   Constant(15.0),
@@ -13,4 +14,4 @@ title!("Average temperature of 2022 in some city")
 xticks!(0:11)
 xlabel!("Months since 01/Jan/2022")
 ylabel!("Temperature (in degrees Celsius)")
-savefig(joinpath(@OUTPUT, "example-1.png")) # hide
+png(joinpath(@OUTPUT, "example-1")) # hide

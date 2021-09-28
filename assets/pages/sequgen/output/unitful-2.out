@@ -1,3 +1,6 @@
-ArgumentError: Package Unitful not found in current path:
-- Run `import Pkg; Pkg.add("Unitful")` to install the Unitful package.
-
+width = 1.1 m
+area = 24.0 cm m
+area = 0.24 m^2
+ratio1 = 0.4
+ratio2 = 0.004 m cm^-1
+ratio2 = 0.4

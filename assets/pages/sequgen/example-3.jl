@@ -15,4 +15,4 @@ plot(t, y, leg=false)
 title!("Average temperature of 2022 in some city")
 xlabel!("Days since 01/Jan/2022")
 ylabel!("Temperature (in degrees Celsius)")
-savefig(joinpath(@OUTPUT, "example-3.png")) # hide
+png(joinpath(@OUTPUT, "example-3")) # hide

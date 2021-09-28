@@ -10,4 +10,4 @@ y3 = sample(seqf, t)
 plot(t, y1)
 plot!(t, y2)
 plot!(t, y3)
-savefig(joinpath(@OUTPUT, "test-transform-1.png")) # hide
+png(joinpath(@OUTPUT, "test-transform-1")) # hide
