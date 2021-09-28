@@ -15,7 +15,7 @@ ignore = ["node_modules/", "_ignore/", "SequGen.jl/"]
 generate_rss = true
 website_title = "Julia Tutorial at NLeSC"
 website_descr = "Julia Tutorial at NLeSC"
-prepath     = get(ENV, "PREVIEW_FRANKLIN_PREPATH", "")
+prepath     = get(ENV, "PREVIEW_FRANKLIN_PREPATH", "julia-tutorial-at-nlesc")
 website_url = get(ENV, "PREVIEW_FRANKLIN_WEBSITE_URL", "abelsiqueira.github.io")
 +++
 

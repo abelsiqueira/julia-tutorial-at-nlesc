@@ -428,7 +428,7 @@ plot(t, y)
 png(joinpath(@OUTPUT, "sinewave-1")) # hide
 ```
 
-\fig{./sinewave-1.png}
+\fig{./output/sinewave-1.png}
 
 On the other hand, it would be nice to be able to create a sine wave by stating where the peak happens, instead of the phase (which is less obvious).
 To do that, we can create a _constructor_ like the following:
@@ -457,7 +457,7 @@ plot(t, y)
 png(joinpath(@OUTPUT, "sinewave-2")) # hide
 ```
 
-\fig{./sinewave-2.png}
+\fig{./output/sinewave-2.png}
 
 As for the Gaussian noise, we'll create a simple version that simply adds a noise for each data point during sampling.
 
@@ -493,7 +493,7 @@ Now we can finally combine all of these for an example:
   - period of a year $T = 12$;
   - peak temperature at noon of 21/June, the Summer solstice for 2022 in the Northern Hemisphere;
 - A Gaussian noise of standard deviation $0.5 K$.
-\fig{./gaussiannoise-1.png}
+\fig{./output/gaussiannoise-1.png}
 
 ```julia:./example-1.jl
 using Plots, SequGen # hide
@@ -514,7 +514,7 @@ ylabel!("Temperature (in degrees Celsius)")
 png(joinpath(@OUTPUT, "example-1")) # hide
 ```
 
-\fig{./example-1.png}
+\fig{./output/example-1.png}
 
 Our example is cool, and our package is working, so we're happy.
 If you're not happy, you should try seeing the Pagliacci clown.
@@ -569,7 +569,7 @@ ylabel!("Temperature (in degrees Celsius)")
 png(joinpath(@OUTPUT, "example-2")) # hide
 ```
 
-\fig{./example-2.png}
+\fig{./output/example-2.png}
 
 We can refine the interval to see it daily, but notice that the range must change to include the extra time after the beginning of the month.
 The correct way to define the range with $n$ points is to split the interval $[0,T]$ into $n+1$ equally spaced points, and take the first $n$.
@@ -594,7 +594,7 @@ ylabel!("Temperature (in degrees Celsius)")
 png(joinpath(@OUTPUT, "example-3")) # hide
 ```
 
-\fig{./example-3.png}
+\fig{./output/example-3.png}
 
 Using units, it's easy to add a new sine wave for daily variations.
 Let's say for an amplitude of 2 Kelvin with peak at noon.
@@ -622,7 +622,7 @@ ylabel!("Temperature (in degrees Celsius)")
 png(joinpath(@OUTPUT, "example-4")) # hide
 ```
 
-\fig{./example-4.png}
+\fig{./output/example-4.png}
 
 ### Advanced structures with multiple dispatch
 
@@ -679,7 +679,7 @@ plot!(t, y3)
 png(joinpath(@OUTPUT, "test-sum-of-sequences-1")) # hide
 ```
 
-\fig{./test-sum-of-sequences-1.png}
+\fig{./output/test-sum-of-sequences-1.png}
 
 Now, we can define how the basic operations `+`, `-` and `*` apply to these sequences.
 That is, we can define `SineWave(...) + SineWave(...)` to call the constructor to `OperationOnSequences`.
@@ -732,7 +732,7 @@ plot!(t, y3)
 png(joinpath(@OUTPUT, "test-sum-of-sequences-2")) # hide
 ```
 
-\fig{./test-sum-of-sequences-2.png}
+\fig{./output/test-sum-of-sequences-2.png}
 
 Here's another example:
 
@@ -746,7 +746,7 @@ plot(t, y)
 png(joinpath(@OUTPUT, "test-sum-of-sequences-3")) # hide
 ```
 
-\fig{./test-sum-of-sequences-3.png}
+\fig{./output/test-sum-of-sequences-3.png}
 
 Another useful feature would be the ability to apply functions to sequences.
 Similarly, we can define a `TransformedSequence` struct for that:
@@ -790,4 +790,4 @@ plot!(t, y3)
 png(joinpath(@OUTPUT, "test-transform-1")) # hide
 ```
 
-\fig{./test-transform-1.png}
+\fig{./output/test-transform-1.png}
