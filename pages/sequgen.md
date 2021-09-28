@@ -420,11 +420,12 @@ Likewise with `.+`.
 Assuming you have `Plots` installed, you can run the following lines in your REPL and see the result:
 ```julia:./sinewave-1.jl
 using Plots, SequGen # hide
+pyplot() # hide
 t = range(0, 10, length=50)
 s = SineWave(2.0, 7.0, pi / 3)
 y = sample(s, t)
 plot(t, y)
-savefig("sinewave-1.png") # hide
+png(joinpath(@OUTPUT, "sinewave-1")) # hide
 ```
 
 \fig{./sinewave-1.png}
@@ -448,11 +449,12 @@ end
 
 ```julia:./sinewave-2.jl
 using Plots, SequGen # hide
+pyplot() # hide
 t = range(0, 10, length=50)
 s = SineWave(:from_peak, 2.0, 7.0, 1.0)
 y = sample(s, t)
 plot(t, y)
-savefig(joinpath(@OUTPUT, "sinewave-2.png")) # hide
+png(joinpath(@OUTPUT, "sinewave-2")) # hide
 ```
 
 \fig{./sinewave-2.png}
@@ -474,11 +476,12 @@ sample(seq::GaussianNoise, t::AbstractVetor) = seq.std * randn(length(t))
 
 ```julia:./gaussiannoise-1.jl
 using Plots, SequGen # hide
+pyplot() # hide
 t = range(0, 10, length=50)
 s = GaussianNoise(0.2)
 y = sample(s, t)
 plot(t, y)
-savefig(joinpath(@OUTPUT, "gaussiannoise-1.png")) # hide
+png(joinpath(@OUTPUT, "gaussiannoise-1")) # hide
 ```
 
 Now we can finally combine all of these for an example:
@@ -494,6 +497,7 @@ Now we can finally combine all of these for an example:
 
 ```julia:./example-1.jl
 using Plots, SequGen # hide
+pyplot() # hide
 t = range(0, 11, length=12)
 seqs = [
   Constant(15.0),
@@ -507,7 +511,7 @@ title!("Average temperature of 2022 in some city")
 xticks!(0:11)
 xlabel!("Months since 01/Jan/2022")
 ylabel!("Temperature (in degrees Celsius)")
-savefig(joinpath(@OUTPUT, "example-1.png")) # hide
+png(joinpath(@OUTPUT, "example-1")) # hide
 ```
 
 \fig{./example-1.png}
@@ -562,7 +566,7 @@ plot(t, y, leg=false)
 title!("Average temperature of 2022 in some city")
 xlabel!("Days since 01/Jan/2022")
 ylabel!("Temperature (in degrees Celsius)")
-savefig(joinpath(@OUTPUT, "example-2.png")) # hide
+png(joinpath(@OUTPUT, "example-2")) # hide
 ```
 
 \fig{./example-2.png}
@@ -587,7 +591,7 @@ plot(t, y, leg=false)
 title!("Average temperature of 2022 in some city")
 xlabel!("Days since 01/Jan/2022")
 ylabel!("Temperature (in degrees Celsius)")
-savefig(joinpath(@OUTPUT, "example-3.png")) # hide
+png(joinpath(@OUTPUT, "example-3")) # hide
 ```
 
 \fig{./example-3.png}
@@ -615,7 +619,7 @@ plot(t, y, leg=false, xticks=ticks)
 title!("Average temperature of 2022 in some city")
 xlabel!("Days since 01/Jan/2022")
 ylabel!("Temperature (in degrees Celsius)")
-savefig(joinpath(@OUTPUT, "example-4.png")) # hide
+png(joinpath(@OUTPUT, "example-4")) # hide
 ```
 
 \fig{./example-4.png}
@@ -672,7 +676,7 @@ y3 = sample(seqquad, t)
 plot(t, y1)
 plot!(t, y2)
 plot!(t, y3)
-savefig(joinpath(@OUTPUT, "test-sum-of-sequences-1.png")) # hide
+png(joinpath(@OUTPUT, "test-sum-of-sequences-1")) # hide
 ```
 
 \fig{./test-sum-of-sequences-1.png}
@@ -725,7 +729,7 @@ y3 = sample(seqquad, t)
 plot(t, y1)
 plot!(t, y2)
 plot!(t, y3)
-savefig(joinpath(@OUTPUT, "test-sum-of-sequences-2.png")) # hide
+png(joinpath(@OUTPUT, "test-sum-of-sequences-2")) # hide
 ```
 
 \fig{./test-sum-of-sequences-2.png}
@@ -739,7 +743,7 @@ seq = sum(
 t = range(0, 1, length=300)
 y = sample(seq, t)
 plot(t, y)
-savefig(joinpath(@OUTPUT, "test-sum-of-sequences-3.png")) # hide
+png(joinpath(@OUTPUT, "test-sum-of-sequences-3")) # hide
 ```
 
 \fig{./test-sum-of-sequences-3.png}
@@ -783,7 +787,7 @@ y3 = sample(seqf, t)
 plot(t, y1)
 plot!(t, y2)
 plot!(t, y3)
-savefig(joinpath(@OUTPUT, "test-transform-1.png")) # hide
+png(joinpath(@OUTPUT, "test-transform-1")) # hide
 ```
 
 \fig{./test-transform-1.png}
