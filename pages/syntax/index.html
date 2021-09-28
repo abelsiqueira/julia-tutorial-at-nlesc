@@ -26,9 +26,9 @@ A&#91;1:2, 1:2&#93;
   B A&#39;;
   A ones&#40;2,2&#41;
 &#93;</code></pre><pre><code class="plaintext code-output">5×5 Matrix{Float64}:
-  0.772061  0.00821671  0.524687  3.0  -1.0
-  0.553704  0.814111    0.289716  2.0   0.0
-  0.42258   0.826452    0.268371  4.0   1.0
+  0.394649  0.665655    0.570749  3.0  -1.0
+  0.46583   0.677489    0.956819  2.0   0.0
+  0.15204   0.00461861  0.522548  4.0   1.0
   3.0       2.0         4.0       1.0   1.0
  -1.0       0.0         1.0       1.0   1.0</code></pre>
 <ul>
@@ -42,7 +42,7 @@ b &#61; A * ones&#40;50&#41;
 x &#61; A \ b
 using LinearAlgebra
 norm&#40;b - A * x&#41;
-norm&#40;x .- 1&#41;</code></pre><pre><code class="plaintext code-output">1.2018896248543763e-13</code></pre>
+norm&#40;x .- 1&#41;</code></pre><pre><code class="plaintext code-output">2.3238429237587442e-14</code></pre>
 <ul>
 <li><p>Everything has a concrete type, every type derives from some abstract type.</p>
 
