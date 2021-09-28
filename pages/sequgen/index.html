@@ -1,4 +1,4 @@
-<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/libs/katex/katex.min.css"> <link rel=stylesheet  href="/libs/highlight/github.min.css"> <link href="/css/bootstrap.min.css" rel=stylesheet  crossorigin=anonymous > <link rel=icon  href="/images/logo.png"> <link rel=stylesheet  href="/css/code-katex.css"> <link rel=stylesheet  href="/css/custom.css"> <link rel=stylesheet  href="/css/dark-mode.css"> <link rel=preconnect  href="https://fonts.gstatic.com"> <link href="https://fonts.googleapis.com/css2?family=Cinzel&family=Montserrat&display=swap" rel=stylesheet > <title>Creating a package: SequGen.jl - demonstration of good practices</title> <meta property="og:title" content="Julia Tutorial at NLeSC"> <meta name="twitter:title" content="Julia Tutorial at NLeSC"> <meta property="og:description" content="Creating a package: SequGen.jl - demonstration of good practices"> <meta name="twitter:description" content="Creating a package: SequGen.jl - demonstration of good practices"> <meta property="og:image" content="https://abelsiqueira.github.io/images/abel-banner.jpg"> <meta name="twitter:image" content="https://abelsiqueira.github.io/images/abel-banner.jpg"> <meta property="og:url" content=abelsiqueira.github.io > <meta name="twitter:card" content=summary_large_image > <header> <nav class="navbar navbar-expand-lg"> <div class=container-fluid > <a class="navbar-brand text-end" href="/"></a> <button class=navbar-toggler  type=button  data-bs-toggle=collapse  data-bs-target="#navbarSupportedContent" aria-controls=navbarSupportedContent  aria-expanded=false  aria-label="Toggle navigation"> <span class=navbar-toggler-icon ></span> </button> <div class="collapse navbar-collapse" id=navbarSupportedContent > <ul class="navbar-nav ms-auto mb-2 mb-lg-0"> <li class=nav-item ><a class=nav-link  href="/">Home</a> <li class=nav-item ><a class=nav-link  href="/blog/">Blog</a> <li class=nav-item ><a class=nav-link  href="/julia/">Julia</a> <li class=nav-item ><a class=nav-link  href="/research/">Research</a> <li class=nav-item ><a class=nav-link  href="/ufpr/">UFPR</a> </ul> <div class="dark-switch form-check form-switch"> <input type=checkbox  class=form-check-input  id=darkSwitch  /> <label class=custom-control-label  for=darkSwitch >Dark Mode</label> </div> <script src="/libs/dark-mode-switch.min.js"></script> </div> </div> </nav> </header> <div class=container-fluid > <div class="container main-text"> <div class=franklin-content ><h1 id=fill_title ><a href="#fill_title" class=header-anchor >Creating a package: SequGen.jl - demonstration of good practices</a></h1> <p>In this section we&#39;ll look into implementing and registering a package, following some good practices.</p> <div class=franklin-toc ><ol><li><a href="#what_iswill_be_sequgen">What is/will be SequGen</a><li><a href="#create_the_package_skeleton">Create the package skeleton</a><li><a href="#uploading_and_checking">Uploading and checking</a><li><a href="#the_basics">The basics</a><ol><li><a href="#advanced_structures_with_multiple_dispatch">Advanced structures with multiple dispatch</a></ol></ol></div> <hr /> <h2 id=what_iswill_be_sequgen ><a href="#what_iswill_be_sequgen" class=header-anchor >What is/will be SequGen</a></h2> <p>SequGen.jl will be a package to implement time series/sequences generation on Julia. It is based on the homonymous NLeSC project <a href="https://github.com/sequgen/sequgen">sequgen</a>.</p> <p>In this tutorial, our package will generate simple time series that we&#39;ll be able to add up and create useful synthetic data. We&#39;ll work with <code>struct</code>s and showcase <em>multiple dispatch</em> in the process.</p> <h2 id=create_the_package_skeleton ><a href="#create_the_package_skeleton" class=header-anchor >Create the package skeleton</a></h2> <p>Not much is needed to create a proper package in Julia. It needs to follow a basic structure of the form</p> <pre><code class=language-julia >PackageName.jl
+<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/julia-tutorial-at-nlesc/libs/katex/katex.min.css"> <link rel=stylesheet  href="/julia-tutorial-at-nlesc/libs/highlight/github.min.css"> <link href="/julia-tutorial-at-nlesc/css/bootstrap.min.css" rel=stylesheet  crossorigin=anonymous > <link rel=icon  href="/julia-tutorial-at-nlesc/images/logo.png"> <link rel=stylesheet  href="/julia-tutorial-at-nlesc/css/code-katex.css"> <link rel=stylesheet  href="/julia-tutorial-at-nlesc/css/custom.css"> <link rel=stylesheet  href="/julia-tutorial-at-nlesc/css/dark-mode.css"> <link rel=preconnect  href="https://fonts.gstatic.com"> <link href="https://fonts.googleapis.com/css2?family=Cinzel&family=Montserrat&display=swap" rel=stylesheet > <title>Creating a package: SequGen.jl - demonstration of good practices</title> <meta property="og:title" content="Julia Tutorial at NLeSC"> <meta name="twitter:title" content="Julia Tutorial at NLeSC"> <meta property="og:description" content="Creating a package: SequGen.jl - demonstration of good practices"> <meta name="twitter:description" content="Creating a package: SequGen.jl - demonstration of good practices"> <meta property="og:image" content="https://abelsiqueira.github.io/images/abel-banner.jpg"> <meta name="twitter:image" content="https://abelsiqueira.github.io/images/abel-banner.jpg"> <meta property="og:url" content=abelsiqueira.github.io > <meta name="twitter:card" content=summary_large_image > <header> <nav class="navbar navbar-expand-lg"> <div class=container-fluid > <a class="navbar-brand text-end" href="/julia-tutorial-at-nlesc/"></a> <button class=navbar-toggler  type=button  data-bs-toggle=collapse  data-bs-target="#navbarSupportedContent" aria-controls=navbarSupportedContent  aria-expanded=false  aria-label="Toggle navigation"> <span class=navbar-toggler-icon ></span> </button> <div class="collapse navbar-collapse" id=navbarSupportedContent > <ul class="navbar-nav ms-auto mb-2 mb-lg-0"> <li class=nav-item ><a class=nav-link  href="/julia-tutorial-at-nlesc/">Home</a> <li class=nav-item ><a class=nav-link  href="/julia-tutorial-at-nlesc/blog/">Blog</a> <li class=nav-item ><a class=nav-link  href="/julia-tutorial-at-nlesc/julia/">Julia</a> <li class=nav-item ><a class=nav-link  href="/julia-tutorial-at-nlesc/research/">Research</a> <li class=nav-item ><a class=nav-link  href="/julia-tutorial-at-nlesc/ufpr/">UFPR</a> </ul> <div class="dark-switch form-check form-switch"> <input type=checkbox  class=form-check-input  id=darkSwitch  /> <label class=custom-control-label  for=darkSwitch >Dark Mode</label> </div> <script src="/julia-tutorial-at-nlesc/libs/dark-mode-switch.min.js"></script> </div> </div> </nav> </header> <div class=container-fluid > <div class="container main-text"> <div class=franklin-content ><h1 id=fill_title ><a href="#fill_title" class=header-anchor >Creating a package: SequGen.jl - demonstration of good practices</a></h1> <p>In this section we&#39;ll look into implementing and registering a package, following some good practices.</p> <div class=franklin-toc ><ol><li><a href="#what_iswill_be_sequgen">What is/will be SequGen</a><li><a href="#create_the_package_skeleton">Create the package skeleton</a><li><a href="#uploading_and_checking">Uploading and checking</a><li><a href="#the_basics">The basics</a><ol><li><a href="#advanced_structures_with_multiple_dispatch">Advanced structures with multiple dispatch</a></ol></ol></div> <hr /> <h2 id=what_iswill_be_sequgen ><a href="#what_iswill_be_sequgen" class=header-anchor >What is/will be SequGen</a></h2> <p>SequGen.jl will be a package to implement time series/sequences generation on Julia. It is based on the homonymous NLeSC project <a href="https://github.com/sequgen/sequgen">sequgen</a>.</p> <p>In this tutorial, our package will generate simple time series that we&#39;ll be able to add up and create useful synthetic data. We&#39;ll work with <code>struct</code>s and showcase <em>multiple dispatch</em> in the process.</p> <h2 id=create_the_package_skeleton ><a href="#create_the_package_skeleton" class=header-anchor >Create the package skeleton</a></h2> <p>Not much is needed to create a proper package in Julia. It needs to follow a basic structure of the form</p> <pre><code class=language-julia >PackageName.jl
 - src/
   - PackageName.jl
 - test/
@@ -362,7 +362,7 @@ end</code></pre>
 s &#61; SineWave&#40;2.0, 7.0, pi / 3&#41;
 y &#61; sample&#40;s, t&#41;
 plot&#40;t, y&#41;</code></pre>
-<img src="/assets/pages/sequgen/output/sinewave-1.png" alt="">
+<img src="/julia-tutorial-at-nlesc/assets/pages/sequgen/output/sinewave-1.png" alt="">
 <p>On the other hand, it would be nice to be able to create a sine wave by stating where the peak happens, instead of the phase &#40;which is less obvious&#41;. To do that, we can create a <em>constructor</em> like the following:</p>
 <pre><code class=language-julia ># File sinewave .jl
 # ... struct SineWave defined above
@@ -379,7 +379,7 @@ end
 s &#61; SineWave&#40;:from_peak, 2.0, 7.0, 1.0&#41;
 y &#61; sample&#40;s, t&#41;
 plot&#40;t, y&#41;</code></pre>
-<img src="/assets/pages/sequgen/output/sinewave-2.png" alt="">
+<img src="/julia-tutorial-at-nlesc/assets/pages/sequgen/output/sinewave-2.png" alt="">
 <p>As for the Gaussian noise, we&#39;ll create a simple version that simply adds a noise for each data point during sampling.</p>
 <pre><code class=language-julia ># File gaussiannoise.jl
 export GaussianNoise
@@ -418,7 +418,7 @@ plot&#40;t, y&#41;</code></pre>
 <li><p>A Gaussian noise of standard deviation <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0.5</mn><mi>K</mi></mrow><annotation encoding="application/x-tex">0.5 K</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.68333em;vertical-align:0em;"></span><span class=mord >0.5</span><span class="mord mathnormal" style="margin-right:0.07153em;">K</span></span></span></span>.</p>
 
 </ul>
-<img src="/assets/pages/sequgen/output/gaussiannoise-1.png" alt="">
+<img src="/julia-tutorial-at-nlesc/assets/pages/sequgen/output/gaussiannoise-1.png" alt="">
 <pre><code class=language-julia >t &#61; range&#40;0, 11, length&#61;12&#41;
 seqs &#61; &#91;
   Constant&#40;15.0&#41;,
@@ -432,7 +432,7 @@ title&#33;&#40;&quot;Average temperature of 2022 in some city&quot;&#41;
 xticks&#33;&#40;0:11&#41;
 xlabel&#33;&#40;&quot;Months since 01/Jan/2022&quot;&#41;
 ylabel&#33;&#40;&quot;Temperature &#40;in degrees Celsius&#41;&quot;&#41;</code></pre>
-<img src="/assets/pages/sequgen/output/example-1.png" alt="">
+<img src="/julia-tutorial-at-nlesc/assets/pages/sequgen/output/example-1.png" alt="">
 <p>Our example is cool, and our package is working, so we&#39;re happy. If you&#39;re not happy, you should try seeing the Pagliacci clown. Anyway, although cool, we can make it cooler. For that, there is a package called <code>Unitful</code>, which allows the automatic usage and propagation of units in Julia. You should <code>pkg&gt; add Unitful</code> inside the environment, because we should use it on the tests.</p>
 <p>After installing, enter <code>julia&gt; using Unitful</code>. You can add units to number by appending them with <code>u&quot;THE-UNIT&quot;</code>. For instance,</p>
 <pre><code class=language-julia >using Unitful
@@ -466,7 +466,7 @@ plot&#40;t, y, leg&#61;false&#41;
 title&#33;&#40;&quot;Average temperature of 2022 in some city&quot;&#41;
 xlabel&#33;&#40;&quot;Days since 01/Jan/2022&quot;&#41;
 ylabel&#33;&#40;&quot;Temperature &#40;in degrees Celsius&#41;&quot;&#41;</code></pre>
-<img src="/assets/pages/sequgen/output/example-2.png" alt="">
+<img src="/julia-tutorial-at-nlesc/assets/pages/sequgen/output/example-2.png" alt="">
 <p>We can refine the interval to see it daily, but notice that the range must change to include the extra time after the beginning of the month. The correct way to define the range with <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">n</span></span></span></span> points is to split the interval <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy=false >[</mo><mn>0</mn><mo separator=true >,</mo><mi>T</mi><mo stretchy=false >]</mo></mrow><annotation encoding="application/x-tex">[0,T]</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class=mopen >[</span><span class=mord >0</span><span class=mpunct >,</span><span class=mspace  style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class=mclose >]</span></span></span></span> into <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">n+1</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathnormal">n</span><span class=mspace  style="margin-right:0.2222222222222222em;"></span><span class=mbin >+</span><span class=mspace  style="margin-right:0.2222222222222222em;"></span></span><span class=base ><span class=strut  style="height:0.64444em;vertical-align:0em;"></span><span class=mord >1</span></span></span></span> equally spaced points, and take the first <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">n</span></span></span></span>.</p>
 <pre><code class=language-julia >using Unitful, UnitfulRecipes, Plots
 n &#61; 360
@@ -483,7 +483,7 @@ plot&#40;t, y, leg&#61;false&#41;
 title&#33;&#40;&quot;Average temperature of 2022 in some city&quot;&#41;
 xlabel&#33;&#40;&quot;Days since 01/Jan/2022&quot;&#41;
 ylabel&#33;&#40;&quot;Temperature &#40;in degrees Celsius&#41;&quot;&#41;</code></pre>
-<img src="/assets/pages/sequgen/output/example-3.png" alt="">
+<img src="/julia-tutorial-at-nlesc/assets/pages/sequgen/output/example-3.png" alt="">
 <p>Using units, it&#39;s easy to add a new sine wave for daily variations. Let&#39;s say for an amplitude of 2 Kelvin with peak at noon. Let&#39;s ignore the noise term and focus on shorter period of 3 days starting at the third month.</p>
 <pre><code class=language-julia >using Unitful, UnitfulRecipes, Plots
 n &#61; 100
@@ -501,7 +501,7 @@ plot&#40;t, y, leg&#61;false, xticks&#61;ticks&#41;
 title&#33;&#40;&quot;Average temperature of 2022 in some city&quot;&#41;
 xlabel&#33;&#40;&quot;Days since 01/Jan/2022&quot;&#41;
 ylabel&#33;&#40;&quot;Temperature &#40;in degrees Celsius&#41;&quot;&#41;</code></pre>
-<img src="/assets/pages/sequgen/output/example-4.png" alt="">
+<img src="/julia-tutorial-at-nlesc/assets/pages/sequgen/output/example-4.png" alt="">
 <h3 id=advanced_structures_with_multiple_dispatch ><a href="#advanced_structures_with_multiple_dispatch" class=header-anchor >Advanced structures with multiple dispatch</a></h3>
 <p>Now that we have some basic structures, we can start thinking about how they should interact. To obtain a sample of the sum of sequences, we used the sum of the samples. An easier way would be to define a structure to hold the sum of these sequences and do that operation internally. Or better, an operation between sequences. Here&#39;s an implementation of that:</p>
 <pre><code class=language-julia ># File operation.jl
@@ -540,7 +540,7 @@ y3 &#61; sample&#40;seqquad, t&#41;
 plot&#40;t, y1&#41;
 plot&#33;&#40;t, y2&#41;
 plot&#33;&#40;t, y3&#41;</code></pre>
-<img src="/assets/pages/sequgen/output/test-sum-of-sequences-1.png" alt="">
+<img src="/julia-tutorial-at-nlesc/assets/pages/sequgen/output/test-sum-of-sequences-1.png" alt="">
 <p>Now, we can define how the basic operations <code>&#43;</code>, <code>-</code> and <code>*</code> apply to these sequences. That is, we can define <code>SineWave&#40;...&#41; &#43; SineWave&#40;...&#41;</code> to call the constructor to <code>OperationOnSequences</code>. Not only that, but we can define a sum of an operator and a number to construct a <code>Constant</code> sequence and create an <code>OperationOnSequences</code>. This can be done by importing the operators from <code>Base</code> and defining <code>&#43;&#40;x::Type1, y::Type2&#41;</code> for each of these types. Since we&#39;re repeating the same code for each operator, we can use <strong>Metaprogamming</strong> to generate the code that we need.</p>
 <pre><code class=language-julia ># File operations.jl
 # ...
@@ -574,7 +574,7 @@ y3 &#61; sample&#40;seqquad, t&#41;
 plot&#40;t, y1&#41;
 plot&#33;&#40;t, y2&#41;
 plot&#33;&#40;t, y3&#41;</code></pre>
-<img src="/assets/pages/sequgen/output/test-sum-of-sequences-2.png" alt="">
+<img src="/julia-tutorial-at-nlesc/assets/pages/sequgen/output/test-sum-of-sequences-2.png" alt="">
 <p>Here&#39;s another example:</p>
 <pre><code class=language-julia >seq &#61; sum&#40;
   SineWave&#40;1 / &#40;2k &#43; 1&#41;, 1 / &#40;2k &#43; 1&#41;, 0.0&#41; for k &#61; 0:6
@@ -582,7 +582,7 @@ plot&#33;&#40;t, y3&#41;</code></pre>
 t &#61; range&#40;0, 1, length&#61;300&#41;
 y &#61; sample&#40;seq, t&#41;
 plot&#40;t, y&#41;</code></pre>
-<img src="/assets/pages/sequgen/output/test-sum-of-sequences-3.png" alt="">
+<img src="/julia-tutorial-at-nlesc/assets/pages/sequgen/output/test-sum-of-sequences-3.png" alt="">
 <p>Another useful feature would be the ability to apply functions to sequences. Similarly, we can define a <code>TransformedSequence</code> struct for that:</p>
 <pre><code class=language-julia ># File transformation.jl
 export TransformedSequence
@@ -615,7 +615,7 @@ y3 &#61; sample&#40;seqf, t&#41;
 plot&#40;t, y1&#41;
 plot&#33;&#40;t, y2&#41;
 plot&#33;&#40;t, y3&#41;</code></pre>
-<img src="/assets/pages/sequgen/output/test-transform-1.png" alt="">
+<img src="/julia-tutorial-at-nlesc/assets/pages/sequgen/output/test-transform-1.png" alt="">
 </div>
 </div>
 </div>
@@ -646,10 +646,10 @@ plot&#33;&#40;t, y3&#41;</code></pre>
 
 
 
-<script src="/libs/highlight/highlight.pack.js"></script>
+<script src="/julia-tutorial-at-nlesc/libs/highlight/highlight.pack.js"></script>
 <script>hljs.initHighlightingOnLoad();hljs.configure({tabReplace: '    '});</script>
 
 
-<script src="/libs/bootstrap.bundle.min.js" crossorigin=anonymous ></script>
+<script src="/julia-tutorial-at-nlesc/libs/bootstrap.bundle.min.js" crossorigin=anonymous ></script>
 <script src="https://kit.fontawesome.com/d17d5e5245.js" crossorigin=anonymous ></script>
 <script type="text/javascript" src="https://cdn.rawgit.com/pcooksey/bibtex-js/ef59e62c/src/bibtex_js.js"></script>
