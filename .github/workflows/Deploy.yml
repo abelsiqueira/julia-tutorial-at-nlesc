@@ -37,6 +37,7 @@ jobs:
         unzip main.zip
         mv abelsiqueira.github.io-main/_layout .
         mv abelsiqueira.github.io-main/_css .
+        mv abelsiqueira.github.io-main/_libs .
         rm -rf abelsiqueira.github.io-main main.zip
     - run: julia -e '
             using Pkg; Pkg.activate("."); Pkg.instantiate();
@@ -59,3 +60,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: gh-pages # Replace here the branch where your website is deployed
           FOLDER: __site
+          
