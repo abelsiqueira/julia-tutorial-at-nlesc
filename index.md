@@ -43,18 +43,18 @@ This tutorial assumes you know some Python so that we can freely compare to it.
   - VSCode
   - Vim/Emacs
 - Main features and bugs
-  - [Main syntax differences]({{fill prepath}}/pages/syntax/)
-  - [Structures, not classes]({{fill prepath}}/pages/structures/)
-  - [Type inference is hard]({{fill prepath}}/pages/type-inference/)
-- [Creating a package: SequGen.jl - demonstration of good practices]({{fill prepath}}/pages/sequgen/)
+  - [Main syntax differences](pages/syntax/)
+  - [Structures, not classes](pages/structures/)
+  - [Type inference is hard](pages/type-inference/)
+- [Creating a package: SequGen.jl - demonstration of good practices](pages/sequgen/)
   - PkgTemplates
   - Documenting
   - Unit tests
   - JuliaFormatter
   - Registering a package
 - Calling Fortran and C code
-- [A more complicated example of multiple dispatch]({{fill prepath}}/pages/multiple-dispatch/)
-- [Python's scipy.optimize vs Julia]({{fill prepath}}/pages/optimization/)
+- [A more complicated example of multiple dispatch](pages/multiple-dispatch/)
+- [Python's scipy.optimize vs Julia](pages/optimization/)
 - Speed demonstration against Python
   - Example should be short
 
