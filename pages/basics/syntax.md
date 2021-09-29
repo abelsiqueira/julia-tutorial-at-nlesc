@@ -3,4 +3,4 @@
 
 # {{fill title}}
 
-\literate{/_literate/syntax.jl}
+\literate{/_literate/basics/syntax.jl}

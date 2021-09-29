@@ -36,36 +36,26 @@ This tutorial assumes you know some Python so that we can freely compare to it.
 
 **Table of contents**:
 
-- Installation
-  - Using [jill](https://github.com/abelsiqueira/jill) for Linux or Mac
-  - The default site for Windows
-- IDE
-  - VSCode
-  - Vim/Emacs
-- Main features and bugs
-  - [Main syntax differences](pages/syntax/)
-  - [Structures, not classes](pages/structures/)
-  - [Type inference is hard](pages/type-inference/)
+- Basics
+  - [Install Julia, an IDE, and some packages](pages/basics/installation/)
+  - Main features and bugs
+    - [Main syntax differences](pages/basics/syntax/)
+    - [Structures, not classes](pages/basics/structures/)
+    - [Type inference is hard](pages/basics/type-inference/)
 - [Creating a package: SequGen.jl - demonstration of good practices](pages/sequgen/)
-  - PkgTemplates
-  - Documenting
-  - Unit tests
-  - JuliaFormatter
-  - Registering a package
-- Calling Fortran and C code
-- [A more complicated example of multiple dispatch](pages/multiple-dispatch/)
-- [Python's scipy.optimize vs Julia](pages/optimization/)
-- Speed demonstration against Python
-  - Example should be short
-
-- Parallel computing
-- Package examples
-  - JuMP
-  - DrWatson
-  - Franklin
-  - Genie
-  - Pluto
-  - Flux
+- Extra topics
+  - Calling Fortran and C code
+  - [A more complicated example of multiple dispatch](pages/multiple-dispatch/)
+  - Speed demonstration against Python
+    - Example should be short
+  - Parallel computing
+  - Package examples
+    - JuMP
+    - DrWatson
+    - Franklin
+    - Genie
+    - Pluto
+    - Flux
 - Questions
   - Is the code portable?
   - When should I use Julia instead of Python?

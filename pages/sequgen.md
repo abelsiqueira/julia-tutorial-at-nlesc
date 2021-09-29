@@ -791,3 +791,7 @@ png(joinpath(@OUTPUT, "test-transform-1")) # hide
 ```
 
 \fig{./output/test-transform-1.png}
+
+TODO: Registration (can it be simulated?)
+
+TODO: Find a good ending (aliens?)
