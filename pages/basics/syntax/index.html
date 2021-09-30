@@ -26,11 +26,11 @@ A&#91;1:2, 1:2&#93;
   B A&#39;;
   A ones&#40;2,2&#41;
 &#93;</code></pre><pre><code class="plaintext code-output">5×5 Matrix{Float64}:
-  0.153053  0.0564905  0.184505  3.0  -1.0
-  0.873237  0.775436   0.808949  2.0   0.0
-  0.139775  0.544615   0.568779  4.0   1.0
-  3.0       2.0        4.0       1.0   1.0
- -1.0       0.0        1.0       1.0   1.0</code></pre>
+  0.736319   0.208286    0.697706  3.0  -1.0
+  0.146165   5.75081e-5  0.65369   2.0   0.0
+  0.0143807  0.541995    0.156981  4.0   1.0
+  3.0        2.0         4.0       1.0   1.0
+ -1.0        0.0         1.0       1.0   1.0</code></pre>
 <ul>
 <li><p>Linear systems can be solved with <code>\</code></p>
 
@@ -42,7 +42,7 @@ b &#61; A * ones&#40;50&#41;
 x &#61; A \ b
 using LinearAlgebra
 norm&#40;b - A * x&#41;
-norm&#40;x .- 1&#41;</code></pre><pre><code class="plaintext code-output">1.5309005341971274e-14</code></pre>
+norm&#40;x .- 1&#41;</code></pre><pre><code class="plaintext code-output">2.484383696975869e-13</code></pre>
 <ul>
 <li><p>Everything has a concrete type, every type derives from some abstract type.</p>
 

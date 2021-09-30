@@ -1,0 +1,218 @@
+<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/julia-tutorial-at-nlesc/libs/katex/katex.min.css"> <link rel=stylesheet  href="/julia-tutorial-at-nlesc/libs/highlight/github.min.css"> <link href="/julia-tutorial-at-nlesc/css/bootstrap.min.css" rel=stylesheet  crossorigin=anonymous > <link rel=icon  href="/julia-tutorial-at-nlesc/images/logo.png"> <link rel=stylesheet  href="/julia-tutorial-at-nlesc/css/code-katex.css"> <link rel=stylesheet  href="/julia-tutorial-at-nlesc/css/custom.css"> <link rel=stylesheet  href="/julia-tutorial-at-nlesc/css/dark-mode.css"> <link rel=preconnect  href="https://fonts.gstatic.com"> <link href="https://fonts.googleapis.com/css2?family=Cinzel&family=Montserrat&display=swap" rel=stylesheet > <title>Parallel</title> <meta property="og:title" content="Julia Tutorial at NLeSC"> <meta name="twitter:title" content="Julia Tutorial at NLeSC"> <meta property="og:description" content=Parallel > <meta name="twitter:description" content=Parallel > <meta property="og:image" content="https://abelsiqueira.github.io/images/abel-banner.jpg"> <meta name="twitter:image" content="https://abelsiqueira.github.io/images/abel-banner.jpg"> <meta property="og:url" content=abelsiqueira.github.io > <meta name="twitter:card" content=summary_large_image > <header> <nav class="navbar navbar-expand-lg"> <div class=container-fluid > <a class="navbar-brand text-end" href="/julia-tutorial-at-nlesc/"></a> <button class=navbar-toggler  type=button  data-bs-toggle=collapse  data-bs-target="#navbarSupportedContent" aria-controls=navbarSupportedContent  aria-expanded=false  aria-label="Toggle navigation"> <span class=navbar-toggler-icon ></span> </button> <div class="collapse navbar-collapse" id=navbarSupportedContent > <ul class="navbar-nav ms-auto mb-2 mb-lg-0"> <li class=nav-item ><a class=nav-link  href="/julia-tutorial-at-nlesc/">Home</a> <li class=nav-item ><a class=nav-link  href="/julia-tutorial-at-nlesc/blog/">Blog</a> <li class=nav-item ><a class=nav-link  href="/julia-tutorial-at-nlesc/julia/">Julia</a> <li class=nav-item ><a class=nav-link  href="/julia-tutorial-at-nlesc/research/">Research</a> <li class=nav-item ><a class=nav-link  href="/julia-tutorial-at-nlesc/ufpr/">UFPR</a> </ul> <div class="dark-switch form-check form-switch"> <input type=checkbox  class=form-check-input  id=darkSwitch  /> <label class=custom-control-label  for=darkSwitch >Dark Mode</label> </div> <script src="/julia-tutorial-at-nlesc/libs/dark-mode-switch.min.js"></script> </div> </div> </nav> </header> <div class=container-fluid > <div class="container main-text"> <div class=franklin-content ><h1 id=fill_title ><a href="#fill_title" class=header-anchor >Parallel</a></h1> <p>Parallelization is hard and is not my specialty, so I&#39;ll focus on a simple example. See more <a href="https://docs.julialang.org/en/v1/manual/parallel-computing/">here</a>.</p> <p><strong>Atention</strong>: Before we start, you should either:</p> <ul> <li><p>Set <strong>&quot;Julia: Num Threads&quot;</strong> in your VSCode to the number of threads that you can use; or</p> <li><p>Pass the number of threads to the <code>julia</code> call: <code>julia --threads N</code>.</p> </ul> <p>Check the number of threads being used with</p> <pre><code class=language-julia >Threads.nthreads&#40;&#41;</code></pre><pre><code class="plaintext code-output">1</code></pre>
+<p>We&#39;ll compute the approximate value of <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>π</mi></mrow><annotation encoding="application/x-tex">\pi</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">π</span></span></span></span> using Monte Carlo simulation. This example is based on <a href="https://carpentries-incubator.github.io/lesson-parallel-python/">Parallel Programming in Python</a>.</p>
+<p>The idea is pretty simple, and you might have seen it before. Consider a square with vertices <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy=false >(</mo><mn>0</mn><mo separator=true >,</mo><mn>0</mn><mo stretchy=false >)</mo></mrow><annotation encoding="application/x-tex">(0,0)</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class=mopen >(</span><span class=mord >0</span><span class=mpunct >,</span><span class=mspace  style="margin-right:0.16666666666666666em;"></span><span class=mord >0</span><span class=mclose >)</span></span></span></span>, <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy=false >(</mo><mn>1</mn><mo separator=true >,</mo><mn>0</mn><mo stretchy=false >)</mo></mrow><annotation encoding="application/x-tex">(1,0)</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class=mopen >(</span><span class=mord >1</span><span class=mpunct >,</span><span class=mspace  style="margin-right:0.16666666666666666em;"></span><span class=mord >0</span><span class=mclose >)</span></span></span></span>, <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy=false >(</mo><mn>0</mn><mo separator=true >,</mo><mn>1</mn><mo stretchy=false >)</mo></mrow><annotation encoding="application/x-tex">(0,1)</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class=mopen >(</span><span class=mord >0</span><span class=mpunct >,</span><span class=mspace  style="margin-right:0.16666666666666666em;"></span><span class=mord >1</span><span class=mclose >)</span></span></span></span> and <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy=false >(</mo><mn>1</mn><mo separator=true >,</mo><mn>1</mn><mo stretchy=false >)</mo></mrow><annotation encoding="application/x-tex">(1,1)</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class=mopen >(</span><span class=mord >1</span><span class=mpunct >,</span><span class=mspace  style="margin-right:0.16666666666666666em;"></span><span class=mord >1</span><span class=mclose >)</span></span></span></span>, and the sector of the circle centered at <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy=false >(</mo><mn>0</mn><mo separator=true >,</mo><mn>0</mn><mo stretchy=false >)</mo></mrow><annotation encoding="application/x-tex">(0,0)</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class=mopen >(</span><span class=mord >0</span><span class=mpunct >,</span><span class=mspace  style="margin-right:0.16666666666666666em;"></span><span class=mord >0</span><span class=mclose >)</span></span></span></span> with radius <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.64444em;vertical-align:0em;"></span><span class=mord >1</span></span></span></span>.</p>
+
+<img src="/julia-tutorial-at-nlesc/assets/pages/extra/parallel/code/output/parallel-1.png" alt="">
+<p>The square&#39;s area is <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.64444em;vertical-align:0em;"></span><span class=mord >1</span></span></span></span>, and the circle&#39;s area is <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>π</mi><mi mathvariant=normal >/</mi><mn>4</mn></mrow><annotation encoding="application/x-tex">\pi / 4</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">π</span><span class=mord >/4</span></span></span></span>. The ratio being <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>π</mi><mi mathvariant=normal >/</mi><mn>4</mn></mrow><annotation encoding="application/x-tex">\pi / 4</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">π</span><span class=mord >/4</span></span></span></span>, then.</p>
+<p>The Monte Carlo approach is to generate a number <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi></mrow><annotation encoding="application/x-tex">N</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span> os points equally distributed on the square. Let <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>M</mi></mrow><annotation encoding="application/x-tex">M</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span></span></span></span> be the number of points that fall inside the sector. The ratio <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>M</mi><mi mathvariant=normal >/</mi><mi>N</mi></mrow><annotation encoding="application/x-tex">M / N</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span><span class=mord >/</span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span> should assintotically approach the ratio <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>π</mi><mi mathvariant=normal >/</mi><mn>4</mn></mrow><annotation encoding="application/x-tex">\pi / 4</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">π</span><span class=mord >/4</span></span></span></span>, therefore an approximation to <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>π</mi></mrow><annotation encoding="application/x-tex">\pi</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">π</span></span></span></span> can be obtained by computing <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>4</mn><mi>M</mi><mi mathvariant=normal >/</mi><mi>N</mi></mrow><annotation encoding="application/x-tex">4M / N</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class=mord >4</span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span><span class=mord >/</span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span>.</p>
+<p>Here&#39;s a basic implementation:</p>
+<pre><code class=language-julia >function calc_pi&#40;N&#41;
+  M &#61; 0
+  for i &#61; 1:N
+    x, y &#61; rand&#40;&#41;, rand&#40;&#41;
+    if x^2 &#43; y^2 &lt; 1
+      M &#43;&#61; 1
+    end
+  end
+  return 4 * M / N
+end</code></pre><pre><code class="plaintext code-output">calc_pi (generic function with 1 method)</code></pre>
+<p>Here are some histogram of the error using various <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi></mrow><annotation encoding="application/x-tex">N</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span> various for 100 simulations each:</p>
+<pre><code class=language-julia >N_values &#61; 10 .^ &#40;5:7&#41;
+plt &#61; plot&#40;layout&#61;grid&#40;3, 1&#41;, size&#61;&#40;400,600&#41;, leg&#61;false&#41;
+for &#40;i, N&#41; in enumerate&#40;N_values&#41;
+  ϵ &#61; π .- &#91;calc_pi&#40;N&#41; for _ &#61; 1:200&#93;
+  histogram&#33;&#40;plt&#91;i&#93;, ϵ, bins&#61;20&#41;
+  title&#33;&#40;plt&#91;i&#93;, &quot;N &#61; &#36;N&quot;&#41;
+end
+plt</code></pre>
+<img src="/julia-tutorial-at-nlesc/assets/pages/extra/parallel/code/output/parallel-2.png" alt="">
+<p>Using <code>@time</code> we can assess the computation time of <code>calc_pi</code>:</p>
+<pre><code class=language-julia >@time calc_pi&#40;10^7&#41;</code></pre><pre><code class="plaintext code-output">  0.086859 seconds
+3.142294</code></pre>
+<p>Be aware that Julia compiles the code as it is first executed. In this case, since we ran the code before, the timing is mostly accurate.</p>
+<p>That being said, measuring execution time of code has some randomness, so it&#39;s better to run the code a few times and compute some statistics &#40;mean, median, minimum, maximum, etc.&#41; on the result. Luckily, the package <code>BenchmarkTools</code> does that for us.</p>
+<p>You can use <code>@btime &quot;Your stuff&quot;</code> to compute the equivalent of <code>@time</code>, but we can see more information with <code>@benchmark</code>:</p>
+<pre><code class=language-julia >using BenchmarkTools
+
+println&#40;&quot;π ≈ &#36;&#40;calc_pi&#40;10^7&#41;&#41;&quot;&#41;
+@benchmark calc_pi&#40;10^7&#41;</code></pre><pre><code class="plaintext code-output">π ≈ 3.1411732
+BenchmarkTools.Trial: 58 samples with 1 evaluation.
+ Range (min … max):  86.571 ms … 86.783 ms  ┊ GC (min … max): 0.00% … 0.00%
+ Time  (median):     86.614 ms              ┊ GC (median):    0.00%
+ Time  (mean ± σ):   86.623 ms ± 42.149 μs  ┊ GC (mean ± σ):  0.00% ± 0.00%
+
+       ▂    ▃ █▅                                               
+  ▄▅▄▁▅█▇▁▄▁█▇██▄▄▄▄▁▄▄▄▇▄▁▁▄▁▁▁▁▄▁▅▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▄▁▁▁▁▁▁▁▁▄ ▁
+  86.6 ms         Histogram: frequency by time        86.8 ms <
+
+ Memory estimate: 0 bytes, allocs estimate: 0.</code></pre>
+<p>Unlike Python, vectorizing the code won&#39;t improve the performance:</p>
+<pre><code class=language-julia >function calc_pi_vectorized&#40;N&#41;
+  pts &#61; rand&#40;N, 2&#41;
+  M &#61; count&#40;sum&#40;pts .^ 2, dims&#61;2&#41; .&lt; 1&#41;
+  return 4 * M / N
+end
+
+println&#40;&quot;π ≈ &#36;&#40;calc_pi_vectorized&#40;10^7&#41;&#41;&quot;&#41;
+@benchmark calc_pi_vectorized&#40;10^7&#41;</code></pre><pre><code class="plaintext code-output">π ≈ 3.141674
+BenchmarkTools.Trial: 26 samples with 1 evaluation.
+ Range (min … max):  179.168 ms … 426.306 ms  ┊ GC (min … max):  2.56% … 58.54%
+ Time  (median):     183.343 ms               ┊ GC (median):     4.13%
+ Time  (mean ± σ):   198.901 ms ±  58.854 ms  ┊ GC (mean ± σ):  11.49% ± 14.00%
+
+  ██                                                             
+  ██▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▃▁▁▁▁▁▁▁▁▁▁▁▁▁▃ ▁
+  179 ms           Histogram: frequency by time          426 ms <
+
+ Memory estimate: 382.67 MiB, allocs estimate: 14.</code></pre>
+<p>We can, however, use threads to improve it. The code below has a few simple changes to have an improved version.</p>
+<pre><code class=language-julia >using Base.Threads: @threads, threadid, nthreads
+
+function calc_pi_threaded_naive&#40;N&#41;
+  M &#61; zeros&#40;Int, nthreads&#40;&#41;&#41;
+  @threads for i &#61; 1:N
+    x, y &#61; rand&#40;&#41;, rand&#40;&#41;
+    if x^2 &#43; y^2 &lt; 1
+      M&#91;threadid&#40;&#41;&#93; &#43;&#61; 1
+    end
+  end
+  return 4 * sum&#40;M&#41; / N
+end
+
+println&#40;&quot;π ≈ &#36;&#40;calc_pi_threaded_naive&#40;10^7&#41;&#41;&quot;&#41;
+@benchmark calc_pi_threaded_naive&#40;10^7&#41;</code></pre><pre><code class="plaintext code-output">π ≈ 3.1425736
+BenchmarkTools.Trial: 35 samples with 1 evaluation.
+ Range (min … max):  143.560 ms … 146.384 ms  ┊ GC (min … max): 0.00% … 0.00%
+ Time  (median):     143.796 ms               ┊ GC (median):    0.00%
+ Time  (mean ± σ):   143.890 ms ± 470.908 μs  ┊ GC (mean ± σ):  0.00% ± 0.00%
+
+  ▂▅█ ▂█                                                         
+  ██████▅███▁█▅▁█▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▅ ▁
+  144 ms           Histogram: frequency by time          146 ms <
+
+ Memory estimate: 640 bytes, allocs estimate: 7.</code></pre>
+<p>The version above creates the a vector to store the number of points inside the circle per thread. We could be more naive and use a single <code>M</code>, but for sharing between threads, <code>M</code> must be an array.</p>
+<p>This version simply uses the <code>Base.Threads</code> module in the form of the macro <code>@threads</code> before the <code>for</code>. The macro splits the for between the threads automatically.</p>
+<p>As you saw, though, the result is <strong>slower</strong> than the basic version. To fix this, we have to use thread-safe random number generators. The code below does this and improves the execution time in comparison to the original.</p>
+<pre><code class=language-julia >using Random
+
+function calc_pi_threaded&#40;N&#41;
+  M &#61; zeros&#40;Int, nthreads&#40;&#41;&#41;
+  @threads for i &#61; 1:N
+    rng &#61; Random.THREAD_RNGs&#91;threadid&#40;&#41;&#93;
+    x, y &#61; rand&#40;rng&#41;, rand&#40;rng&#41;
+    if x^2 &#43; y^2 &lt; 1
+      M&#91;threadid&#40;&#41;&#93; &#43;&#61; 1
+    end
+  end
+  return 4 * sum&#40;M&#41; / N
+end
+
+println&#40;&quot;π ≈ &#36;&#40;calc_pi_threaded&#40;10^7&#41;&#41;&quot;&#41;
+@benchmark calc_pi_threaded&#40;10^7&#41;</code></pre><pre><code class="plaintext code-output">π ≈ 3.1410268
+BenchmarkTools.Trial: 56 samples with 1 evaluation.
+ Range (min … max):  89.349 ms …  93.799 ms  ┊ GC (min … max): 0.00% … 0.00%
+ Time  (median):     89.428 ms               ┊ GC (median):    0.00%
+ Time  (mean ± σ):   89.519 ms ± 584.538 μs  ┊ GC (mean ± σ):  0.00% ± 0.00%
+
+              ▂   █▂    ▂                                       
+  ▅▁▁▁▅▁▅▁█▁▁██▅█▅█████▅██▁█▅▅▅▁▅▅█▁█▁▅▅▅▁▅▁▁▅▁▅▁▁▁▅▁▁▁▁▅▁▁▁▅▅ ▁
+  89.3 ms         Histogram: frequency by time         89.6 ms <
+
+ Memory estimate: 640 bytes, allocs estimate: 7.</code></pre>
+<p>But wait, there&#39;s more. We can manually split the range, and just use <code>@threads</code> over the ranges.</p>
+<pre><code class=language-julia >using Distributed: splitrange
+
+function calc_pi_proper_threaded&#40;N&#41;
+  ranges &#61; splitrange&#40;1, N, nthreads&#40;&#41;&#41;
+  M &#61; Ref&#40;0&#41;
+  @threads for rg in ranges
+    rng &#61; MersenneTwister&#40;&#41;
+    c &#61; 0
+    for _ in rg
+      c &#43;&#61; rand&#40;rng&#41;^2 &#43; rand&#40;rng&#41;^2 &lt; 1
+    end
+    M&#91;&#93; &#43;&#61; c
+  end
+  return 4 * M&#91;&#93; / N
+end
+
+println&#40;&quot;π ≈ &#36;&#40;calc_pi_proper_threaded&#40;10^7&#41;&#41;&quot;&#41;
+@benchmark calc_pi_proper_threaded&#40;10^7&#41;</code></pre><pre><code class="plaintext code-output">π ≈ 3.1426104
+BenchmarkTools.Trial: 104 samples with 1 evaluation.
+ Range (min … max):  48.272 ms …  49.485 ms  ┊ GC (min … max): 0.00% … 0.00%
+ Time  (median):     48.306 ms               ┊ GC (median):    0.00%
+ Time  (mean ± σ):   48.340 ms ± 166.785 μs  ┊ GC (mean ± σ):  0.00% ± 0.00%
+
+  █▃                                                            
+  ██▅▇▄▃▃▁▂▁▃▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▂ ▂
+  48.3 ms         Histogram: frequency by time         49.5 ms <
+
+ Memory estimate: 20.20 KiB, allocs estimate: 19.</code></pre>
+<p>We use <code>Ref&#40;0&#41;</code> now to keep a reference to a number that all threads can access.</p>
+<p>Finally, we can use the package FLoops and change very little to obtain still some more speed. I don&#39;t know why, though.</p>
+<pre><code class=language-julia >using FLoops
+
+function calc_pi_proper_floop&#40;N&#41;
+  ranges &#61; splitrange&#40;1, N, nthreads&#40;&#41;&#41;
+  @floop for rg in ranges
+    rng &#61; MersenneTwister&#40;&#41;
+    c &#61; 0
+    for _ in rg
+      c &#43;&#61; rand&#40;rng&#41;^2 &#43; rand&#40;rng&#41;^2 &lt; 1
+    end
+    @reduce&#40;M &#43;&#61; c&#41;
+  end
+  return 4 * M / N
+end
+
+println&#40;&quot;π ≈ &#36;&#40;calc_pi_proper_floop&#40;10^7&#41;&#41;&quot;&#41;
+@benchmark calc_pi_proper_floop&#40;10^7&#41;</code></pre><pre><code class="plaintext code-output">π ≈ 3.1413636
+BenchmarkTools.Trial: 144 samples with 1 evaluation.
+ Range (min … max):  34.556 ms …  42.281 ms  ┊ GC (min … max): 0.00% … 0.00%
+ Time  (median):     34.708 ms               ┊ GC (median):    0.00%
+ Time  (mean ± σ):   34.821 ms ± 896.042 μs  ┊ GC (mean ± σ):  0.00% ± 0.00%
+
+  ▃█                                                            
+  ██▄▁▁▁▁▁▁▁▅▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▄ ▄
+  34.6 ms       Histogram: log(frequency) by time      42.2 ms <
+
+ Memory estimate: 19.78 KiB, allocs estimate: 19.</code></pre>
+
+</div>
+</div>
+</div>
+</div>
+
+<footer>
+<div class="container text-center social-footer">
+    <a href="mailto:abel.s.siqueira@gmail.com">
+        <i class="fas fa-2x fa-envelope" aria-hidden=true ></i>
+    </a><a href="https://github.com/abelsiqueira">
+        <i class="fab fa-2x fa-github-square" aria-hidden=true ></i>
+    </a><a href="https://linkedin.com/in/abel-siqueira/">
+        <i class="fab fa-2x fa-linkedin" aria-hidden=true ></i>
+    </a><a href="https://twitter.com/abel_siqueira">
+        <i class="fab fa-2x fa-twitter-square" aria-hidden=true ></i>
+    </a><a href="https://www.researchgate.net/profile/Abel_Siqueira">
+        <i class="fab fa-2x fa-researchgate" aria-hidden=true ></i>
+    </a><a href="http://orcid.org/0000-0003-4451-281X">
+        <i class="fab fa-2x fa-orcid" aria-hidden=true ></i>
+    </a>
+</div>
+</footer>
+
+
+
+
+
+
+
+
+<script src="/julia-tutorial-at-nlesc/libs/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();hljs.configure({tabReplace: '    '});</script>
+
+
+<script src="/julia-tutorial-at-nlesc/libs/bootstrap.bundle.min.js" crossorigin=anonymous ></script>
+<script src="https://kit.fontawesome.com/d17d5e5245.js" crossorigin=anonymous ></script>
+<script type="text/javascript" src="https://cdn.rawgit.com/pcooksey/bibtex-js/ef59e62c/src/bibtex_js.js"></script>
