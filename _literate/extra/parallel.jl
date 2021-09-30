@@ -19,6 +19,7 @@ Consider a square with vertices $(0,0)$, $(1,0)$, $(0,1)$ and $(1,1)$,
 and the sector of the circle centered at $(0,0)$ with radius $1$.
 =#
 using Plots # hide
+pyplot() # hide
 plot(leg=false, axis=false, axis_ratio=:equal, ticks=false) # hide
 plot!([0,1,1,0,0], [0,0,1,1,0], c=:blue, fill=true, fillcolor=:lightblue) # hide
 t = range(0, π / 2, length=100) # hide
@@ -49,6 +50,7 @@ end
 #=
 Here are some histogram of the error using various $N$ various for 100 simulations each:
 =#
+pyplot() # hide
 N_values = 10 .^ (5:7)
 plt = plot(layout=grid(3, 1), size=(400,600), leg=false)
 for (i, N) in enumerate(N_values)
