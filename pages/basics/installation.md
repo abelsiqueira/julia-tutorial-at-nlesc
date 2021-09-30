@@ -135,5 +135,5 @@ You can `add PackageName1, PackageName2` or `add GitHubLink`, for instance.
 In this tutorial, we'll need to install several packages.
 You can copy paste the following command:
 ```
-pkg> add CSV, DataFrames, JuMP, Plots, Revise, Unitful, UnitfulRecipes
+pkg> add BenchmarkTools, CSV, DataFrames, JuMP, Plots, Revise, Unitful, UnitfulRecipes
 ```

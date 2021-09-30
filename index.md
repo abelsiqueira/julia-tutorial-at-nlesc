@@ -48,7 +48,7 @@ This tutorial assumes you know some Python so that we can freely compare to it.
   - [A more complicated example of multiple dispatch](pages/multiple-dispatch/)
   - Speed demonstration against Python
     - Example should be short
-  - Parallel computing
+  - [Parallel computing](pages/extra/parallel/)
   - Package examples
     - JuMP
     - DrWatson
