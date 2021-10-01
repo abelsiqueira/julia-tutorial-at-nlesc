@@ -223,3 +223,52 @@ If you install `FFTW.jl`, you will notice that you don't need to install the C l
 Julia has a built-in [`Artifacts` system](https://pkgdocs.julialang.org/dev/artifacts/) and a commonly used package `BinaryBuilder.jl` that work in conjunction to allow binaries to be pre-built and distributed.
 The details are complicated, but the user doesn't have to worry about them.
 
+## Python
+
+Julia can also can Python and R code, using `PyCall` and `RCall`, respectively.
+We'll focus on Python for this example.
+
+We're gonna use `PyCall`. Like `IJulia`,
+
+```julia:ex5
+using Plots, PyCall, Random
+pyplot()
+
+Random.seed!(123)
+n = 2^8
+X = (2 * rand(n, 2) .- 1) * 4
+y = [
+  X[i,2]^2 * 16 - X[i,1]^2 * 16 ≤ 2 * randn() ? 1 : -1 for i = 1:n
+]
+y = [
+  (X[i,1] - 1)^2 + (4 - randn()) * (X[i,2] - X[i,1]^2)^2 ≤ 10 ? 1 : -1 for i = 1:n
+]
+plot(leg=false)
+idx = findall(y .== -1)
+scatter!(X[idx,1], X[idx,2], m=(4,:red,:square))
+idx = findall(y .== 1)
+scatter!(X[idx,1], X[idx,2], m=(4,:blue,:circle))
+png(joinpath(@OUTPUT, "pycall-1")) # hide
+```
+
+\fig{pycall-1}
+
+```julia:ex6
+svm = pyimport_conda("sklearn.svm", "scikit-learn")
+clf = svm.SVC(C=1e-2, gamma=5.0, probability=true)
+clf.fit(X, y)
+x1g = range(extrema(X[:,1])..., length=100)
+x2g = range(extrema(X[:,2])..., length=100)
+Z = [
+  clf.predict_proba([x1i x2j;])[2] for x2j in x2g, x1i in x1g
+]
+contourf(x1g, x2g, Z, c=cgrad([:pink,:magenta,:lightblue]), levels=50)
+idx = findall(y .== -1)
+scatter!(X[idx,1], X[idx,2], m=(4,:red,:square), lab="", opacity=0.5)
+idx = findall(y .== 1)
+scatter!(X[idx,1], X[idx,2], m=(4,:blue,:circle), lab="", opacity=0.5)
+png(joinpath(@OUTPUT, "pycall-2")) # hide
+```
+
+\fig{pycall-2}
+
