@@ -1,0 +1,138 @@
+<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/julia-tutorial-at-nlesc/libs/katex/katex.min.css"> <link rel=stylesheet  href="/julia-tutorial-at-nlesc/libs/highlight/github.min.css"> <link href="/julia-tutorial-at-nlesc/css/bootstrap.min.css" rel=stylesheet  crossorigin=anonymous > <link rel=icon  href="/julia-tutorial-at-nlesc/images/logo.png"> <link rel=stylesheet  href="/julia-tutorial-at-nlesc/css/code-katex.css"> <link rel=stylesheet  href="/julia-tutorial-at-nlesc/css/custom.css"> <link rel=stylesheet  href="/julia-tutorial-at-nlesc/css/dark-mode.css"> <link rel=preconnect  href="https://fonts.gstatic.com"> <link href="https://fonts.googleapis.com/css2?family=Cinzel&family=Montserrat&display=swap" rel=stylesheet > <title>Interoperability</title> <meta property="og:title" content="Julia Tutorial at NLeSC"> <meta name="twitter:title" content="Julia Tutorial at NLeSC"> <meta property="og:description" content=Interoperability > <meta name="twitter:description" content=Interoperability > <meta property="og:image" content="https://abelsiqueira.github.io/images/abel-banner.jpg"> <meta name="twitter:image" content="https://abelsiqueira.github.io/images/abel-banner.jpg"> <meta property="og:url" content=abelsiqueira.github.io > <meta name="twitter:card" content=summary_large_image > <header> <nav class="navbar navbar-expand-lg"> <div class=container-fluid > <a class="navbar-brand text-end" href="/julia-tutorial-at-nlesc/"></a> <button class=navbar-toggler  type=button  data-bs-toggle=collapse  data-bs-target="#navbarSupportedContent" aria-controls=navbarSupportedContent  aria-expanded=false  aria-label="Toggle navigation"> <span class=navbar-toggler-icon ></span> </button> <div class="collapse navbar-collapse" id=navbarSupportedContent > <ul class="navbar-nav ms-auto mb-2 mb-lg-0"> <li class=nav-item ><a class=nav-link  href="/julia-tutorial-at-nlesc/">Home</a> <li class=nav-item ><a class=nav-link  href="/julia-tutorial-at-nlesc/blog/">Blog</a> <li class=nav-item ><a class=nav-link  href="/julia-tutorial-at-nlesc/julia/">Julia</a> <li class=nav-item ><a class=nav-link  href="/julia-tutorial-at-nlesc/research/">Research</a> <li class=nav-item ><a class=nav-link  href="/julia-tutorial-at-nlesc/ufpr/">UFPR</a> </ul> <div class="dark-switch form-check form-switch"> <input type=checkbox  class=form-check-input  id=darkSwitch  /> <label class=custom-control-label  for=darkSwitch >Dark Mode</label> </div> <script src="/julia-tutorial-at-nlesc/libs/dark-mode-switch.min.js"></script> </div> </div> </nav> </header> <div class=container-fluid > <div class="container main-text"> <div class=franklin-content ><h1 id=fill_title ><a href="#fill_title" class=header-anchor >Interoperability</a></h1> <p>Julia can natively call C and Fortran functions, and with the help of packages it can also access code from other languages, such as Python and R.</p> <p>Julia has a &quot;no boilerplate&quot; philosophy for C and Fortran code. There&#39;s no &quot;glue&quot; code, code generation of compilation. To exemplify this, let&#39;s consider two files, one in Fortran and one in C:</p> <pre><code class=language-julia >&#33; File lu_fact.f90
+subroutine lu_factorization &#40;nrow, ncol, A&#41;
+
+  implicit none
+
+  integer, intent&#40;in&#41; :: nrow, ncol
+  real, intent&#40;inout&#41;, dimension&#40;nrow, ncol&#41; :: A
+
+  integer :: i, j, k
+
+  do j &#61; 1,nrow
+    do i &#61; j&#43;1,nrow
+      A&#40;i,j&#41; &#61; A&#40;i,j&#41; / A&#40;j,j&#41;
+      do k &#61; j&#43;1,ncol
+        A&#40;i,k&#41; &#61; A&#40;i,k&#41; - A&#40;j,k&#41; * A&#40;i,j&#41;
+      enddo
+    enddo
+  enddo
+
+end</code></pre> <p>The code above implements the <a href="https://en.wikipedia.org/wiki/LU_decomposition">LU factorization</a>, without pivoting or checks. The input matrix is also used as output. The factorization is used to solve linear systems.</p> <p>The code below implements the <a href="https://en.wikipedia.org/wiki/Triangular_matrix#Forward_and_back_substitution">forward and back substitutions</a>, using the resulting matrix from above as input. The input vector <code>x</code> corresponds to the right-hand side vector on input, and as the solution of the linear system on output.</p> <pre><code class=language-julia >// File lu_solve.c
+#include &lt;stdio.h&gt;
+
+void lu_solve&#40;long long n, float *LU, float *x&#41;
+&#123;
+  int i, j;
+
+  for &#40;i &#61; 0; i &lt; n; i&#43;&#43;&#41;
+    for &#40;j &#61; 0; j &lt; i; j&#43;&#43;&#41;
+      x&#91;i&#93; -&#61; LU&#91;i &#43; j * n&#93; * x&#91;j&#93;;
+
+  for &#40;i &#61; n - 1; i &gt;&#61; 0; i--&#41;
+  &#123;
+    for &#40;j &#61; i &#43; 1; j &lt; n; j&#43;&#43;&#41;
+      x&#91;i&#93; -&#61; LU&#91;i &#43; j * n&#93; * x&#91;j&#93;;
+    x&#91;i&#93; /&#61; LU&#91;i &#43; i * n&#93;;
+  &#125;
+&#125;</code></pre> <p>The file <code>lu_fact.f90</code> is in Fortran 90 and <code>lu_solve.c</code> is in C, as the extension implies. To compile these file to use with Julia, we have to prepare them into a shared library. To that end, we&#39;ll compile them using the GCC/GFortran compilers with the <code>-fPIC -shared</code> flags, and then link them with <code>ld</code>.</p> <p>The following commands were tested on linux:</p> <pre><code class=language-julia >gfortran -fPIC -shared lu_fact.f90 -o lu_fact.o
+gcc -fPIC -shared lu_solve.c -o lu_solve.o
+ld -shared &#36;PWD/lu_fact.o &#36;PWD/lu_solve.o -o lu.so</code></pre> <p>The <code>&#36;PWD</code> variable is necessary because the shared library should know where the compiled packages are. There are other ways of doing this.</p> <p>Now we can use the library <code>lu.so</code> on Julia. Here&#39;s an example:</p> <pre><code class=language-julia >using Libdl, LinearAlgebra
+
+path &#61; &quot;assets/interoperability&quot;
+lib &#61; joinpath&#40;path, &quot;lu.so&quot;&#41;
+
+n &#61; 10
+L &#61; tril&#40;rand&#40;Float32, n, n&#41;, -1&#41; &#43; I
+U &#61; triu&#40;rand&#40;Float32, n, n&#41;&#41;
+A &#61; L * U
+b &#61; A * ones&#40;Float32, n&#41;
+
+LU &#61; copy&#40;A&#41;
+x &#61; copy&#40;b&#41;
+
+ccall&#40;
+  &#40;:lu_factorization_, lib&#41;,
+  Cvoid,
+  &#40;Ref&#123;Int&#125;, Ref&#123;Int&#125;, Ref&#123;Cfloat&#125;&#41;,
+  n, n, LU,
+&#41;
+
+ccall&#40;
+  &#40;:lu_solve, lib&#41;,
+  Cvoid,
+  &#40;Int, Ref&#123;Cfloat&#125;, Ref&#123;Cfloat&#125;&#41;,
+  n, LU, x,
+&#41;
+
+println&#40;&quot;‖LU - &#40;L &#43; U - I&#41;‖ &#61; &quot;, norm&#40;LU - L - U &#43; I&#41;&#41;
+println&#40;&quot;‖x - 1‖ &#61; &quot;, norm&#40;x .- 1&#41;&#41;
+println&#40;&quot;‖A * x - b‖ &#61; &quot;, norm&#40;A * x - b&#41;&#41;</code></pre><pre><code class="plaintext code-output">could not load library "assets/interoperability/lu.so"
+/home/abel/julia-projects/why-julia-at-nlesc/assets/interoperability/lu_fact.o: cannot open shared object file: No such file or directory
+</code></pre> <p>The first part of the code defines a &quot;good&quot; matrix <code>A</code> and <code>b</code> such that the solution to the linear system <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>x</mi><mo>=</mo><mi>b</mi></mrow><annotation encoding="application/x-tex">Ax = b</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal">A</span><span class="mord mathnormal">x</span><span class=mspace  style="margin-right:0.2777777777777778em;"></span><span class=mrel >=</span><span class=mspace  style="margin-right:0.2777777777777778em;"></span></span><span class=base ><span class=strut  style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathnormal">b</span></span></span></span> is <code>x &#61; ones&#40;n&#41;</code>. The <code>LU &#61; copy&#40;A&#41;</code> and <code>x &#61; copy&#40;b&#41;</code> are so that we can use <code>A</code> and <code>b</code> for testing later. One important part of the code is that since we used the default variables for Fortran, we used <code>float</code> for C, and we have to use an appropriate type for Julia as well. <code>Float32</code> refers to a 32 bits real number, i.e. <code>float</code>. <code>Cfloat</code> is just an alias for <code>Float32</code>.</p> <p>The <code>ccall</code> signature is simple:</p> <ul> <li><p>The first argument is the function or a tuple with the function and it&#39;s library;</p> <li><p>The second argument is the return type;</p> <li><p>The third argument is a tuple with the types of every argument;</p> <li><p>The other arguments are the arguments to the C/Fortran function.</p> </ul> <p>Noteworthy:</p> <ul> <li><p>Fortran with <code>gfortran</code> added a <code>_</code> to the function name;</p> <li><p><code>Ref&#123;T&#125;</code> indicates that a reference will be passed, allowing the argument to be modified &#40;<code>Ptr&#123;T&#125;</code> also exists, to indicate returned pointers by C&#41;;</p> <li><p>Fortran always passes variables by reference.</p> </ul> <h2 id=fftw ><a href="#fftw" class=header-anchor >FFTW</a></h2> <p>For a more substantial example, we can look at the <a href="https://www.fftw.org">FFTW Library</a> for the discrete Fourier transform. The compilation of this example takes some time and the installation may be less straightforward than in my system, so be warned.</p> <ul> <li><p>First, download the library. I&#39;m using v3.3.10. Untar it too.</p> <li><p>Then, enter the folder and issue a <code>./configure --enable-shared</code>.</p> <li><p>Now, enter <code>make</code>.</p> </ul> <p>This will produce a shared library <code>.libs/libfftw3.so</code>.</p> <p>Now we can write a function to compute the FFT of a given vector using this lib.</p> <p>We&#39;ll be create a simple version of the following C code, available in the <a href="https://www.fftw.org/fftw3_doc/Complex-One_002dDimensional-DFTs.html#Complex-One_002dDimensional-DFTs">online docs of FFTW</a>.</p> <pre><code class=language-julia >#include &lt;fftw3.h&gt;
+...
+&#123;
+    fftw_complex *in, *out;
+    fftw_plan p;
+    ...
+    in &#61; &#40;fftw_complex*&#41; fftw_malloc&#40;sizeof&#40;fftw_complex&#41; * N&#41;;
+    out &#61; &#40;fftw_complex*&#41; fftw_malloc&#40;sizeof&#40;fftw_complex&#41; * N&#41;;
+    p &#61; fftw_plan_dft_1d&#40;N, in, out, FFTW_FORWARD, FFTW_ESTIMATE&#41;;
+    ...
+    fftw_execute&#40;p&#41;; /* repeat as needed */
+    ...
+    fftw_destroy_plan&#40;p&#41;;
+    fftw_free&#40;in&#41;; fftw_free&#40;out&#41;;
+&#125;</code></pre> <pre><code class=language-julia >function myfft&#40;x::Vector&#123;ComplexF64&#125;&#41;
+  y &#61; copy&#40;x&#41;
+  FFTW_FORWARD &#61; Int32&#40;-1&#41;
+  FFTW_ESTIMATE &#61; Int32&#40;64&#41;
+
+  plan &#61; ccall&#40;
+    &#40;:fftw_plan_dft_1d, &quot;fftw-3.3.10/.libs/libfftw3.so&quot;&#41;,
+    Ptr&#123;Cvoid&#125;,
+    &#40;Int32, Ref&#123;ComplexF64&#125;, Ref&#123;ComplexF64&#125;, Int32, UInt32&#41;,
+    length&#40;x&#41;, x, y, FFTW_FORWARD, FFTW_ESTIMATE
+  &#41;
+  ccall&#40;
+    &#40;:fftw_execute, &quot;fftw-3.3.10/.libs/libfftw3.so&quot;&#41;,
+    Cvoid,
+    &#40;Ptr&#123;Cvoid&#125;,&#41;,
+    plan
+  &#41;
+  ccall&#40;
+    &#40;:fftw_destroy_plan, &quot;fftw-3.3.10/.libs/libfftw3.so&quot;&#41;,
+    Cvoid,
+    &#40;Ptr&#123;Cvoid&#125;,&#41;,
+    plan
+  &#41;
+  return y
+end
+
+x &#61; rand&#40;ComplexF64, 8&#41;
+y &#61; myfft&#40;x&#41;</code></pre><pre><code class="plaintext code-output">could not load library "fftw-3.3.10/.libs/libfftw3.so"
+fftw-3.3.10/.libs/libfftw3.so: cannot open shared object file: No such file or directory
+</code></pre> <p>We can implement the a basic DFT to compare:</p> <pre><code class=language-julia >function mydft&#40;x&#41;
+  n &#61; length&#40;x&#41;
+  return &#91;
+    sum&#40;x&#91;i&#43;1&#93; * exp&#40;-im * 2π * i * k / n&#41; for i &#61; 0:n-1&#41;
+    for k &#61; 0:n-1
+  &#93;
+end
+mydft&#40;x&#41;</code></pre><pre><code class="plaintext code-output">8-element Vector{ComplexF64}:
+     4.055756934983193 + 5.327568543683458im
+   0.10550358392102005 - 0.9040234301582177im
+    0.7534683338525564 - 1.0577688274525903im
+   -0.6781064970929158 - 0.3609808919434522im
+ -0.018561220118161914 + 0.8457784791908806im
+    0.5692776882767354 - 0.07782542063004294im
+   -0.6935621915043466 - 0.08854000956167624im
+    0.9556807708708851 + 0.03156029202054583im</code></pre> <p>You may have noticed:</p> <ul> <li><p>Memory is handled by Julia in this case, so we don&#39;t use <code>malloc</code>.</p> <li><p>The C struct <code>fftw_complex</code> simply stores two <code>double</code>s. In Julia we would need a similar struct, and <code>ComplexF64</code> is exactly that, so it&#39;s extra smooth.</p> <li><p>We can use <code>Ptr&#123;Cvoid&#125;</code> to avoid dealing with the return type of <code>fftw_plan_dft_1d</code>, which is an opaque pointer.</p> </ul> <h3 id=fftwjl_and_where_are_the_so_files ><a href="#fftwjl_and_where_are_the_so_files" class=header-anchor >FFTW.jl &#40;and where are the .so files?&#41;</a></h3> <p>The ability to easily integrate C/Fortran functions is also one of the foundations of Julia. In fact, the example above is adapted from a <a href="https://github.com/JuliaLang/julia/commit/021afbfbac5ea941dc5402af2a9dea6d91fc7267">2011 commit</a> almost unmodified. The FFTW package is now wrapped in the package <code>FFTW.jl</code>. You can add and use it easily:</p> <pre><code class=language-julia >using FFTW
+y &#61; fft&#40;x&#41;</code></pre><pre><code class="plaintext code-output">8-element Vector{ComplexF64}:
+    4.055756934983194 + 5.327568543683458im
+  0.10550358392102022 - 0.9040234301582174im
+   0.7534683338525561 - 1.0577688274525905im
+   -0.678106497092915 - 0.3609808919434522im
+ -0.01856122011816197 + 0.8457784791908809im
+   0.5692776882767351 - 0.07782542063004097im
+  -0.6935621915043462 - 0.08854000956167307im
+   0.9556807708708838 + 0.031560292020543224im</code></pre> <p>If you install <code>FFTW.jl</code>, you will notice that you don&#39;t need to install the C library <code>FFTW</code> manually, i.e., the Julia package automatically does that for you. Julia has a built-in <a href="https://pkgdocs.julialang.org/dev/artifacts/"><code>Artifacts</code> system</a> and a commonly used package <code>BinaryBuilder.jl</code> that work in conjunction to allow binaries to be pre-built and distributed. The details are complicated, but the user doesn&#39;t have to worry about them.</p> </div> </div> </div> </div> <footer> <div class="container text-center social-footer"> <a href="mailto:abel.s.siqueira@gmail.com"> <i class="fas fa-2x fa-envelope" aria-hidden=true ></i> </a><a href="https://github.com/abelsiqueira"> <i class="fab fa-2x fa-github-square" aria-hidden=true ></i> </a><a href="https://linkedin.com/in/abel-siqueira/"> <i class="fab fa-2x fa-linkedin" aria-hidden=true ></i> </a><a href="https://twitter.com/abel_siqueira"> <i class="fab fa-2x fa-twitter-square" aria-hidden=true ></i> </a><a href="https://www.researchgate.net/profile/Abel_Siqueira"> <i class="fab fa-2x fa-researchgate" aria-hidden=true ></i> </a><a href="http://orcid.org/0000-0003-4451-281X"> <i class="fab fa-2x fa-orcid" aria-hidden=true ></i> </a> </div> </footer> <script src="/julia-tutorial-at-nlesc/libs/highlight/highlight.pack.js"></script> <script>hljs.initHighlightingOnLoad();hljs.configure({tabReplace: ' '});</script> <script src="/julia-tutorial-at-nlesc/libs/bootstrap.bundle.min.js" crossorigin=anonymous ></script> <script src="https://kit.fontawesome.com/d17d5e5245.js" crossorigin=anonymous ></script> <script type="text/javascript" src="https://cdn.rawgit.com/pcooksey/bibtex-js/ef59e62c/src/bibtex_js.js"></script>
