@@ -2,13 +2,19 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
-    <loc>abelsiqueira.github.io/pages/type-inference/index.html</loc>
-    <lastmod>2021-10-01</lastmod>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/README-perfcnt/index.html</loc>
+    <lastmod>2020-12-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
     <loc>abelsiqueira.github.io/pages/structures/index.html</loc>
+    <lastmod>2021-10-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/pages/type-inference/index.html</loc>
     <lastmod>2021-10-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
@@ -21,12 +27,6 @@
 </url>
 <url>
     <loc>abelsiqueira.github.io/pages/extra/interoperability/index.html</loc>
-    <lastmod>2021-10-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-</url>
-<url>
-    <loc>abelsiqueira.github.io/pages/extra/parallel/index.html</loc>
     <lastmod>2021-10-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
@@ -50,8 +50,758 @@
     <priority>0.5</priority>
 </url>
 <url>
+    <loc>abelsiqueira.github.io/pages/extra/parallel/index.html</loc>
+    <lastmod>2021-10-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
     <loc>abelsiqueira.github.io/pages/sequgen/index.html</loc>
     <lastmod>2021-10-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/64_002dbit-Guru-Interface/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Complex-numbers/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Transposed-distributions/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Multi_002ddimensional-Array-Format/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Advanced-Real_002dto_002dreal-Transforms/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Dynamic-Arrays-in-C_002dThe-Wrong-Way/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Wisdom-Import/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Extended-and-quadruple-precision-in-Fortran/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/One_002ddimensional-distributions/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Real_002ddata-DFTs/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/FFTW-Reference/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/MPI-Files-and-Data-Types/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Row_002dmajor-Format/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Installation-on-non_002dUnix-systems/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/SIMD-alignment-and-fftw_005fmalloc/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Wisdom-Generic-Export_002fImport-from-Fortran/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Fortran-Examples/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Installation-and-Customization/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/FFTW-MPI-Transposes/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Real_002dto_002dReal-Transform-Kinds/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/FAQ/fftw-faq.html/section4/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Guru-Real_002ddata-DFTs/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Load-balancing/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/FAQ/fftw-faq.html/index/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Upgrading-from-FFTW-version-2/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/MPI-Data-Distribution-Functions/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/More-DFTs-of-Real-Data/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Complex-One_002dDimensional-DFTs/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Linking-and-Initializing-MPI-FFTW/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Reversing-array-dimensions/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/How-Many-Threads-to-Use_003f/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Using-Plans/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Multi_002dthreaded-FFTW/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Using-MPI-Plans/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/MPI-Initialization/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/2d-MPI-example/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Usage-of-Multi_002dthreaded-FFTW/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/index/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Advanced-Interface/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Multi_002ddimensional-MPI-DFTs-of-Real-Data/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Plan-execution-in-Fortran/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/FFTW-MPI-Installation/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Installation-on-Unix/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/1d-Discrete-Hartley-Transforms-_0028DHTs_0029/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/FAQ/fftw-faq.html/section1/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/MPI-Data-Distribution/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Memory-Allocation/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Other-Multi_002ddimensional-Real_002ddata-MPI-Transforms/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Wisdom-File-Export_002fImport-from-Fortran/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Complex-DFTs/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Real_002dto_002dReal-Transforms/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Library-Index/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Dynamic-Arrays-in-C/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/FAQ/fftw-faq.html/section3/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Overview-of-Fortran-interface/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/The-1d-Real_002ddata-DFT/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Caveats-in-Using-Wisdom/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/The-Halfcomplex_002dformat-DFT/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Advanced-Real_002ddata-DFTs/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Installation-and-Supported-Hardware_002fSoftware/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Tutorial/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Combining-MPI-and-Threads/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Basic-and-advanced-distribution-interfaces/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Fixed_002dsize-Arrays-in-C/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Introduction/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/MPI-Wisdom-Communication/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Precision/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Accessing-the-wisdom-API-from-Fortran/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Thread-safety/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Cycle-Counters/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Generating-your-own-code/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Concept-Index/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/What-FFTW-Really-Computes/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/FFTW-Execution-in-Fortran/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Guru-Complex-DFTs/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Calling-FFTW-from-Modern-Fortran/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/License-and-Copyright/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Acknowledgments/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/FFTW-Fortran-type-reference/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Wisdom-String-Export_002fImport-from-Fortran/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Wisdom/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Advanced-distributed_002dtranspose-interface/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/FFTW-MPI-Wisdom/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Distributed_002dmemory-FFTW-with-MPI/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Data-Types-and-Files/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/FFTW-Constants-in-Fortran/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Column_002dmajor-Format/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Guru-vector-and-transform-sizes/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/An-improved-replacement-for-MPI_005fAlltoall/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/One_002dDimensional-DFTs-of-Real-Data/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Real_002ddata-DFT-Array-Format/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Wisdom-Export/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Wisdom-of-Fortran_003f/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Advanced-Complex-DFTs/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Planner-Flags/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/FFTW-MPI-Fortran-Interface/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Allocating-aligned-memory-in-Fortran/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/FFTW-MPI-Performance-Tips/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/The-1d-Discrete-Fourier-Transform-_0028DFT_0029/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Guru-Real_002dto_002dreal-Transforms/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Defining-an-FFTW-module/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/1d-Real_002dodd-DFTs-_0028DSTs_0029/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/MPI-Plan-Creation/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/New_002darray-Execute-Functions/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Multi_002ddimensional-Transforms/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Avoiding-MPI-Deadlocks/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Words-of-Wisdom_002dSaving-Plans/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Fortran_002dinterface-routines/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Calling-FFTW-from-Legacy-Fortran/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Interleaved-and-split-arrays/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/The-Discrete-Hartley-Transform/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Other-Important-Topics/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Basic-distributed_002dtranspose-interface/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Wisdom-Utilities/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Real-even_002fodd-DFTs-_0028cosine_002fsine-transforms_0029/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/1d-Real_002deven-DFTs-_0028DCTs_0029/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/FAQ/fftw-faq.html/section5/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Guru-Interface/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Multi_002dDimensional-DFTs-of-Real-Data/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Forgetting-Wisdom/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Complex-Multi_002dDimensional-DFTs/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/Basic-Interface/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/FAQ/fftw-faq.html/section2/</loc>
+    <lastmod>2021-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/assets/interoperability/fftw-3.3.10/doc/html/FFTW-MPI-Reference/</loc>
+    <lastmod>2021-09-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>

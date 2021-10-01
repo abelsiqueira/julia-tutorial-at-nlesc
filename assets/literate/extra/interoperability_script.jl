@@ -57,11 +57,6 @@ function myfft(x::Vector{ComplexF64})
   )
   return y
 end
-#We won't build fftw online, so here's cheating: # hide
-if get(ENV, "CI", "no") == "yes" # hide
-  using FFTW # hide
-  myfft(x) = fft(x) # hide
-end # hide
 
 x = rand(ComplexF64, 8)
 y = myfft(x)
