@@ -9,3 +9,4 @@ franklin
 franklin.pub
 node_modules/
 SequGen.jl
+assets/interoperability/fftw-3.3.10*

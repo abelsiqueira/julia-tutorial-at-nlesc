@@ -27,6 +27,7 @@ jobs:
     # NOTE: Here you can install dependencies such as matplotlib if you use
     # packages such as PyPlot.
     - run: pip install matplotlib
+    - run: pip install scikit-learn
     - name: Install Julia
       uses: julia-actions/setup-julia@v1
       with:
@@ -39,6 +40,20 @@ jobs:
         mv abelsiqueira.github.io-main/_css .
         mv abelsiqueira.github.io-main/_libs .
         rm -rf abelsiqueira.github.io-main main.zip
+    - name: Compile C/Fortran files
+      run: |
+        cd assets/interoperability
+        gfortran -fPIC -shared lu_fact.f90 -o lu_fact.o
+        gcc -fPIC -shared lu_solve.c -o lu_solve.o
+        ld -shared $PWD/lu_fact.o $PWD/lu_solve.o -o lu.so
+    - name: Install fftw
+      run: |
+        cd assets/interoperability
+        wget https://www.fftw.org/fftw-3.3.10.tar.gz
+        tar -zxf fftw-3.3.10.tar.gz
+        cd fftw-3.3.10
+        ./configure --enable-shared
+        make
     - run: julia -e '
             using Pkg; Pkg.activate("."); Pkg.instantiate();
             Pkg.add(url="https://github.com/abelsiqueira/SequGen.jl");
