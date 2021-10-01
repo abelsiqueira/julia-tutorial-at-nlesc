@@ -44,7 +44,7 @@ This tutorial assumes you know some Python so that we can freely compare to it.
     - [Type inference is hard](pages/basics/type-inference/)
 - [Creating a package: SequGen.jl - demonstration of good practices](pages/sequgen/)
 - Extra topics
-  - Calling Fortran and C code
+  - [Calling Fortran and C code](pages/extra/interoperability/)
   - [A more complicated example of multiple dispatch](pages/multiple-dispatch/)
   - Speed demonstration against Python
     - Example should be short
