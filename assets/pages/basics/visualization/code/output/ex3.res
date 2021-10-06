@@ -1,0 +1,1 @@
+Plots.AnimatedGif("/home/runner/work/julia-tutorial-at-nlesc/julia-tutorial-at-nlesc/__site/assets/pages/basics/visualization/code/output/vis-plots-anim-1.gif")

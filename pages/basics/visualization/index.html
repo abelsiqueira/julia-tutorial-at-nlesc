@@ -1,0 +1,127 @@
+<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/julia-tutorial-at-nlesc/libs/highlight/github.min.css"> <link href="/julia-tutorial-at-nlesc/css/bootstrap.min.css" rel=stylesheet  crossorigin=anonymous > <link rel=icon  href="/julia-tutorial-at-nlesc/images/logo.png"> <link rel=stylesheet  href="/julia-tutorial-at-nlesc/css/code-katex.css"> <link rel=stylesheet  href="/julia-tutorial-at-nlesc/css/custom.css"> <link rel=stylesheet  href="/julia-tutorial-at-nlesc/css/dark-mode.css"> <link rel=preconnect  href="https://fonts.gstatic.com"> <link href="https://fonts.googleapis.com/css2?family=Cinzel&family=Montserrat&display=swap" rel=stylesheet > <title>Visualization</title> <meta property="og:title" content="Julia Tutorial at NLeSC"> <meta name="twitter:title" content="Julia Tutorial at NLeSC"> <meta property="og:description" content=Visualization > <meta name="twitter:description" content=Visualization > <meta property="og:image" content="https://abelsiqueira.github.io/images/abel-banner.jpg"> <meta name="twitter:image" content="https://abelsiqueira.github.io/images/abel-banner.jpg"> <meta property="og:url" content=abelsiqueira.github.io > <meta name="twitter:card" content=summary_large_image > <header> <nav class="navbar navbar-expand-lg"> <div class=container-fluid > <a class="navbar-brand text-end" href="/julia-tutorial-at-nlesc/"></a> <button class=navbar-toggler  type=button  data-bs-toggle=collapse  data-bs-target="#navbarSupportedContent" aria-controls=navbarSupportedContent  aria-expanded=false  aria-label="Toggle navigation"> <span class=navbar-toggler-icon ></span> </button> <div class="collapse navbar-collapse" id=navbarSupportedContent > <ul class="navbar-nav ms-auto mb-2 mb-lg-0"> <li class=nav-item ><a class=nav-link  href="/julia-tutorial-at-nlesc/">Home</a> <li class=nav-item ><a class=nav-link  href="/julia-tutorial-at-nlesc/blog/">Blog</a> <li class=nav-item ><a class=nav-link  href="/julia-tutorial-at-nlesc/julia/">Julia</a> <li class=nav-item ><a class=nav-link  href="/julia-tutorial-at-nlesc/research/">Research</a> <li class=nav-item ><a class=nav-link  href="/julia-tutorial-at-nlesc/ufpr/">UFPR</a> </ul> <div class="dark-switch form-check form-switch"> <input type=checkbox  class=form-check-input  id=darkSwitch  /> <label class=custom-control-label  for=darkSwitch >Dark Mode</label> </div> <script src="/julia-tutorial-at-nlesc/libs/dark-mode-switch.min.js"></script> </div> </div> </nav> </header> <div class=container-fluid > <div class="container main-text"> <div class=franklin-content ><h1 id=fill_title ><a href="#fill_title" class=header-anchor >Visualization</a></h1> <p>Julia has a few packages for visualization, depending on your tastes.</p> <div class=franklin-toc ><ol><li><a href="#plots">Plots</a><li><a href="#pyplot">PyPlot</a><li><a href="#makie">Makie</a><li><a href="#statsplots">StatsPlots</a><li><a href="#graphrecipes">GraphRecipes</a></ol></div> <h2 id=plots ><a href="#plots" class=header-anchor >Plots</a></h2> <p>Plots is probably the most well-known, and also one of the oldest. It provides an abstraction layer and you can select the backend that actually does the plotting. See the backend list <a href="https://docs.juliaplots.org/latest/backends/">here</a>.</p> <p>When you install Plots it also install GR, which is quite fast and has some decent graphics. GR is the default choice, but if you alternate from it, you can activate it again with <code>gr&#40;&#41;</code>.</p> <p>The PyPlot package provides another common backend. It uses Python&#39;s matplotlib, which provides very nice graphics, although it is a bit slower than GR. Change to PyPlot using <code>pyplot&#40;&#41;</code>.</p> <p>You can also use UnicodePlots for plotting directly into the REPL. Change using <code>unicodeplots&#40;&#41;</code>.</p> <p>PlotlyJS is also quite well-liked, because it usually allows some interactivity in the plots. Use <code>plotlyjs&#40;&#41;</code> to change.</p> <p>Some packages are more fickle than others to install. GR, for instance, decided to not work with GitHub Actions for this site. For that reason, I use mostly PyPlot.</p> <p>Here are some examples with PyPlot. Try them with other backends.</p> <pre><code class=language-julia >using LinearAlgebra, Plots, Random
+pyplot&#40;&#41;
+
+Random.seed&#33;&#40;0&#41;
+n &#61; 100
+x &#61; range&#40;-1, 1, length&#61;n&#41;
+y &#61; 5 * exp.&#40;-10x.^2&#41; &#43; x &#43; 0.2 * randn&#40;n&#41;
+Etr, Ete &#61; Float64&#91;&#93;, Float64&#91;&#93;
+Ite &#61; shuffle&#40;1:n&#41;&#91;1:2 * div&#40;n, 5&#41;&#93;
+Itr &#61; setdiff&#40;1:n, Ite&#41;
+pmax &#61; 6
+plt &#61; plot&#40;title&#61;&quot;ML stuff&quot;, layout&#61;grid&#40;1, 2&#41;, size&#61;&#40;800,400&#41;&#41;
+scatter&#33;&#40;plt&#91;1&#93;, x, y, leg&#61;false&#41;
+for p &#61; 1:pmax
+  X &#61; &#91;x&#91;i&#93;^j for i &#61; 1:n, j &#61; 0:p&#93;
+  β &#61; X&#91;Itr,:&#93; \ y&#91;Itr&#93;
+  plot&#33;&#40;plt&#91;1&#93;, t -&gt; β&#91;1&#93; &#43; sum&#40;β&#91;j&#43;1&#93; * t^j for j &#61; 1:p&#41;, -1, 1&#41;
+  r &#61; y - X * β
+  push&#33;&#40;Etr, norm&#40;r&#91;Itr&#93;&#41;^2 / length&#40;Itr&#41;&#41;
+  push&#33;&#40;Ete, norm&#40;r&#91;Ite&#93;&#41;^2 / length&#40;Ite&#41;&#41;
+end
+plot&#33;&#40;title&#61;&quot;MSE&quot;&#41;
+plot&#33;&#40;plt&#91;2&#93;, Etr, m&#61;&#40;3,:blue,:square&#41;, lab&#61;&quot;Train&quot;&#41;
+plot&#33;&#40;plt&#91;2&#93;, Ete, m&#61;&#40;3,:red,:circle&#41;, lab&#61;&quot;Test&quot;&#41;
+png&#40;joinpath&#40;@OUTPUT, &quot;vis-plots-1&quot;&#41;&#41;</code></pre> <img src="/julia-tutorial-at-nlesc/assets/pages/basics/visualization/code/output/vis-plots-1.png" alt=""> <pre><code class=language-julia >X &#61; &#91;
+  0.4 * randn&#40;div&#40;n, 2&#41;, 2&#41; .&#43; 3;
+  1.2 * randn&#40;div&#40;n, 2&#41;, 2&#41; .- 1;
+&#93;
+h &#61; 1.0
+K&#40;x&#41; &#61; exp&#40;-norm&#40;x&#41;^2 / h&#41; / h
+f&#40;x&#41; &#61; sum&#40;K&#40;x - X&#91;i,:&#93;&#41; for i &#61; 1:n&#41; / n
+
+plt &#61; plot&#40;layout&#61;grid&#40;2,2&#41;, leg&#61;false&#41;
+scatter&#33;&#40;plt&#91;1&#93;, X&#91;:,1&#93;, X&#91;:,2&#93;, title&#61;&quot;scatter&quot;&#41;
+contour&#33;&#40;plt&#91;2&#93;, -5:0.1:5, -5:0.1:5, &#40;x,y&#41; -&gt; f&#40;&#91;x;y&#93;&#41;, title&#61;&quot;countour&quot;, levels&#61;50&#41;
+surface&#33;&#40;plt&#91;3&#93;, -5:0.1:5, -5:0.1:5, &#40;x,y&#41; -&gt; f&#40;&#91;x;y&#93;&#41;, title&#61;&quot;surface&quot;&#41;
+surface&#33;&#40;plt&#91;4&#93;, -5:0.1:5, -5:0.1:5, &#40;x,y&#41; -&gt; f&#40;&#91;x;y&#93;&#41;, title&#61;&quot;surface&quot;, camera&#61;&#40;70,10&#41;&#41;
+plt
+png&#40;joinpath&#40;@OUTPUT, &quot;vis-plots-2&quot;&#41;&#41;</code></pre> <img src="/julia-tutorial-at-nlesc/assets/pages/basics/visualization/code/output/vis-plots-2.png" alt=""> <pre><code class=language-julia >θg &#61; range&#40;0, 2π, length&#61;120&#41;
+anim &#61; Animation&#40;&#41;
+n &#61; 3
+plot&#40;leg&#61;false, axis&#61;false, grid&#61;false, size&#61;&#40;600,600&#41;&#41;
+for i &#61; 1:6
+  θr &#61; range&#40;0, 2π, length&#61;n &#43; 1&#41;
+  plot&#33;&#40;cos.&#40;θr&#41;, sin.&#40;θr&#41;, c&#61;:blue, opacity&#61;0.5, lw&#61;3&#41;
+  radius &#61; 1 / cos&#40;π / n&#41;
+  plot&#33;&#40;radius * cos.&#40;θr .&#43; π / n&#41;, radius * sin.&#40;θr .&#43; π / n&#41;, c&#61;:red, opacity&#61;0.5, lw&#61;3&#41;
+  xlims&#33;&#40;-2, 2&#41;
+  ylims&#33;&#40;-2, 2&#41;
+  frame&#40;anim&#41;
+  global n &#61; 2n
+end
+
+gif&#40;anim, joinpath&#40;@OUTPUT, &quot;vis-plots-anim-1.gif&quot;&#41;, fps&#61;1&#41;</code></pre><pre><code class="plaintext code-output">Plots.AnimatedGif("/home/runner/work/julia-tutorial-at-nlesc/julia-tutorial-at-nlesc/__site/assets/pages/basics/visualization/code/output/vis-plots-anim-1.gif")</code></pre>
+<img src="/julia-tutorial-at-nlesc/assets/pages/basics/visualization/code/output/vis-plots-anim-1.gif" alt="">
+<h2 id=pyplot ><a href="#pyplot" class=header-anchor >PyPlot</a></h2>
+<p>PyPlot uses Python&#39;s matplotlib, as said above. We can use it as a backend to Plots, but it can also be used directly. The main advantage are that the syntax is closer to matplotlib&#39;s syntax, and Plots doesn&#39;t support everything that PyPlot does.</p>
+<pre><code class=language-julia >using PyPlot
+x &#61; range&#40;0, 2π, length&#61;1000&#41;
+y &#61; sin.&#40;3 * x &#43; 4 * cos.&#40;2 * x&#41;&#41;
+PyPlot.figure&#40;&#41;
+PyPlot.plot&#40;x, y, color&#61;&quot;red&quot;, linewidth&#61;2.0, linestyle&#61;&quot;--&quot;&#41;
+PyPlot.title&#40;&quot;A sinusoidally modulated sinusoid&quot;&#41;
+PyPlot.savefig&#40;joinpath&#40;@OUTPUT, &quot;vis-pyplot-1&quot;&#41;&#41;</code></pre>
+<img src="/julia-tutorial-at-nlesc/assets/pages/basics/visualization/code/output/vis-pyplot-1.png" alt="">
+<h2 id=makie ><a href="#makie" class=header-anchor >Makie</a></h2>
+<p>Makie is a complete alternative to Plots. It tries to achieve high performance using heavier backends, such as OpenGL.</p>
+<h2 id=statsplots ><a href="#statsplots" class=header-anchor >StatsPlots</a></h2>
+<p>This package provides &quot;recipes for Plots.jl&quot; - i.e., new plotting functions - for statistical plots.</p>
+<pre><code class=language-julia >using DataFrames, RDatasets, StatsPlots
+
+df &#61; dataset&#40;&quot;datasets&quot;, &quot;iris&quot;&#41;
+@df df cornerplot&#40;cols&#40;1:4&#41;, compact&#61;true&#41;
+png&#40;joinpath&#40;@OUTPUT, &quot;vis-statsplots-1&quot;&#41;&#41;</code></pre><pre><code class="plaintext code-output">ArgumentError: Package DataFrames not found in current path:
+- Run `import Pkg; Pkg.add("DataFrames")` to install the DataFrames package.
+
+</code></pre>
+<p><span style="color:red;">// Image matching '/assets/pages/basics/visualization/code/vis-statsplots-1.png' not found. //</span></p>
+<pre><code class=language-julia >plt &#61; plot&#40;layout&#61;grid&#40;2, 2&#41;&#41;
+for i &#61; 1:4
+  violin&#33;&#40;plt&#91;i&#93;, df.Species, df&#91;&#33;,i&#93;, lab&#61;&quot;&quot;, ylabel&#61;names&#40;df&#41;&#91;i&#93;&#41;
+  boxplot&#33;&#40;plt&#91;i&#93;, df.Species, df&#91;&#33;,i&#93;, lab&#61;&quot;&quot;, fillalpha&#61;0.6, m&#61;&#40;0&#41;&#41;
+  dotplot&#33;&#40;plt&#91;i&#93;, df.Species, df&#91;&#33;,i&#93;, lab&#61;&quot;&quot;, m&#61;&#40;:white, 2&#41;, opacity&#61;0.6&#41;
+end
+png&#40;plt, joinpath&#40;@OUTPUT, &quot;vis-statsplots-2&quot;&#41;&#41;</code></pre><pre><code class="plaintext code-output">UndefVarError: df not defined
+</code></pre>
+<p><span style="color:red;">// Image matching '/assets/pages/basics/visualization/code/vis-statsplots-2.png' not found. //</span></p>
+<h2 id=graphrecipes ><a href="#graphrecipes" class=header-anchor >GraphRecipes</a></h2>
+<p>Plot recipes for Graphs.</p>
+<pre><code class=language-julia >using GraphRecipes
+g &#61; rand&#40;0:1, 5, 5&#41;
+graphplot&#40;g&#41;
+png&#40;joinpath&#40;@OUTPUT, &quot;vis-graphrecipes-1&quot;&#41;&#41;</code></pre>
+<img src="/julia-tutorial-at-nlesc/assets/pages/basics/visualization/code/output/vis-graphrecipes-1.png" alt="">
+
+</div>
+</div>
+</div>
+</div>
+
+<footer>
+<div class="container text-center social-footer">
+    <a href="mailto:abel.s.siqueira@gmail.com">
+        <i class="fas fa-2x fa-envelope" aria-hidden=true ></i>
+    </a><a href="https://github.com/abelsiqueira">
+        <i class="fab fa-2x fa-github-square" aria-hidden=true ></i>
+    </a><a href="https://linkedin.com/in/abel-siqueira/">
+        <i class="fab fa-2x fa-linkedin" aria-hidden=true ></i>
+    </a><a href="https://twitter.com/abel_siqueira">
+        <i class="fab fa-2x fa-twitter-square" aria-hidden=true ></i>
+    </a><a href="https://www.researchgate.net/profile/Abel_Siqueira">
+        <i class="fab fa-2x fa-researchgate" aria-hidden=true ></i>
+    </a><a href="http://orcid.org/0000-0003-4451-281X">
+        <i class="fab fa-2x fa-orcid" aria-hidden=true ></i>
+    </a>
+</div>
+</footer>
+
+
+
+<script src="/julia-tutorial-at-nlesc/libs/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();hljs.configure({tabReplace: '    '});</script>
+
+
+<script src="/julia-tutorial-at-nlesc/libs/bootstrap.bundle.min.js" crossorigin=anonymous ></script>
+<script src="https://kit.fontawesome.com/d17d5e5245.js" crossorigin=anonymous ></script>
+<script type="text/javascript" src="https://cdn.rawgit.com/pcooksey/bibtex-js/ef59e62c/src/bibtex_js.js"></script>
