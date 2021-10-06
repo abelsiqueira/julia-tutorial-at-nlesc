@@ -67,24 +67,20 @@ PyPlot.savefig&#40;joinpath&#40;@OUTPUT, &quot;vis-pyplot-1&quot;&#41;&#41;</cod
 <p>Makie is a complete alternative to Plots. It tries to achieve high performance using heavier backends, such as OpenGL.</p>
 <h2 id=statsplots ><a href="#statsplots" class=header-anchor >StatsPlots</a></h2>
 <p>This package provides &quot;recipes for Plots.jl&quot; - i.e., new plotting functions - for statistical plots.</p>
-<pre><code class=language-julia >using DataFrames, RDatasets, StatsPlots
+<pre><code class=language-julia >using RDatasets, StatsPlots
 
 df &#61; dataset&#40;&quot;datasets&quot;, &quot;iris&quot;&#41;
 @df df cornerplot&#40;cols&#40;1:4&#41;, compact&#61;true&#41;
-png&#40;joinpath&#40;@OUTPUT, &quot;vis-statsplots-1&quot;&#41;&#41;</code></pre><pre><code class="plaintext code-output">ArgumentError: Package DataFrames not found in current path:
-- Run `import Pkg; Pkg.add("DataFrames")` to install the DataFrames package.
-
-</code></pre>
-<p><span style="color:red;">// Image matching '/assets/pages/basics/visualization/code/vis-statsplots-1.png' not found. //</span></p>
+png&#40;joinpath&#40;@OUTPUT, &quot;vis-statsplots-1&quot;&#41;&#41;</code></pre>
+<img src="/julia-tutorial-at-nlesc/assets/pages/basics/visualization/code/output/vis-statsplots-1.png" alt="">
 <pre><code class=language-julia >plt &#61; plot&#40;layout&#61;grid&#40;2, 2&#41;&#41;
 for i &#61; 1:4
   violin&#33;&#40;plt&#91;i&#93;, df.Species, df&#91;&#33;,i&#93;, lab&#61;&quot;&quot;, ylabel&#61;names&#40;df&#41;&#91;i&#93;&#41;
   boxplot&#33;&#40;plt&#91;i&#93;, df.Species, df&#91;&#33;,i&#93;, lab&#61;&quot;&quot;, fillalpha&#61;0.6, m&#61;&#40;0&#41;&#41;
   dotplot&#33;&#40;plt&#91;i&#93;, df.Species, df&#91;&#33;,i&#93;, lab&#61;&quot;&quot;, m&#61;&#40;:white, 2&#41;, opacity&#61;0.6&#41;
 end
-png&#40;plt, joinpath&#40;@OUTPUT, &quot;vis-statsplots-2&quot;&#41;&#41;</code></pre><pre><code class="plaintext code-output">UndefVarError: df not defined
-</code></pre>
-<p><span style="color:red;">// Image matching '/assets/pages/basics/visualization/code/vis-statsplots-2.png' not found. //</span></p>
+png&#40;plt, joinpath&#40;@OUTPUT, &quot;vis-statsplots-2&quot;&#41;&#41;</code></pre>
+<img src="/julia-tutorial-at-nlesc/assets/pages/basics/visualization/code/output/vis-statsplots-2.png" alt="">
 <h2 id=graphrecipes ><a href="#graphrecipes" class=header-anchor >GraphRecipes</a></h2>
 <p>Plot recipes for Graphs.</p>
 <pre><code class=language-julia >using GraphRecipes

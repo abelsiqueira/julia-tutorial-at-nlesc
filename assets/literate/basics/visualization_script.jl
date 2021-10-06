@@ -67,7 +67,7 @@ PyPlot.plot(x, y, color="red", linewidth=2.0, linestyle="--")
 PyPlot.title("A sinusoidally modulated sinusoid")
 PyPlot.savefig(joinpath(@OUTPUT, "vis-pyplot-1"))
 
-using DataFrames, RDatasets, StatsPlots
+using RDatasets, StatsPlots
 
 df = dataset("datasets", "iris")
 @df df cornerplot(cols(1:4), compact=true)
