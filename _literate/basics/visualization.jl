@@ -122,7 +122,7 @@ It tries to achieve high performance using heavier backends, such as OpenGL.
 
 This package provides "recipes for Plots.jl" - i.e., new plotting functions - for statistical plots.
 =#
-using DataFrames, RDatasets, StatsPlots
+using RDatasets, StatsPlots
 
 df = dataset("datasets", "iris")
 @df df cornerplot(cols(1:4), compact=true)
