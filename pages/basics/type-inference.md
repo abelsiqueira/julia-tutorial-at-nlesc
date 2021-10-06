@@ -3,4 +3,4 @@
 
 # {{fill title}}
 
-\literate{/_literate/type-inference.jl}
+\literate{/_literate/basics/type-inference.jl}

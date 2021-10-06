@@ -5,7 +5,10 @@
 
 # Introduction
 
+TODO: Use summary tag
+
 TODO: add reference
+
 Julia was created in 2010 by someone with an ambitious goal: be as fast as lower-level languages but with a higher-level syntax. It achieves this by means of just-in-time compilation: when a code is executed for the first time, the compiler is called. The second time the code is called, it is already compiled and can be executed quickly.
 
 Since its public release in 2012 it has attracted many researchers and software developers in part for these reasons.
@@ -40,12 +43,10 @@ This tutorial assumes you know some Python so that we can freely compare to it.
   - [Install Julia, an IDE, and some packages](pages/basics/installation/)
   - Main features and bugs
     - [Main syntax differences](pages/basics/syntax/)
-    - [Structures, not classes](pages/basics/structures/)
     - [Visualization packages](pages/basics/visualization/)
     - [Type inference is hard](pages/basics/type-inference/)
 - [Creating a package: SequGen.jl - demonstration of good practices](pages/sequgen/)
 - Extra topics
-  - [A more complicated example of multiple dispatch](pages/multiple-dispatch/)
   - [Calling Fortran and C code](pages/extra/interoperability/)
   - [Nonlinear Optimization in Python vs Julia](pages/extra/optimization/)
   - [Parallel computing](pages/extra/parallel/)
