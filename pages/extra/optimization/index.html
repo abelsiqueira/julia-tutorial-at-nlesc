@@ -68,8 +68,8 @@ output &#61; optimize&#40;
 β &#61; Optim.minimizer&#40;output&#41;
 hβ &#61; sigmoid.&#40;β&#91;1&#93; .&#43; X * β&#91;2:end&#93;&#41;
 ŷ &#61; round.&#40;hβ&#41;
-accuracy &#61; sum&#40;y .&#61;&#61; ŷ&#41; / n</code></pre><pre><code class="plaintext code-output">ArgumentError: Package CSV not found in current path:
-- Run `import Pkg; Pkg.add("CSV")` to install the CSV package.
+accuracy &#61; sum&#40;y .&#61;&#61; ŷ&#41; / n</code></pre><pre><code class="plaintext code-output">ArgumentError: Package DataFrames not found in current path:
+- Run `import Pkg; Pkg.add("DataFrames")` to install the DataFrames package.
 
 </code></pre> <p>The beginning of the codes is similar: read the file, create <code>X</code> and <code>y</code>.</p> <p>We then define the functions. Some main differences:</p> <ul> <li><p>Instead of writing the objective vectorized, I use a loop over the indices.</p> <li><p>To avoid creating a vector for <code>β&#91;2:end&#93;</code>, I use <code>@views</code> at the beginning of the line. The macro automatically transforms <code>β&#91;2:end&#93;</code> into <code>view&#40;β, 2:end&#41;</code>.</p> <li><p>The Julia <code>myjac</code> function receives an additional argument for the memory that it should reuse &#40;<code>gx</code>&#41; for the output.</p> </ul> <p>Now, the specific part. In Python, we use SciPy&#39;s optimize, and in Julia we&#39;re using Optim.jl. The arguments are similar, although Optim&#39;s arguments are positional.</p> <p>We can benchmark Optim&#39;s code to compare against SciPy&#39;s optimize:</p> <pre><code class=language-julia >using BenchmarkTools
 
