@@ -68,10 +68,20 @@ output &#61; optimize&#40;
 β &#61; Optim.minimizer&#40;output&#41;
 hβ &#61; sigmoid.&#40;β&#91;1&#93; .&#43; X * β&#91;2:end&#93;&#41;
 ŷ &#61; round.&#40;hβ&#41;
-accuracy &#61; sum&#40;y .&#61;&#61; ŷ&#41; / n</code></pre><pre><code class="plaintext code-output">ArgumentError: Package DataFrames not found in current path:
-- Run `import Pkg; Pkg.add("DataFrames")` to install the DataFrames package.
+accuracy &#61; sum&#40;y .&#61;&#61; ŷ&#41; / n</code></pre><pre><code class="plaintext code-output">0.986</code></pre>
+<p>The beginning of the codes is similar: read the file, create <code>X</code> and <code>y</code>.</p>
+<p>We then define the functions. Some main differences:</p>
+<ul>
+<li><p>Instead of writing the objective vectorized, I use a loop over the indices.</p>
 
-</code></pre> <p>The beginning of the codes is similar: read the file, create <code>X</code> and <code>y</code>.</p> <p>We then define the functions. Some main differences:</p> <ul> <li><p>Instead of writing the objective vectorized, I use a loop over the indices.</p> <li><p>To avoid creating a vector for <code>β&#91;2:end&#93;</code>, I use <code>@views</code> at the beginning of the line. The macro automatically transforms <code>β&#91;2:end&#93;</code> into <code>view&#40;β, 2:end&#41;</code>.</p> <li><p>The Julia <code>myjac</code> function receives an additional argument for the memory that it should reuse &#40;<code>gx</code>&#41; for the output.</p> </ul> <p>Now, the specific part. In Python, we use SciPy&#39;s optimize, and in Julia we&#39;re using Optim.jl. The arguments are similar, although Optim&#39;s arguments are positional.</p> <p>We can benchmark Optim&#39;s code to compare against SciPy&#39;s optimize:</p> <pre><code class=language-julia >using BenchmarkTools
+<li><p>To avoid creating a vector for <code>β&#91;2:end&#93;</code>, I use <code>@views</code> at the beginning of the line. The macro automatically transforms <code>β&#91;2:end&#93;</code> into <code>view&#40;β, 2:end&#41;</code>.</p>
+
+<li><p>The Julia <code>myjac</code> function receives an additional argument for the memory that it should reuse &#40;<code>gx</code>&#41; for the output.</p>
+
+</ul>
+<p>Now, the specific part. In Python, we use SciPy&#39;s optimize, and in Julia we&#39;re using Optim.jl. The arguments are similar, although Optim&#39;s arguments are positional.</p>
+<p>We can benchmark Optim&#39;s code to compare against SciPy&#39;s optimize:</p>
+<pre><code class=language-julia >using BenchmarkTools
 
 β₀ &#61; zeros&#40;p &#43; 1&#41;
 @benchmark optimize&#40;
@@ -82,8 +92,19 @@ accuracy &#61; sum&#40;y .&#61;&#61; ŷ&#41; / n</code></pre><pre><code class="
   Optim.Options&#40;
     g_tol &#61; 1e-4,
   &#41;,
-&#41;</code></pre><pre><code class="plaintext code-output">UndefVarError: p not defined
-</code></pre> <p>In Julia, we don&#39;t have a single optimization library. In fact, I&#39;m co-creator of the <a href="https://juliasmoothoptimizers.github.io">JuliaSmoothOptimizers</a> organization, which &quot;competes&quot; against Optim. We focus on tools for Nonlinear Optimization developers, instead of focusing on users, so our basic interface is a lot more raw. On the other hand, we claim that our methods are faster, but notice my bias.</p> <p>NLPModels alone doesn&#39;t have a simple user interface, so we create a struct <code>MyLogisticRegression</code> to hold the problem and to indicate the objective and gradient. The struct fields are not obvious and you have to follow the docs of NLPModels to learn how to do it. But you can check the speed gain.</p> <pre><code class=language-julia >using JSOSolvers, Logging, NLPModels
+&#41;</code></pre><pre><code class="plaintext code-output">BenchmarkTools.Trial: 12 samples with 1 evaluation.
+ Range (min … max):  416.328 ms … 495.268 ms  ┊ GC (min … max): 0.00% … 0.00%
+ Time  (median):     443.274 ms               ┊ GC (median):    0.00%
+ Time  (mean ± σ):   449.331 ms ±  25.217 ms  ┊ GC (mean ± σ):  0.31% ± 0.69%
+
+  █     █   ███ █            █   █  █          █     █        █  
+  █▁▁▁▁▁█▁▁▁███▁█▁▁▁▁▁▁▁▁▁▁▁▁█▁▁▁█▁▁█▁▁▁▁▁▁▁▁▁▁█▁▁▁▁▁█▁▁▁▁▁▁▁▁█ ▁
+  416 ms           Histogram: frequency by time          495 ms <
+
+ Memory estimate: 30.37 MiB, allocs estimate: 1431.</code></pre>
+<p>In Julia, we don&#39;t have a single optimization library. In fact, I&#39;m co-creator of the <a href="https://juliasmoothoptimizers.github.io">JuliaSmoothOptimizers</a> organization, which &quot;competes&quot; against Optim. We focus on tools for Nonlinear Optimization developers, instead of focusing on users, so our basic interface is a lot more raw. On the other hand, we claim that our methods are faster, but notice my bias.</p>
+<p>NLPModels alone doesn&#39;t have a simple user interface, so we create a struct <code>MyLogisticRegression</code> to hold the problem and to indicate the objective and gradient. The struct fields are not obvious and you have to follow the docs of NLPModels to learn how to do it. But you can check the speed gain.</p>
+<pre><code class=language-julia >using JSOSolvers, Logging, NLPModels
 
 struct MyLogisticRegression &lt;: AbstractNLPModel&#123;Float64, Vector&#123;Float64&#125;&#125;
   meta :: NLPModelMeta&#123;Float64, Vector&#123;Float64&#125;&#125;
@@ -106,5 +127,61 @@ println&#40;output&#41;
 
 @benchmark with_logger&#40;NullLogger&#40;&#41;&#41; do
   lbfgs&#40;nlp, atol&#61;1e-4, rtol&#61;1e-4&#41;
-end</code></pre><pre><code class="plaintext code-output">UndefVarError: X not defined
-</code></pre> <p>TODO: Check progress of ManualNLPModels</p> <p>One noteworthy aspect of this comparison is that Python uses the L-BFGS-B Fortran algorithm, which is a reference implementation of a classic method. The Julia versions are pure Julia.</p> </div> </div> </div> </div> <footer> <div class="container text-center social-footer"> <a href="mailto:abel.s.siqueira@gmail.com"> <i class="fas fa-2x fa-envelope" aria-hidden=true ></i> </a><a href="https://github.com/abelsiqueira"> <i class="fab fa-2x fa-github-square" aria-hidden=true ></i> </a><a href="https://linkedin.com/in/abel-siqueira/"> <i class="fab fa-2x fa-linkedin" aria-hidden=true ></i> </a><a href="https://twitter.com/abel_siqueira"> <i class="fab fa-2x fa-twitter-square" aria-hidden=true ></i> </a><a href="https://www.researchgate.net/profile/Abel_Siqueira"> <i class="fab fa-2x fa-researchgate" aria-hidden=true ></i> </a><a href="http://orcid.org/0000-0003-4451-281X"> <i class="fab fa-2x fa-orcid" aria-hidden=true ></i> </a> </div> </footer> <script src="/julia-tutorial-at-nlesc/libs/highlight/highlight.pack.js"></script> <script>hljs.initHighlightingOnLoad();hljs.configure({tabReplace: ' '});</script> <script src="/julia-tutorial-at-nlesc/libs/bootstrap.bundle.min.js" crossorigin=anonymous ></script> <script src="https://kit.fontawesome.com/d17d5e5245.js" crossorigin=anonymous ></script> <script type="text/javascript" src="https://cdn.rawgit.com/pcooksey/bibtex-js/ef59e62c/src/bibtex_js.js"></script>
+end</code></pre><pre><code class="plaintext code-output">Generic Execution stats
+  status: first-order stationary
+  objective value: 0.035504781916813
+  primal feasibility: 0.0
+  dual feasibility: 0.00011923338501061753
+  solution: [-0.008672859839379604  -0.7833754246517539  -0.09849721612105959  -0.2561961749800854 ⋯ -0.04372711407863323]
+  iterations: 30
+  elapsed time: 1.056102991104126
+BenchmarkTools.Trial: 25 samples with 1 evaluation.
+ Range (min … max):  196.716 ms … 216.459 ms  ┊ GC (min … max): 0.00% … 0.00%
+ Time  (median):     207.649 ms               ┊ GC (median):    0.00%
+ Time  (mean ± σ):   207.188 ms ±   5.739 ms  ┊ GC (mean ± σ):  0.32% ± 1.09%
+
+  ▁    ▁    ▁▁  █ █   ▁      ▁  ▁▁ ▁▁    ▁ ▁▁ ▁  █ ▁▁  ▁      █  
+  █▁▁▁▁█▁▁▁▁██▁▁█▁█▁▁▁█▁▁▁▁▁▁█▁▁██▁██▁▁▁▁█▁██▁█▁▁█▁██▁▁█▁▁▁▁▁▁█ ▁
+  197 ms           Histogram: frequency by time          216 ms <
+
+ Memory estimate: 14.42 MiB, allocs estimate: 918.</code></pre>
+<p>TODO: Check progress of ManualNLPModels</p>
+<p>One noteworthy aspect of this comparison is that Python uses the L-BFGS-B Fortran algorithm, which is a reference implementation of a classic method. The Julia versions are pure Julia.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<footer>
+<div class="container text-center social-footer">
+    <a href="mailto:abel.s.siqueira@gmail.com">
+        <i class="fas fa-2x fa-envelope" aria-hidden=true ></i>
+    </a><a href="https://github.com/abelsiqueira">
+        <i class="fab fa-2x fa-github-square" aria-hidden=true ></i>
+    </a><a href="https://linkedin.com/in/abel-siqueira/">
+        <i class="fab fa-2x fa-linkedin" aria-hidden=true ></i>
+    </a><a href="https://twitter.com/abel_siqueira">
+        <i class="fab fa-2x fa-twitter-square" aria-hidden=true ></i>
+    </a><a href="https://www.researchgate.net/profile/Abel_Siqueira">
+        <i class="fab fa-2x fa-researchgate" aria-hidden=true ></i>
+    </a><a href="http://orcid.org/0000-0003-4451-281X">
+        <i class="fab fa-2x fa-orcid" aria-hidden=true ></i>
+    </a>
+</div>
+</footer>
+
+
+
+
+
+
+
+
+<script src="/julia-tutorial-at-nlesc/libs/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();hljs.configure({tabReplace: '    '});</script>
+
+
+<script src="/julia-tutorial-at-nlesc/libs/bootstrap.bundle.min.js" crossorigin=anonymous ></script>
+<script src="https://kit.fontawesome.com/d17d5e5245.js" crossorigin=anonymous ></script>
+<script type="text/javascript" src="https://cdn.rawgit.com/pcooksey/bibtex-js/ef59e62c/src/bibtex_js.js"></script>
