@@ -41,6 +41,7 @@ This tutorial assumes you know some Python so that we can freely compare to it.
   - Main features and bugs
     - [Main syntax differences](pages/basics/syntax/)
     - [Structures, not classes](pages/basics/structures/)
+    - [Visualization packages](pages/basics/visualization/)
     - [Type inference is hard](pages/basics/type-inference/)
 - [Creating a package: SequGen.jl - demonstration of good practices](pages/sequgen/)
 - Extra topics
@@ -59,7 +60,7 @@ This tutorial assumes you know some Python so that we can freely compare to it.
   - Is the code portable?
   - When should I use Julia instead of Python?
   - When should I use Python instead of Julia?
-  - Can I use Rest API to talk with other applications?
 
 - Left out/maybe if there's more time
   - GPU computing
+  - Rest API
