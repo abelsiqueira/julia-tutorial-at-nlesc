@@ -66,9 +66,9 @@ So that we can compare the time
 Here's a similar Julia version
 
 ```julia:ex1
-using ADNLPModels, CSV, DataFrames, Optim, JSOSolvers, LinearAlgebra, Logging, NLPModels
+using CSV, DataFrames, Optim, LinearAlgebra
 
-path = joinpath("assets", "python-scipy-optimize-example", "data.csv")
+path = joinpath("assets", "data.csv")
 df = DataFrame(CSV.File(path))
 X = Matrix(df[:,1:end-1])
 y = df[:,end]
@@ -146,6 +146,8 @@ The struct fields are not obvious and you have to follow the docs of NLPModels t
 But you can check the speed gain.
 
 ```julia:ex3
+using JSOSolvers, Logging, NLPModels
+
 struct MyLogisticRegression <: AbstractNLPModel{Float64, Vector{Float64}}
   meta :: NLPModelMeta{Float64, Vector{Float64}}
   counters :: Counters

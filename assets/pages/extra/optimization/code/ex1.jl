@@ -1,7 +1,7 @@
 # This file was generated, do not modify it. # hide
-using ADNLPModels, CSV, DataFrames, Optim, JSOSolvers, LinearAlgebra, Logging, NLPModels
+using CSV, DataFrames, Optim, LinearAlgebra
 
-path = joinpath("assets", "python-scipy-optimize-example", "data.csv")
+path = joinpath("assets", "data.csv")
 df = DataFrame(CSV.File(path))
 X = Matrix(df[:,1:end-1])
 y = df[:,end]

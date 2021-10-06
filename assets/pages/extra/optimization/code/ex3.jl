@@ -1,4 +1,6 @@
 # This file was generated, do not modify it. # hide
+using JSOSolvers, Logging, NLPModels
+
 struct MyLogisticRegression <: AbstractNLPModel{Float64, Vector{Float64}}
   meta :: NLPModelMeta{Float64, Vector{Float64}}
   counters :: Counters
