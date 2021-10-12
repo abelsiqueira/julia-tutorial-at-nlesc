@@ -75,9 +75,9 @@ png&#40;joinpath&#40;@OUTPUT, &quot;vis-statsplots-1&quot;&#41;&#41;</code></pre
 <img src="/julia-tutorial-at-nlesc/assets/pages/basics/visualization/code/output/vis-statsplots-1.png" alt="">
 <pre><code class=language-julia >plt &#61; plot&#40;layout&#61;grid&#40;2, 2&#41;&#41;
 for i &#61; 1:4
-  violin&#33;&#40;plt&#91;i&#93;, df.Species, df&#91;&#33;,i&#93;, lab&#61;&quot;&quot;, ylabel&#61;names&#40;df&#41;&#91;i&#93;&#41;
-  boxplot&#33;&#40;plt&#91;i&#93;, df.Species, df&#91;&#33;,i&#93;, lab&#61;&quot;&quot;, fillalpha&#61;0.6, m&#61;&#40;0&#41;&#41;
-  dotplot&#33;&#40;plt&#91;i&#93;, df.Species, df&#91;&#33;,i&#93;, lab&#61;&quot;&quot;, m&#61;&#40;:white, 2&#41;, opacity&#61;0.6&#41;
+  StatsPlots.violin&#33;&#40;plt&#91;i&#93;, df.Species, df&#91;&#33;,i&#93;, lab&#61;&quot;&quot;, ylabel&#61;names&#40;df&#41;&#91;i&#93;&#41;
+  StatsPlots.boxplot&#33;&#40;plt&#91;i&#93;, df.Species, df&#91;&#33;,i&#93;, lab&#61;&quot;&quot;, fillalpha&#61;0.6, m&#61;&#40;0&#41;&#41;
+  StatsPlots.dotplot&#33;&#40;plt&#91;i&#93;, df.Species, df&#91;&#33;,i&#93;, lab&#61;&quot;&quot;, m&#61;&#40;:white, 2&#41;, opacity&#61;0.6&#41;
 end
 png&#40;plt, joinpath&#40;@OUTPUT, &quot;vis-statsplots-2&quot;&#41;&#41;</code></pre>
 <img src="/julia-tutorial-at-nlesc/assets/pages/basics/visualization/code/output/vis-statsplots-2.png" alt="">
