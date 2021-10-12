@@ -18,9 +18,7 @@ $$\nabla \ell(\beta) = \frac{1}{n} \sum_{i=1}^n \big(y_i - h_{\beta}(x_i)\big) \
 
 where $e$ is the vector with all components equal to 1.
 
-Download the data.csv to follow the example.
-
-TODO: link to data.csv
+Download [data.csv](https://github.com/abelsiqueira/julia-tutorial-at-nlesc/raw/main/assets/data.csv) to follow the example.
 
 In Python, we can define the function $-\ell(\beta)$ to minimize, and its derivatives, as follows:
 
@@ -168,7 +166,7 @@ println(output)
   lbfgs(nlp, atol=1e-4, rtol=1e-4)
 end
 
-# TODO: Check progress of ManualNLPModels
+# TODO: Check progress of ManualNLPModels (check after 18-Oct)
 
 #=
 One noteworthy aspect of this comparison is that Python uses the L-BFGS-B Fortran algorithm, which is a reference implementation of a classic method.

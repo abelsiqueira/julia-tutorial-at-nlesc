@@ -5,11 +5,7 @@
 
 # Introduction
 
-TODO: Use summary tag
-
-TODO: add reference
-
-Julia was created in 2010 by someone with an ambitious goal: be as fast as lower-level languages but with a higher-level syntax. It achieves this by means of just-in-time compilation: when a code is executed for the first time, the compiler is called. The second time the code is called, it is already compiled and can be executed quickly.
+Julia was created around 2010 by someone with an ambitious goal: be as fast as lower-level languages but with a higher-level syntax. It achieves this by means of just-in-time compilation: when a code is executed for the first time, the compiler is called. The second time the code is called, it is already compiled and can be executed quickly.
 
 Since its public release in 2012 it has attracted many researchers and software developers in part for these reasons.
 However, it is also a very pleasant language to write code in, largely for its linear algebra capabilities.
@@ -19,9 +15,9 @@ Julia is inspired by several languages and manages to attract people from differ
 It lacks a higher adoption rate, in part because it's very new, compared to other languages like Python and R.
 Julia 1.0 was released in 2018, and its current Long Term Support version, 1.6, was released in 2020.
 In some areas, however, it has seen a very large adoption.
-Two main groups being former MatLab users, and optimization developers.
+Two main groups being former MatLab users, and optimization developers, which is where I come from.
 
-TODO: refactor and expand these paragraphs.
+More information about Julia's creation can be seen through papers related to it [here](https://julialang.org/research/).
 
 In this tutorial, we'll take a glimpse of what Julia can and can't do (well), comparing it against Python.
 At the end of this tutorial, you should

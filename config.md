@@ -43,3 +43,14 @@ Add here global latex commands to use throughout your pages.
   </figure>
   ~~~
 }
+\newcommand{\detbegin}[1]{
+  ~~~
+  <details>
+  <summary><span class="details-summary">#1</span></summary>
+  ~~~
+}
+\newcommand{\detend}{
+  ~~~
+  </details>
+  ~~~
+}

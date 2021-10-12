@@ -16,13 +16,12 @@ All of them need you to have a binary `julia` or `julia.exe` accessible.
 
 ## Binary executable
 
-### Windows
+\detbegin{Windows}
 
 The easiest way of probably to download the installer on the [Julia Downloads page](https://julialang.org/downloads/).
 
-TODO: Ask someone using Windows what's the best way.
-
-### MacOS and Linux
+\detend
+\detbegin{MacOS and Linux}
 
 For MacOS and Linux, you could also follow the [Julia Downloads page](https://julialang.org/downloads/), but I also maintain a installer called [Jill](https://github.com/abelsiqueira/jill).
 You can download it with
@@ -40,13 +39,14 @@ julia -v
 
 Your package manager might also have `julia` available, but make sure the version is updated.
 
+\detend
 ## Jupyter notebook (Julia's kernel)
 
 You can install Julia for Jupyter in two ways:
 - Using your existing Python + Jupyter installation;
 - Install a standalone Julia Jupyter installation.
 
-### Existing Python + Jupyter installation
+\detbegin{Existing Python + Jupyter installation}
 
 I'm assuming that you have `python` and the Jupyter notebook for `python` working properly, so that you only need to install Julia's kernel.
 Open `julia`. You should see a welcome text and a prompty like `julia> `.
@@ -56,7 +56,8 @@ Open `julia`. You should see a welcome text and a prompty like `julia> `.
 - Enter `using Pkg`.
 - Enter `Pkg.add("IJulia")` (Capital i and capital j).
 
-### Standalone
+\detend
+\detbegin{Standalone}
 
 Open `julia`. You should see a welcome text and a prompty like `julia> `.
 
@@ -64,6 +65,8 @@ Open `julia`. You should see a welcome text and a prompty like `julia> `.
 - Enter `add IJulia` (Capital i and capital j).
   - This will install a minimal Python + Jupyter distribution via miniconda.
 - To start the notebook, enter `using IJulia` and then `notebook()`.
+
+\detend
 
 ## Editor/IDE
 
@@ -82,7 +85,7 @@ Alternatively, the four options below are common:
 - [Sublime text](https://github.com/JuliaEditorSupport/Julia-sublime)
 - [Notepad++](https://github.com/JuliaEditorSupport/julia-NotepadPlusPlus)
 
-### More on VSCode
+\detbegin{More on VSCode}
 
 If you choose to use VSCode, you should test the following:
 - Open a Julia terminal
@@ -99,6 +102,7 @@ The first time you try to run commands on the Julia VSCode, it will prepare the 
 When you open a Julia project folder, the environment should be automatically set.
 You can change it on the `julia env` toolbar option.
 
+\detend
 ## Pkg - Install packages
 
 Julia comes with a built-in package manager: `Pkg`.
