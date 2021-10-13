@@ -66,9 +66,9 @@ ccall&#40;
 
 println&#40;&quot;‖LU - &#40;L &#43; U - I&#41;‖ &#61; &quot;, norm&#40;LU - L - U &#43; I&#41;&#41;
 println&#40;&quot;‖x - 1‖ &#61; &quot;, norm&#40;x .- 1&#41;&#41;
-println&#40;&quot;‖A * x - b‖ &#61; &quot;, norm&#40;A * x - b&#41;&#41;</code></pre><pre><code class="plaintext code-output">‖LU - (L + U - I)‖ = 2.3439525e-5
-‖x - 1‖ = 1.09899065e-5
-‖A * x - b‖ = 1.7192608e-6
+println&#40;&quot;‖A * x - b‖ &#61; &quot;, norm&#40;A * x - b&#41;&#41;</code></pre><pre><code class="plaintext code-output">‖LU - (L + U - I)‖ = 2.414704e-6
+‖x - 1‖ = 2.3439863e-5
+‖A * x - b‖ = 2.3841858e-6
 </code></pre> <p>The first part of the code defines a &quot;good&quot; matrix <code>A</code> and <code>b</code> such that the solution to the linear system <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>x</mi><mo>=</mo><mi>b</mi></mrow><annotation encoding="application/x-tex">Ax = b</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal">A</span><span class="mord mathnormal">x</span><span class=mspace  style="margin-right:0.2777777777777778em;"></span><span class=mrel >=</span><span class=mspace  style="margin-right:0.2777777777777778em;"></span></span><span class=base ><span class=strut  style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathnormal">b</span></span></span></span> is <code>x &#61; ones&#40;n&#41;</code>. The <code>LU &#61; copy&#40;A&#41;</code> and <code>x &#61; copy&#40;b&#41;</code> are so that we can use <code>A</code> and <code>b</code> for testing later. One important part of the code is that since we used the default variables for Fortran, we used <code>float</code> for C, and we have to use an appropriate type for Julia as well. <code>Float32</code> refers to a 32 bits real number, i.e. <code>float</code>. <code>Cfloat</code> is just an alias for <code>Float32</code>.</p> <p>The <code>ccall</code> signature is simple:</p> <ul> <li><p>The first argument is the function or a tuple with the function and it&#39;s library;</p> <li><p>The second argument is the return type;</p> <li><p>The third argument is a tuple with the types of every argument;</p> <li><p>The other arguments are the arguments to the C/Fortran function.</p> </ul> <p>Noteworthy:</p> <ul> <li><p>Fortran with <code>gfortran</code> added a <code>_</code> to the function name;</p> <li><p><code>Ref&#123;T&#125;</code> indicates that a reference will be passed, allowing the argument to be modified &#40;<code>Ptr&#123;T&#125;</code> also exists, to indicate returned pointers by C&#41;;</p> <li><p>Fortran always passes variables by reference.</p> </ul> <h2 id=fftw ><a href="#fftw" class=header-anchor >FFTW</a></h2> <p>For a more substantial example, we can look at the <a href="https://www.fftw.org">FFTW Library</a> for the discrete Fourier transform. The compilation of this example takes some time and the installation may be less straightforward than in my system, so be warned.</p> <ul> <li><p>First, download the library. I&#39;m using v3.3.10. Untar it too.</p> <li><p>Then, enter the folder and issue a <code>./configure --enable-shared</code>.</p> <li><p>Now, enter <code>make</code>.</p> </ul> <p>This will produce a shared library <code>.libs/libfftw3.so</code>.</p> <p>Now we can write a function to compute the FFT of a given vector using this lib.</p> <p>We&#39;ll be create a simple version of the following C code, available in the <a href="https://www.fftw.org/fftw3_doc/Complex-One_002dDimensional-DFTs.html#Complex-One_002dDimensional-DFTs">online docs of FFTW</a>.</p> <pre><code class=language-julia >#include &lt;fftw3.h&gt;
 ...
 &#123;
@@ -111,14 +111,14 @@ end
 
 x &#61; rand&#40;ComplexF64, 8&#41;
 y &#61; myfft&#40;x&#41;</code></pre><pre><code class="plaintext code-output">8-element Vector{ComplexF64}:
-    3.404743278537992 + 3.821087983097238im
- -0.26486247521370154 - 0.4911133308164072im
-   1.5955396780430477 + 0.4242019858336654im
-   0.9986646595785275 + 0.11249108356520132im
- -0.14239260996078196 - 2.4940518779387317im
-  -0.5443262061924964 + 1.370026928905991im
-  0.28553389762329595 - 0.955142707646182im
-  -0.4668842997597408 - 0.27488135416282855im</code></pre> <p>We can implement the a basic DFT to compare:</p> <pre><code class=language-julia >function mydft&#40;x&#41;
+     4.8563398366457 + 4.918043077845817im
+ -0.5584713687872389 - 0.06972589172145907im
+  1.1595202486828367 - 0.39028854391493795im
+ -0.9715037230022334 - 1.9489890967053087im
+   0.564273701601059 + 0.2184975837835994im
+ 0.19601917302905525 + 0.09751647349067052im
+ -0.6983040806953942 - 0.5176872658813294im
+  1.0159206572089095 - 0.8465624562760898im</code></pre> <p>We can implement the a basic DFT to compare:</p> <pre><code class=language-julia >function mydft&#40;x&#41;
   n &#61; length&#40;x&#41;
   return &#91;
     sum&#40;x&#91;i&#43;1&#93; * exp&#40;-im * 2π * i * k / n&#41; for i &#61; 0:n-1&#41;
@@ -126,23 +126,23 @@ y &#61; myfft&#40;x&#41;</code></pre><pre><code class="plaintext code-output">8-
   &#93;
 end
 mydft&#40;x&#41;</code></pre><pre><code class="plaintext code-output">8-element Vector{ComplexF64}:
-   3.4047432785379925 + 3.821087983097238im
- -0.26486247521370165 - 0.49111333081640707im
-   1.5955396780430477 + 0.42420198583366553im
-   0.9986646595785265 + 0.1124910835652011im
- -0.14239260996078096 - 2.494051877938732im
-  -0.5443262061924979 + 1.3700269289059888im
-    0.285533897623296 - 0.9551427076461843im
- -0.46688429975973905 - 0.2748813541628262im</code></pre> <p>You may have noticed:</p> <ul> <li><p>Memory is handled by Julia in this case, so we don&#39;t use <code>malloc</code>.</p> <li><p>The C struct <code>fftw_complex</code> simply stores two <code>double</code>s. In Julia we would need a similar struct, and <code>ComplexF64</code> is exactly that, so it&#39;s extra smooth.</p> <li><p>We can use <code>Ptr&#123;Cvoid&#125;</code> to avoid dealing with the return type of <code>fftw_plan_dft_1d</code>, which is an opaque pointer.</p> </ul> <h3 id=fftwjl_and_where_are_the_so_files ><a href="#fftwjl_and_where_are_the_so_files" class=header-anchor >FFTW.jl &#40;and where are the .so files?&#41;</a></h3> <p>The ability to easily integrate C/Fortran functions is also one of the foundations of Julia. In fact, the example above is adapted from a <a href="https://github.com/JuliaLang/julia/commit/021afbfbac5ea941dc5402af2a9dea6d91fc7267">2011 commit</a> almost unmodified. The FFTW package is now wrapped in the package <code>FFTW.jl</code>. You can add and use it easily:</p> <pre><code class=language-julia >using FFTW
+     4.8563398366457 + 4.918043077845816im
+ -0.5584713687872391 - 0.06972589172145949im
+  1.1595202486828364 - 0.39028854391493806im
+ -0.9715037230022335 - 1.948989096705309im
+  0.5642737016010596 + 0.21849758378359918im
+ 0.19601917302905442 + 0.09751647349066861im
+ -0.6983040806953944 - 0.5176872658813332im
+  1.0159206572089108 - 0.8465624562760865im</code></pre> <p>You may have noticed:</p> <ul> <li><p>Memory is handled by Julia in this case, so we don&#39;t use <code>malloc</code>.</p> <li><p>The C struct <code>fftw_complex</code> simply stores two <code>double</code>s. In Julia we would need a similar struct, and <code>ComplexF64</code> is exactly that, so it&#39;s extra smooth.</p> <li><p>We can use <code>Ptr&#123;Cvoid&#125;</code> to avoid dealing with the return type of <code>fftw_plan_dft_1d</code>, which is an opaque pointer.</p> </ul> <h3 id=fftwjl_and_where_are_the_so_files ><a href="#fftwjl_and_where_are_the_so_files" class=header-anchor >FFTW.jl &#40;and where are the .so files?&#41;</a></h3> <p>The ability to easily integrate C/Fortran functions is also one of the foundations of Julia. In fact, the example above is adapted from a <a href="https://github.com/JuliaLang/julia/commit/021afbfbac5ea941dc5402af2a9dea6d91fc7267">2011 commit</a> almost unmodified. The FFTW package is now wrapped in the package <code>FFTW.jl</code>. You can add and use it easily:</p> <pre><code class=language-julia >using FFTW
 y &#61; fft&#40;x&#41;</code></pre><pre><code class="plaintext code-output">8-element Vector{ComplexF64}:
-    3.404743278537992 + 3.821087983097238im
- -0.26486247521370154 - 0.4911133308164071im
-   1.5955396780430477 + 0.4242019858336654im
-   0.9986646595785275 + 0.11249108356520132im
- -0.14239260996078196 - 2.4940518779387317im
-  -0.5443262061924964 + 1.370026928905991im
-  0.28553389762329595 - 0.955142707646182im
-  -0.4668842997597408 - 0.2748813541628285im</code></pre> <p>If you install <code>FFTW.jl</code>, you will notice that you don&#39;t need to install the C library <code>FFTW</code> manually, i.e., the Julia package automatically does that for you. Julia has a built-in <a href="https://pkgdocs.julialang.org/dev/artifacts/"><code>Artifacts</code> system</a> and a commonly used package <code>BinaryBuilder.jl</code> that work in conjunction to allow binaries to be pre-built and distributed. The details are complicated, but the user doesn&#39;t have to worry about them.</p> <h2 id=python ><a href="#python" class=header-anchor >Python</a></h2> <p>Julia can also can Python and R code, using <code>PyCall</code> and <code>RCall</code>, respectively. We&#39;ll focus on Python for this example.</p> <p>We&#39;re gonna use <code>PyCall</code>. Like <code>IJulia</code>,</p> <pre><code class=language-julia >using Plots, PyCall, Random
+     4.8563398366457 + 4.918043077845817im
+ -0.5584713687872389 - 0.0697258917214591im
+  1.1595202486828367 - 0.39028854391493795im
+ -0.9715037230022334 - 1.9489890967053087im
+   0.564273701601059 + 0.2184975837835994im
+  0.1960191730290552 + 0.0975164734906705im
+ -0.6983040806953942 - 0.5176872658813294im
+  1.0159206572089095 - 0.8465624562760898im</code></pre> <p>If you install <code>FFTW.jl</code>, you will notice that you don&#39;t need to install the C library <code>FFTW</code> manually, i.e., the Julia package automatically does that for you. Julia has a built-in <a href="https://pkgdocs.julialang.org/dev/artifacts/"><code>Artifacts</code> system</a> and a commonly used package <code>BinaryBuilder.jl</code> that work in conjunction to allow binaries to be pre-built and distributed. The details are complicated, but the user doesn&#39;t have to worry about them.</p> <h2 id=python ><a href="#python" class=header-anchor >Python</a></h2> <p>Julia can also can Python and R code, using <code>PyCall</code> and <code>RCall</code>, respectively. We&#39;ll focus on Python for this example.</p> <p>We&#39;re gonna use <code>PyCall</code>. Like <code>IJulia</code>,</p> <pre><code class=language-julia >using Plots, PyCall, Random
 pyplot&#40;&#41;
 
 Random.seed&#33;&#40;123&#41;

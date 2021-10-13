@@ -2,7 +2,31 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
-    <loc>abelsiqueira.github.io/pages/extra/optimization/index.html</loc>
+    <loc>abelsiqueira.github.io/pages/basics/installation/index.html</loc>
+    <lastmod>2021-10-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/pages/extra/parallel/index.html</loc>
+    <lastmod>2021-10-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/pages/basics/visualization/index.html</loc>
+    <lastmod>2021-10-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/pages/faq/index.html</loc>
+    <lastmod>2021-10-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/pages/extra/more-packages/index.html</loc>
     <lastmod>2021-10-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
@@ -14,19 +38,19 @@
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>abelsiqueira.github.io/pages/basics/installation/index.html</loc>
+    <loc>abelsiqueira.github.io/pages/basics/type-inference/index.html</loc>
+    <lastmod>2021-10-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>abelsiqueira.github.io/pages/extra/optimization/index.html</loc>
     <lastmod>2021-10-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
     <loc>abelsiqueira.github.io/pages/extra/interoperability/index.html</loc>
-    <lastmod>2021-10-13</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-</url>
-<url>
-    <loc>abelsiqueira.github.io/pages/extra/parallel/index.html</loc>
     <lastmod>2021-10-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
@@ -39,18 +63,6 @@
 </url>
 <url>
     <loc>abelsiqueira.github.io/pages/basics/syntax/index.html</loc>
-    <lastmod>2021-10-13</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-</url>
-<url>
-    <loc>abelsiqueira.github.io/pages/basics/type-inference/index.html</loc>
-    <lastmod>2021-10-13</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-</url>
-<url>
-    <loc>abelsiqueira.github.io/pages/basics/visualization/index.html</loc>
     <lastmod>2021-10-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
