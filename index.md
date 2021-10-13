@@ -37,26 +37,16 @@ This tutorial assumes you know some Python so that we can freely compare to it.
 
 - Basics
   - [Install Julia, an IDE, and some packages](pages/basics/installation/)
-  - Main features and bugs
-    - [Main syntax differences](pages/basics/syntax/)
-    - [Visualization packages](pages/basics/visualization/)
-    - [Type inference is hard](pages/basics/type-inference/)
+  - [Main syntax differences](pages/basics/syntax/)
+  - [Visualization packages](pages/basics/visualization/)
+  - [Type inference is hard](pages/basics/type-inference/)
 - [Creating a package: SequGen.jl - demonstration of good practices](pages/sequgen/)
 - Extra topics
   - [Calling Fortran and C code](pages/extra/interoperability/)
   - [Nonlinear Optimization in Python vs Julia](pages/extra/optimization/)
   - [Parallel computing](pages/extra/parallel/)
-  - Package examples
-    - JuMP
-    - DrWatson
-    - Franklin
-    - Genie
-    - Pluto
-    - Flux
-- Questions
-  - Is the code portable?
-  - When should I use Julia instead of Python?
-  - When should I use Python instead of Julia?
+  - [More packages](pages/extra/more-packages/)
+- [Frequently Asked Questions](pages/faq.md)
 
 - Left out/maybe if there's more time
   - GPU computing
