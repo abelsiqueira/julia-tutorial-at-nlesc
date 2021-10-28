@@ -92,14 +92,14 @@ accuracy &#61; sum&#40;y .&#61;&#61; ŷ&#41; / n</code></pre><pre><code class="
   Optim.Options&#40;
     g_tol &#61; 1e-4,
   &#41;,
-&#41;</code></pre><pre><code class="plaintext code-output">BenchmarkTools.Trial: 20 samples with 1 evaluation.
- Range (min … max):  215.033 ms … 300.883 ms  ┊ GC (min … max): 0.00% … 2.70%
- Time  (median):     259.919 ms               ┊ GC (median):    0.00%
- Time  (mean ± σ):   254.459 ms ±  24.909 ms  ┊ GC (mean ± σ):  0.66% ± 1.36%
+&#41;</code></pre><pre><code class="plaintext code-output">BenchmarkTools.Trial: 18 samples with 1 evaluation.
+ Range (min … max):  273.606 ms … 320.983 ms  ┊ GC (min … max): 0.00% … 0.00%
+ Time  (median):     287.096 ms               ┊ GC (median):    0.00%
+ Time  (mean ± σ):   292.220 ms ±  15.506 ms  ┊ GC (mean ± σ):  0.42% ± 0.92%
 
-  ▁     ▁ ▁ █▁▁      ▁ ▁       ▁   ▁  █▁ █ ▁ ▁               ▁▁  
-  █▁▁▁▁▁█▁█▁███▁▁▁▁▁▁█▁█▁▁▁▁▁▁▁█▁▁▁█▁▁██▁█▁█▁█▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁██ ▁
-  215 ms           Histogram: frequency by time          301 ms <
+  ▁   ▁  █ ▁▁▁  ▁ ▁ ▁ ▁  ▁   ▁   ▁                  ▁     ▁   █  
+  █▁▁▁█▁▁█▁███▁▁█▁█▁█▁█▁▁█▁▁▁█▁▁▁█▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁█▁▁▁▁▁█▁▁▁█ ▁
+  274 ms           Histogram: frequency by time          321 ms <
 
  Memory estimate: 30.37 MiB, allocs estimate: 1431.</code></pre>
 <p>In Julia, we don&#39;t have a single optimization library. In fact, I&#39;m co-creator of the <a href="https://juliasmoothoptimizers.github.io">JuliaSmoothOptimizers</a> organization, which &quot;competes&quot; against Optim. We focus on tools for Nonlinear Optimization developers, instead of focusing on users, so our basic interface is a lot more raw. On the other hand, we claim that our methods are faster, but notice my bias.</p>
@@ -129,20 +129,20 @@ println&#40;output&#41;
   lbfgs&#40;nlp, atol&#61;1e-4, rtol&#61;1e-4&#41;
 end</code></pre><pre><code class="plaintext code-output">Generic Execution stats
   status: first-order stationary
-  objective value: 0.035504781916813
+  objective value: 0.035504781916812965
   primal feasibility: 0.0
-  dual feasibility: 0.00011923338501061753
-  solution: [-0.008672859839379604  -0.7833754246517539  -0.09849721612105959  -0.2561961749800854 ⋯ -0.04372711407863323]
+  dual feasibility: 0.0001192333850105848
+  solution: [-0.008672859839378136  -0.783375424651758  -0.09849721612105819  -0.2561961749800911 ⋯ -0.043727114078631044]
   iterations: 30
-  elapsed time: 0.9979898929595947
-BenchmarkTools.Trial: 41 samples with 1 evaluation.
- Range (min … max):  102.995 ms … 159.591 ms  ┊ GC (min … max): 0.00% … 0.00%
- Time  (median):     119.736 ms               ┊ GC (median):    0.00%
- Time  (mean ± σ):   123.429 ms ±  15.783 ms  ┊ GC (mean ± σ):  0.70% ± 2.04%
+  elapsed time: 0.9474279880523682
+BenchmarkTools.Trial: 38 samples with 1 evaluation.
+ Range (min … max):  126.545 ms … 148.875 ms  ┊ GC (min … max): 0.00% … 0.00%
+ Time  (median):     133.495 ms               ┊ GC (median):    0.00%
+ Time  (mean ± σ):   134.423 ms ±   5.428 ms  ┊ GC (mean ± σ):  0.45% ± 1.49%
 
-         ▅   █                   ▂                               
-  █▅█▁▅▁██▁▅▁█▁▁▁▁▅▅█▁▅▁▅▁▁▁▁▅▅▅▅█▁▅▁▅▁▁▁▁▁▅▅▅▁▁▁▅▅▁▁▅▁▁▁▅▁▁▁▁▅ ▁
-  103 ms           Histogram: frequency by time          160 ms <
+      ▁     ▁ █▁ ▁   ▄ ▁  ▁                   ▁                  
+  ▆▆▆▁█▁▆▁▁▁█▆██▁█▁▆▆█▆█▁▁█▁▆▁▁▁▁▆▆▆▁▁▁▆▁▁▁▁▆▆█▁▁▁▁▁▁▁▁▆▁▁▁▁▁▁▆ ▁
+  127 ms           Histogram: frequency by time          149 ms <
 
  Memory estimate: 14.42 MiB, allocs estimate: 918.</code></pre>
 <p>TODO: Check progress of ManualNLPModels &#40;check after 18-Oct&#41;</p>

@@ -27,23 +27,23 @@ end
 plt</code></pre>
 <img src="/julia-tutorial-at-nlesc/assets/pages/extra/parallel/code/output/parallel-2.png" alt="">
 <p>Using <code>@time</code> we can assess the computation time of <code>calc_pi</code>:</p>
-<pre><code class=language-julia >@time calc_pi&#40;10^7&#41;</code></pre><pre><code class="plaintext code-output">  0.104891 seconds
-3.1419828</code></pre>
+<pre><code class=language-julia >@time calc_pi&#40;10^7&#41;</code></pre><pre><code class="plaintext code-output">  0.103762 seconds
+3.1417008</code></pre>
 <p>Be aware that Julia compiles the code as it is first executed. In this case, since we ran the code before, the timing is mostly accurate.</p>
 <p>That being said, measuring execution time of code has some randomness, so it&#39;s better to run the code a few times and compute some statistics &#40;mean, median, minimum, maximum, etc.&#41; on the result. Luckily, the package <code>BenchmarkTools</code> does that for us.</p>
 <p>You can use <code>@btime &quot;Your stuff&quot;</code> to compute the equivalent of <code>@time</code>, but we can see more information with <code>@benchmark</code>:</p>
 <pre><code class=language-julia >using BenchmarkTools
 
 println&#40;&quot;π ≈ &#36;&#40;calc_pi&#40;10^7&#41;&#41;&quot;&#41;
-@benchmark calc_pi&#40;10^7&#41;</code></pre><pre><code class="plaintext code-output">π ≈ 3.141172
-BenchmarkTools.Trial: 47 samples with 1 evaluation.
- Range (min … max):  102.329 ms … 118.928 ms  ┊ GC (min … max): 0.00% … 0.00%
- Time  (median):     107.815 ms               ┊ GC (median):    0.00%
- Time  (mean ± σ):   108.550 ms ±   3.742 ms  ┊ GC (mean ± σ):  0.00% ± 0.00%
+@benchmark calc_pi&#40;10^7&#41;</code></pre><pre><code class="plaintext code-output">π ≈ 3.1409908
+BenchmarkTools.Trial: 49 samples with 1 evaluation.
+ Range (min … max):  103.447 ms … 104.074 ms  ┊ GC (min … max): 0.00% … 0.00%
+ Time  (median):     103.880 ms               ┊ GC (median):    0.00%
+ Time  (mean ± σ):   103.863 ms ± 110.718 μs  ┊ GC (mean ± σ):  0.00% ± 0.00%
 
-    ▃   ▃  █   ▃ ▃▃▃█  ▃ ▃   ▃ ▃        ▃                        
-  ▇▁█▁▁▇█▁▁█▁▇▇█▇████▁▇█▇█▇▁▁█▇█▇▁▇▁▁▇▇▁█▁▁▁▇▇▇▇▁▁▁▁▇▁▁▁▁▁▁▁▁▁▇ ▁
-  102 ms           Histogram: frequency by time          119 ms <
+                                          █ ▆ ▃▁                 
+  ▄▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▇▁▄▄▁▁▄▁▇▁▁▇▄▁▁▄▇▇▄█▁█▇██▇▇▄▁▁▁▇▇▁▄▁▁▁▄▄ ▁
+  103 ms           Histogram: frequency by time          104 ms <
 
  Memory estimate: 0 bytes, allocs estimate: 0.</code></pre>
 <p>Unlike Python, vectorizing the code won&#39;t improve the performance:</p>
@@ -54,15 +54,15 @@ BenchmarkTools.Trial: 47 samples with 1 evaluation.
 end
 
 println&#40;&quot;π ≈ &#36;&#40;calc_pi_vectorized&#40;10^7&#41;&#41;&quot;&#41;
-@benchmark calc_pi_vectorized&#40;10^7&#41;</code></pre><pre><code class="plaintext code-output">π ≈ 3.1409728
-BenchmarkTools.Trial: 19 samples with 1 evaluation.
- Range (min … max):  240.240 ms … 514.099 ms  ┊ GC (min … max):  2.57% … 54.26%
- Time  (median):     245.616 ms               ┊ GC (median):     3.62%
- Time  (mean ± σ):   270.917 ms ±  75.271 ms  ┊ GC (mean ± σ):  11.95% ± 14.85%
+@benchmark calc_pi_vectorized&#40;10^7&#41;</code></pre><pre><code class="plaintext code-output">π ≈ 3.1409432
+BenchmarkTools.Trial: 24 samples with 1 evaluation.
+ Range (min … max):  190.264 ms … 434.849 ms  ┊ GC (min … max):  2.22% … 57.16%
+ Time  (median):     194.330 ms               ┊ GC (median):     3.57%
+ Time  (mean ± σ):   211.682 ms ±  60.282 ms  ┊ GC (mean ± σ):  11.19% ± 14.31%
 
-  ▃█                                                             
-  ██▄▄▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▄▁▁▁▁▁▁▁▁▁▁▁▁▁▄ ▁
-  240 ms           Histogram: frequency by time          514 ms <
+  █▆                                                             
+  ██▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▃▁▁▁▁▁▁▁▁▁▁▁▁▁▃ ▁
+  190 ms           Histogram: frequency by time          435 ms <
 
  Memory estimate: 382.67 MiB, allocs estimate: 14.</code></pre>
 <p>We can, however, use threads to improve it. The code below has a few simple changes to have an improved version.</p>
@@ -80,15 +80,15 @@ function calc_pi_threaded_naive&#40;N&#41;
 end
 
 println&#40;&quot;π ≈ &#36;&#40;calc_pi_threaded_naive&#40;10^7&#41;&#41;&quot;&#41;
-@benchmark calc_pi_threaded_naive&#40;10^7&#41;</code></pre><pre><code class="plaintext code-output">π ≈ 3.1410812
-BenchmarkTools.Trial: 31 samples with 1 evaluation.
- Range (min … max):  151.703 ms … 170.037 ms  ┊ GC (min … max): 0.00% … 0.00%
- Time  (median):     162.121 ms               ┊ GC (median):    0.00%
- Time  (mean ± σ):   161.551 ms ±   4.945 ms  ┊ GC (mean ± σ):  0.00% ± 0.00%
+@benchmark calc_pi_threaded_naive&#40;10^7&#41;</code></pre><pre><code class="plaintext code-output">π ≈ 3.1414116
+BenchmarkTools.Trial: 30 samples with 1 evaluation.
+ Range (min … max):  171.734 ms … 177.025 ms  ┊ GC (min … max): 0.00% … 0.00%
+ Time  (median):     171.933 ms               ┊ GC (median):    0.00%
+ Time  (mean ± σ):   172.116 ms ± 937.240 μs  ┊ GC (mean ± σ):  0.00% ± 0.00%
 
-  ▁    █   ▁    ▁ ▁ ▁▁█   ▁▁ ▁   ▁▁ ▁ ▁  ▁  ▁▁ ██▁ █▁▁▁       ▁  
-  █▁▁▁▁█▁▁▁█▁▁▁▁█▁█▁███▁▁▁██▁█▁▁▁██▁█▁█▁▁█▁▁██▁███▁████▁▁▁▁▁▁▁█ ▁
-  152 ms           Histogram: frequency by time          170 ms <
+  ▄▄█▃                                                           
+  ████▄▄▆▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▄ ▁
+  172 ms           Histogram: frequency by time          177 ms <
 
  Memory estimate: 640 bytes, allocs estimate: 7.</code></pre>
 <p>The version above creates the a vector to store the number of points inside the circle per thread. We could be more naive and use a single <code>M</code>, but for sharing between threads, <code>M</code> must be an array.</p>
@@ -109,15 +109,15 @@ function calc_pi_threaded&#40;N&#41;
 end
 
 println&#40;&quot;π ≈ &#36;&#40;calc_pi_threaded&#40;10^7&#41;&#41;&quot;&#41;
-@benchmark calc_pi_threaded&#40;10^7&#41;</code></pre><pre><code class="plaintext code-output">π ≈ 3.1423148
-BenchmarkTools.Trial: 49 samples with 1 evaluation.
- Range (min … max):   96.283 ms … 112.166 ms  ┊ GC (min … max): 0.00% … 0.00%
- Time  (median):     102.098 ms               ┊ GC (median):    0.00%
- Time  (mean ± σ):   102.015 ms ±   2.895 ms  ┊ GC (mean ± σ):  0.00% ± 0.00%
+@benchmark calc_pi_threaded&#40;10^7&#41;</code></pre><pre><code class="plaintext code-output">π ≈ 3.141522
+BenchmarkTools.Trial: 46 samples with 1 evaluation.
+ Range (min … max):  108.775 ms … 124.309 ms  ┊ GC (min … max): 0.00% … 0.00%
+ Time  (median):     108.889 ms               ┊ GC (median):    0.00%
+ Time  (mean ± σ):   109.230 ms ±   2.274 ms  ┊ GC (mean ± σ):  0.00% ± 0.00%
 
-        ▁     ▁    ▁▁ ▄▁▄█▁▁ ▁ ▄         ▁                       
-  ▆▁▆▁▆▁█▆▁▁▆▆█▆▆▆▆██▆██████▁█▆█▁▆▆▆▁▁▆▁▁█▁▁▆▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▆ ▁
-  96.3 ms          Histogram: frequency by time          112 ms <
+  █                                                              
+  █▆▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▅ ▁
+  109 ms        Histogram: log(frequency) by time        124 ms <
 
  Memory estimate: 640 bytes, allocs estimate: 7.</code></pre>
 <p>But wait, there&#39;s more. We can manually split the range, and just use <code>@threads</code> over the ranges.</p>
@@ -138,15 +138,15 @@ function calc_pi_proper_threaded&#40;N&#41;
 end
 
 println&#40;&quot;π ≈ &#36;&#40;calc_pi_proper_threaded&#40;10^7&#41;&#41;&quot;&#41;
-@benchmark calc_pi_proper_threaded&#40;10^7&#41;</code></pre><pre><code class="plaintext code-output">π ≈ 3.1411636
-BenchmarkTools.Trial: 117 samples with 1 evaluation.
- Range (min … max):  39.820 ms … 49.689 ms  ┊ GC (min … max): 0.00% … 0.00%
- Time  (median):     42.330 ms              ┊ GC (median):    0.00%
- Time  (mean ± σ):   42.815 ms ±  1.964 ms  ┊ GC (mean ± σ):  0.00% ± 0.00%
+@benchmark calc_pi_proper_threaded&#40;10^7&#41;</code></pre><pre><code class="plaintext code-output">π ≈ 3.1412312
+BenchmarkTools.Trial: 87 samples with 1 evaluation.
+ Range (min … max):  57.844 ms …  59.520 ms  ┊ GC (min … max): 0.00% … 0.00%
+ Time  (median):     58.083 ms               ┊ GC (median):    0.00%
+ Time  (mean ± σ):   58.117 ms ± 207.331 μs  ┊ GC (mean ± σ):  0.00% ± 0.00%
 
-  ▃       ▃ ▃ ▃█▃ ▄▄▁   ▁▁▃    ▁                               
-  █▆▄▄▄▄▇▁█▆█▆███▆███▄▆▆███▇▆▆▄█▆▄▄▁▇▇▆▄▁▁▄▁▄▁▁▄▁▁▁▄▁▁▄▁▁▁▄▄▆ ▄
-  39.8 ms         Histogram: frequency by time        48.3 ms <
+          ▆█▆▁                                                  
+  ▃▁▁▁▃▁▆█████▇▆▆▅▃▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▃ ▁
+  57.8 ms         Histogram: frequency by time         59.3 ms <
 
  Memory estimate: 20.20 KiB, allocs estimate: 19.</code></pre>
 <p>We use <code>Ref&#40;0&#41;</code> now to keep a reference to a number that all threads can access.</p>
@@ -167,15 +167,15 @@ function calc_pi_proper_floop&#40;N&#41;
 end
 
 println&#40;&quot;π ≈ &#36;&#40;calc_pi_proper_floop&#40;10^7&#41;&#41;&quot;&#41;
-@benchmark calc_pi_proper_floop&#40;10^7&#41;</code></pre><pre><code class="plaintext code-output">π ≈ 3.1419956
-BenchmarkTools.Trial: 114 samples with 1 evaluation.
- Range (min … max):  43.161 ms … 58.002 ms  ┊ GC (min … max): 0.00% … 0.00%
- Time  (median):     43.629 ms              ┊ GC (median):    0.00%
- Time  (mean ± σ):   44.125 ms ±  1.751 ms  ┊ GC (mean ± σ):  0.00% ± 0.00%
+@benchmark calc_pi_proper_floop&#40;10^7&#41;</code></pre><pre><code class="plaintext code-output">π ≈ 3.141014
+BenchmarkTools.Trial: 121 samples with 1 evaluation.
+ Range (min … max):  40.822 ms …  42.937 ms  ┊ GC (min … max): 0.00% … 0.00%
+ Time  (median):     41.504 ms               ┊ GC (median):    0.00%
+ Time  (mean ± σ):   41.465 ms ± 188.697 μs  ┊ GC (mean ± σ):  0.00% ± 0.00%
 
-  ▃█▇▃▄▂▃▂ ▁                                                   
-  ████████▇█▁▅▁▅▁▁▅▁▅▁▁▅▁▅▁▅▁▁▁▅▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▅ ▅
-  43.2 ms      Histogram: log(frequency) by time      52.8 ms <
+                                      ▂▂       ▂▃▄█▇▆▃          
+  ▅▁▁▁▁▅▁▁▁▁▁▁▁▅▁▁▁▁▁▁▅▅▇▁▅▁▅▁▅▁▁▁▁▁▁▅██▅█▅▅▅▇▇████████▁▁▁▁▁▁▅ ▅
+  40.8 ms       Histogram: log(frequency) by time      41.7 ms <
 
  Memory estimate: 19.78 KiB, allocs estimate: 19.</code></pre>
 
