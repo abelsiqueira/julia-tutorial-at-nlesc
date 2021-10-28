@@ -9,7 +9,7 @@ Julia was created around 2010 by someone with an ambitious goal: to be as fast a
 
 Since its public release in 2012, Julia has attracted many researchers and software developers in part due to these reasons. It is inspired by several languages, a very pleasant and intuitive language to write code in, largely for its linear algebra capabilities. Besides that, Julia also provides _multiple dispatch_, which allows some very interesting packages to thrive.
 
-Although manages to attract people from different backgrounds, Julia has a slow higher adoption rate, in part because it's very new, compared to other languages like Python and R. In 2018, Julia 1.0 was released, and in 2020 its current Long Term Support version, 1.6, was released. The main groups which seem to have a very large adoption are the former MatLab users, and optimization developers, where I come from.
+Although managing to attract people from different backgrounds, Julia has a slow higher adoption rate, in part because it's very new, compared to other languages like Python and R. In 2018, Julia 1.0 was released, and in 2021 its current Long Term Support version, 1.6, was released. The main groups which seem to have a very large adoption rate are former MatLab users, and optimization developers, where I come from.
 
 More information about Julia's creation can be seen through papers related to it [here](https://julialang.org/research/).
 
