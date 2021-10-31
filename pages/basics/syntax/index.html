@@ -1,4 +1,4 @@
-<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/julia-tutorial-at-nlesc/libs/katex/katex.min.css"> <link rel=stylesheet  href="/julia-tutorial-at-nlesc/libs/highlight/github.min.css"> <link href="/julia-tutorial-at-nlesc/css/bootstrap.min.css" rel=stylesheet  crossorigin=anonymous > <link rel=icon  href="/julia-tutorial-at-nlesc/images/logo.png"> <link rel=stylesheet  href="/julia-tutorial-at-nlesc/css/code-katex.css"> <link rel=stylesheet  href="/julia-tutorial-at-nlesc/css/custom.css"> <link rel=stylesheet  href="/julia-tutorial-at-nlesc/css/dark-mode.css"> <link rel=preconnect  href="https://fonts.gstatic.com"> <link href="https://fonts.googleapis.com/css2?family=Cinzel&family=Montserrat&display=swap" rel=stylesheet > <title>Main syntax differences</title> <meta property="og:title" content="Julia Tutorial at NLeSC"> <meta name="twitter:title" content="Julia Tutorial at NLeSC"> <meta property="og:description" content="Main syntax differences"> <meta name="twitter:description" content="Main syntax differences"> <meta property="og:image" content="https://abelsiqueira.github.io/images/abel-banner.jpg"> <meta name="twitter:image" content="https://abelsiqueira.github.io/images/abel-banner.jpg"> <meta property="og:url" content=abelsiqueira.github.io > <meta name="twitter:card" content=summary_large_image > <header> <nav class="navbar navbar-expand-lg"> <div class=container-fluid > <a class="navbar-brand text-end" href="/julia-tutorial-at-nlesc/"></a> <button class=navbar-toggler  type=button  data-bs-toggle=collapse  data-bs-target="#navbarSupportedContent" aria-controls=navbarSupportedContent  aria-expanded=false  aria-label="Toggle navigation"> <span class=navbar-toggler-icon ></span> </button> <div class="collapse navbar-collapse" id=navbarSupportedContent > <ul class="navbar-nav ms-auto mb-2 mb-lg-0"> <li class=nav-item ><a class=nav-link  href="/julia-tutorial-at-nlesc/">Home</a> <li class=nav-item ><a class=nav-link  href="/julia-tutorial-at-nlesc/blog/">Blog</a> <li class=nav-item ><a class=nav-link  href="/julia-tutorial-at-nlesc/julia/">Julia</a> <li class=nav-item ><a class=nav-link  href="/julia-tutorial-at-nlesc/research/">Research</a> <li class=nav-item ><a class=nav-link  href="/julia-tutorial-at-nlesc/ufpr/">UFPR</a> </ul> <div class="dark-switch form-check form-switch"> <input type=checkbox  class=form-check-input  id=darkSwitch  /> <label class=custom-control-label  for=darkSwitch >Dark Mode</label> </div> <script src="/julia-tutorial-at-nlesc/libs/dark-mode-switch.min.js"></script> </div> </div> </nav> </header> <div class=container-fluid > <div class="container main-text"> <div class=franklin-content ><h1 id=fill_title ><a href="#fill_title" class=header-anchor >Main syntax differences</a></h1> <ul> <li><p>Julia&#39;s arrays default to column vector behaviour</p> <li><p>Julia uses brackets to access elements and indices start at 1</p> <li><p>Slices are inclusive of endpoints, and <code>end</code> means end.</p> <li><p>Steps can be passed in the middle</p> </ul> <pre><code class=language-julia >x &#61; &#91;1, 2, 3, 4, 5&#93;
+<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/julia-tutorial-at-nlesc/libs/katex/katex.min.css"> <link rel=stylesheet  href="/julia-tutorial-at-nlesc/libs/highlight/github.min.css"> <link href="/julia-tutorial-at-nlesc/css/bootstrap.min.css" rel=stylesheet  crossorigin=anonymous > <link rel=icon  href="/julia-tutorial-at-nlesc/images/logo.png"> <link rel=stylesheet  href="/julia-tutorial-at-nlesc/css/code-katex.css"> <link rel=stylesheet  href="/julia-tutorial-at-nlesc/css/custom.css"> <link rel=stylesheet  href="/julia-tutorial-at-nlesc/css/dark-mode.css"> <link rel=preconnect  href="https://fonts.gstatic.com"> <link href="https://fonts.googleapis.com/css2?family=Cinzel&family=Montserrat&display=swap" rel=stylesheet > <title>Main syntax differences</title> <meta property="og:title" content="Julia Tutorial at NLeSC"> <meta name="twitter:title" content="Julia Tutorial at NLeSC"> <meta property="og:description" content="Main syntax differences"> <meta name="twitter:description" content="Main syntax differences"> <meta property="og:image" content="https://abelsiqueira.github.io/images/abel-banner.jpg"> <meta name="twitter:image" content="https://abelsiqueira.github.io/images/abel-banner.jpg"> <meta property="og:url" content=abelsiqueira.github.io > <meta name="twitter:card" content=summary_large_image > <header> <nav class="navbar navbar-expand-lg"> <div class=container-fluid > <a class="navbar-brand text-end" href="/julia-tutorial-at-nlesc/"></a> <button class=navbar-toggler  type=button  data-bs-toggle=collapse  data-bs-target="#navbarSupportedContent" aria-controls=navbarSupportedContent  aria-expanded=false  aria-label="Toggle navigation"> <span class=navbar-toggler-icon ></span> </button> <div class="collapse navbar-collapse" id=navbarSupportedContent > <ul class="navbar-nav ms-auto mb-2 mb-lg-0"> <li class=nav-item ><a class=nav-link  href="/julia-tutorial-at-nlesc/">Home</a> <li class=nav-item ><a class=nav-link  href="/julia-tutorial-at-nlesc/blog/">Blog</a> <li class=nav-item ><a class=nav-link  href="/julia-tutorial-at-nlesc/julia/">Julia</a> <li class=nav-item ><a class=nav-link  href="/julia-tutorial-at-nlesc/research/">Research</a> <li class=nav-item ><a class=nav-link  href="/julia-tutorial-at-nlesc/ufpr/">UFPR</a> </ul> <div class="dark-switch form-check form-switch"> <input type=checkbox  class=form-check-input  id=darkSwitch  /> <label class=custom-control-label  for=darkSwitch >Dark Mode</label> </div> <script src="/julia-tutorial-at-nlesc/libs/dark-mode-switch.min.js"></script> </div> </div> </nav> </header> <div class=container-fluid > <div class="container main-text"> <div class=franklin-content ><h1 id=fill_title ><a href="#fill_title" class=header-anchor >Main syntax differences</a></h1> <ul> <li><p>Julia&#39;s arrays default to column vector behaviour</p> <li><p>Julia&#39;s indexes start at 1 and you can access elements using brackets</p> <li><p>Slices are inclusive of endpoints, and <code>end</code> means the last component.</p> <li><p>Steps can be informed in the middle</p> </ul> <pre><code class=language-julia >x &#61; &#91;1, 2, 3, 4, 5&#93;
 x * 2
 ones&#40;5&#41; &#43; x
 x&#91;2&#93;
@@ -9,11 +9,11 @@ length&#40;x&#41;</code></pre><pre><code class="plaintext code-output">5</code><
 <ul>
 <li><p>Matrices are first-class citizens.</p>
 
-<li><p>Create with brackets, spaces change columns, and <code>;</code> change lines.</p>
+<li><p>Create a matrix with brackets, spaces to change columns, and <code>;</code> to change lines.</p>
 
 <li><p>Only in vectors <code>,</code> can be used instead of spaces &#40;compat. Python&#41;.</p>
 
-<li><p>You can concatenate matrices, vectors and numbers with the same syntax.</p>
+<li><p>You can concatenate matrices, vectors, and numbers with the same syntax.</p>
 
 </ul>
 <pre><code class=language-julia >A &#61; &#91;3 2 4; -1 0 1&#93;
@@ -34,7 +34,7 @@ A&#91;1:2, 1:2&#93;
 <ul>
 <li><p>Linear systems can be solved with <code>\</code></p>
 
-<li><p>the LinearAlgebra stdlib module contains useful linear algebra tools, functions and elements.</p>
+<li><p>The LinearAlgebra stdlib module contains useful linear algebra tools, functions, and elements.</p>
 
 </ul>
 <pre><code class=language-julia >A &#61; randn&#40;50, 50&#41;
@@ -42,7 +42,7 @@ b &#61; A * ones&#40;50&#41;
 x &#61; A \ b
 using LinearAlgebra
 norm&#40;b - A * x&#41;
-norm&#40;x .- 1&#41;</code></pre><pre><code class="plaintext code-output">1.1464145426955781e-12</code></pre>
+norm&#40;x .- 1&#41;</code></pre><pre><code class="plaintext code-output">2.0850281031076354e-13</code></pre>
 <ul>
 <li><p>Everything has a concrete type, every type derives from some abstract type.</p>
 
@@ -58,7 +58,7 @@ typeof&#40;&#91;2, 2.0&#93;&#41;
 typeof&#40;&#91;2, true&#93;&#41;
 typeof&#40;&#91;2, &quot;a&quot;&#93;&#41;</code></pre><pre><code class="plaintext code-output">Vector{Any} (alias for Array{Any, 1})</code></pre>
 <ul>
-<li><p>There are 3 ways to write functions</p>
+<li><p>There are 3 approaches to write functions</p>
 
 </ul>
 <pre><code class=language-julia >function foo&#40;a, b&#41;
@@ -184,7 +184,7 @@ end</code></pre><pre><code class="plaintext code-output">√2 ≈ 1.416992187500
 √2 ≈ 1.4142135623730950e+00, (√2)² - 2 ≈ 8.0872759798342835e-49
 </code></pre>
 <ul>
-<li><p>In the REPL, <code>?</code> enters help mode.</p>
+<li><p>In the REPL, <code>?</code> access the help mode.</p>
 
 <li><p><code>apropos</code> can be used to search among the docstrings</p>
 
@@ -192,7 +192,7 @@ end</code></pre><pre><code class="plaintext code-output">√2 ≈ 1.416992187500
 <hr />
 <h2 id=exercises ><a href="#exercises" class=header-anchor >Exercises</a></h2>
 <ol>
-<li><p>Verify that if <code>v</code> and <code>w</code> are vectors, then <code>&#91;v w&#93;</code> and <code>&#91;v, w&#93;</code> are different. Notice the type of the second object.</p>
+<li><p>Given <code>v</code> and <code>w</code> vectors, verify that <code>&#91;v w&#93;</code> and <code>&#91;v, w&#93;</code> are different. Notice the type of the second object.</p>
 
 <li><p>Search for &quot;dot product&quot; using the <code>apropos</code> function.</p>
 

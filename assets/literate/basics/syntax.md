@@ -1,8 +1,8 @@
 <!--This file was generated, do not modify it.-->
 - Julia's arrays default to column vector behaviour
-- Julia uses brackets to access elements and indices start at 1
-- Slices are inclusive of endpoints, and `end` means end.
-- Steps can be passed in the middle
+- Julia's indexes start at 1 and you can access elements using brackets
+- Slices are inclusive of endpoints, and `end` means the last component.
+- Steps can be informed in the middle
 
 ```julia:ex1
 x = [1, 2, 3, 4, 5]
@@ -16,9 +16,9 @@ length(x)
 ```
 
 - Matrices are first-class citizens.
-- Create with brackets, spaces change columns, and `;` change lines.
+- Create a matrix with brackets, spaces to change columns, and `;` to change lines.
 - Only in vectors `,` can be used instead of spaces (compat. Python).
-- You can concatenate matrices, vectors and numbers with the same syntax.
+- You can concatenate matrices, vectors, and numbers with the same syntax.
 
 ```julia:ex2
 A = [3 2 4; -1 0 1]
@@ -34,7 +34,7 @@ A[1:2, 1:2]
 ```
 
 - Linear systems can be solved with `\ `
-- the LinearAlgebra stdlib module contains useful linear algebra tools, functions and elements.
+- The LinearAlgebra stdlib module contains useful linear algebra tools, functions, and elements.
 
 ```julia:ex3
 A = randn(50, 50)
@@ -59,7 +59,7 @@ typeof([2, true])
 typeof([2, "a"])
 ```
 
-- There are 3 ways to write functions
+- There are 3 approaches to write functions
 
 ```julia:ex5
 function foo(a, b)
@@ -179,13 +179,14 @@ for T in [Float16, Float32, Float64, BigFloat]
 end
 ```
 
-- In the REPL, `?` enters help mode.
+- In the REPL, `?` access the help mode.
 - `apropos` can be used to search among the docstrings
 ---
 
 ## Exercises
 
-1. Verify that if `v` and `w` are vectors, then `[v w]` and `[v, w]` are different. Notice the type of the second object.
+
+1. Given `v` and `w` vectors, verify that `[v w]` and `[v, w]` are different. Notice the type of the second object.
 1. Search for "dot product" using the `apropos` function.
 1. Create a function that orthogonalizes a _list of vectors_ following the given theorem:
 **Theorem**: Given $n$ linear independent vector $v_1, v_2, \dots, v_n$, define
