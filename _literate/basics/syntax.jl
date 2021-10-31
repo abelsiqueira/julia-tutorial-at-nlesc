@@ -1,8 +1,8 @@
 #=
 - Julia's arrays default to column vector behaviour
-- Julia uses brackets to access elements and indices start at 1
-- Slices are inclusive of endpoints, and `end` means end.
-- Steps can be passed in the middle
+- Julia's indexes start at 1 and you can access elements using brackets
+- Slices are inclusive of endpoints, and `end` means the last component.
+- Steps can be informed in the middle
 =#
 x = [1, 2, 3, 4, 5]
 x * 2
@@ -13,9 +13,9 @@ x[2:end]
 x[1:2:end]
 length(x)
 # - Matrices are first-class citizens.
-# - Create with brackets, spaces change columns, and `;` change lines.
+# - Create a matrix with brackets, spaces to change columns, and `;` to change lines.
 # - Only in vectors `,` can be used instead of spaces (compat. Python).
-# - You can concatenate matrices, vectors and numbers with the same syntax.
+# - You can concatenate matrices, vectors, and numbers with the same syntax.
 A = [3 2 4; -1 0 1]
 A * ones(3)
 B = rand(3, 3)
@@ -27,7 +27,7 @@ A[1:2, 1:2]
   A ones(2,2)
 ]
 # - Linear systems can be solved with `\ `
-# - the LinearAlgebra stdlib module contains useful linear algebra tools, functions and elements.
+# - The LinearAlgebra stdlib module contains useful linear algebra tools, functions, and elements.
 A = randn(50, 50)
 b = A * ones(50)
 x = A \ b
@@ -44,7 +44,7 @@ typeof(2 + 2.0)
 typeof([2, 2.0])
 typeof([2, true])
 typeof([2, "a"])
-# - There are 3 ways to write functions
+# - There are 3 approaches to write functions
 function foo(a, b)
   return (a + 1) * (b - 1)
 end
@@ -136,14 +136,15 @@ for T in [Float16, Float32, Float64, BigFloat]
   x, fx, iter = newton_parametric(x -> x^2 - 2, x -> 2x, one(T))
   @printf("√2 ≈ %20.16e, (√2)² - 2 ≈ %20.16e\n", x, x^2 - 2)
 end
-# - In the REPL, `?` enters help mode.
+# - In the REPL, `?` access the help mode.
 # - `apropos` can be used to search among the docstrings
 #=
 ---
 
 ## Exercises
 
-1. Verify that if `v` and `w` are vectors, then `[v w]` and `[v, w]` are different. Notice the type of the second object.
+
+1. Given `v` and `w` vectors, verify that `[v w]` and `[v, w]` are different. Notice the type of the second object.
 1. Search for "dot product" using the `apropos` function.
 1. Create a function that orthogonalizes a _list of vectors_ following the given theorem:
 **Theorem**: Given $n$ linear independent vector $v_1, v_2, \dots, v_n$, define
