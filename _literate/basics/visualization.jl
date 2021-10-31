@@ -115,7 +115,7 @@ PyPlot.savefig(joinpath(@OUTPUT, "vis-pyplot-1"))
 #=
 ## Makie
 
-Makie is a complete(? what you want to say here ?) alternative to Plots.
+Makie is a completely different alternative to Plots.
 It tries to achieve high performance using heavier backends, such as OpenGL.
 
 ## StatsPlots
