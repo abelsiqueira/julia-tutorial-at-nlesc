@@ -1,7 +1,7 @@
 #=
-- Julia's arrays default to column vector behavior
+- Julia's arrays default to column vector behaviour
 - Julia's indexes start at 1 and you can access elements using brackets
-- Slices are inclusive of endpoints, and `end` means the end, the last component.
+- Slices are inclusive of endpoints, and `end` means the last component.
 - Steps can be informed in the middle
 =#
 x = [1, 2, 3, 4, 5]
