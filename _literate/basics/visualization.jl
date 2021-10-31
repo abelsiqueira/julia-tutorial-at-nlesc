@@ -5,7 +5,7 @@ Julia has a few packages for visualization, depending on your tastes.
 
 ## Plots
 
-Plots is probably the most well-known, and also one of the oldest.
+Plots is probably the most well-known library, and also one of the oldest.
 It provides an abstraction layer and you can select the backend that actually does the plotting.
 See the backend list [here](https://docs.juliaplots.org/latest/backends/).
 
@@ -17,10 +17,10 @@ It uses Python's matplotlib, which provides very nice graphics, although it is a
 Change to PyPlot using `pyplot()`.
 
 You can also use UnicodePlots for plotting directly into the REPL.
-Change using `unicodeplots()`.
+Change to UnicodePlots using `unicodeplots()`.
 
-PlotlyJS is also quite well-liked, because it usually allows some interactivity in the plots.
-Use `plotlyjs()` to change.
+PlotlyJS is also quite well-liked, because it usually allows some interactivity in the plots.  
+Use `plotlyjs()` to plot with PlotlyJS.
 
 Some packages are more fickle than others to install.
 GR, for instance, decided to not work with GitHub Actions for this site.
@@ -115,7 +115,7 @@ PyPlot.savefig(joinpath(@OUTPUT, "vis-pyplot-1"))
 #=
 ## Makie
 
-Makie is a complete alternative to Plots.
+Makie is a completely different alternative to Plots.
 It tries to achieve high performance using heavier backends, such as OpenGL.
 
 ## StatsPlots
