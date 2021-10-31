@@ -18,7 +18,7 @@ All of them need you to have a binary `julia` or `julia.exe` accessible.
 
 \detbegin{Windows}
 
-Probably that is the easiest way to download the installer on the [Julia Downloads page](https://julialang.org/downloads/).
+Probably the easiest way is to download the installer on the [Julia Downloads page](https://julialang.org/downloads/).
 
 \detend
 \detbegin{MacOS and Linux}
@@ -41,7 +41,7 @@ Your package manager might also have `julia` available, but make sure the versio
 \detend
 ## Jupyter notebook (Julia's kernel)
 
-In Jupyter, you can install Julia in two ways:
+You can run Julia in Jupyter in two ways:
 - Using your existing Python + Jupyter installation;
 - Installing a standalone Julia Jupyter installation.
 
@@ -60,7 +60,7 @@ Open `julia`. Then you should see a welcome text and a prompt like `julia> `.
 
 Open `julia`. You should see a welcome text and a prompt like `julia> `.
 
-- Press `]`. And the command prompt will change to `(@v1.6) pkg> `.
+- Press `]` and the command prompt will change to `(@v1.6) pkg> `.
 - Enter `add IJulia` (Capital i and capital j).
   - This will install a minimal Python + Jupyter distribution via miniconda.
 - To start the notebook, enter `using IJulia` and then `notebook()`.
@@ -70,7 +70,7 @@ Open `julia`. You should see a welcome text and a prompt like `julia> `.
 ## Editor/IDE
 
 Julia is supported by a few editors and IDEs.
-An incomplete list with other options of editors is available on the [main page](https://julialang.org).
+An incomplete list of editors is available on the [main page](https://julialang.org).
 One of the main requirements for an editor to support Julia is the latex-unicode autocompletion feature.
 
 Since 2019, the most used and recommended IDE is [VS Code](https://www.julia-vscode.org/) (see also [the official visualstudio docs](https://code.visualstudio.com/docs/languages/julia).)
@@ -87,7 +87,7 @@ Alternatively, the other four common options are:
 \detbegin{More on VSCode}
 
 If you choose to use VSCode, you should make some tests, like:
-- Openning a Julia terminal
+- Opening a Julia terminal
   - Open the "Command Palette" (`Ctrl+Shift+P`);
   - Find "Julia: Start REPL" (`Alt+J Alt+O`);
 - Sending commands to REPL
@@ -105,18 +105,18 @@ You can change it on the `julia env` toolbar option.
 ## Pkg - Install packages
 
 Julia comes with a built-in package manager: `Pkg`.
-`Pkg` is itself a package and 
+- `Pkg` is itself a package;
 - it's always available because it's part of the stdlib;
-- it's also a very robust manager, that deals with conflicts and can handle environments.
-- connects to the official Julia registry to resolve package names.
-- :( it also allows for unregistered packages to be installed.
+- it's a very robust manager, that deals with conflicts and can handle environments;
+- it connects to the official Julia registry to resolve package names;
+- it also allows for unregistered packages to be installed.
 
 To access the package manager, open the Julia terminal and press `]`.
 You should see a prompt like `(@v1.6) pkg> `.
 Enter `help` for a list of commands.
 Here are some commands that will be useful in this tutorial:
 
-- `activate`: set the primary environment which the package manager manipulates
+- `activate`: set the primary environment that the package manager manipulates
 When you `activate` a different environment, you can see it before the `pkg` prompt.
 E.g.:
 ```
