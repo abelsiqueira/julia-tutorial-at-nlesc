@@ -1,25 +1,25 @@
-<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/julia-tutorial-at-nlesc/libs/highlight/github.min.css"> <link href="/julia-tutorial-at-nlesc/css/bootstrap.min.css" rel=stylesheet  crossorigin=anonymous > <link rel=icon  href="/julia-tutorial-at-nlesc/images/logo.png"> <link rel=stylesheet  href="/julia-tutorial-at-nlesc/css/code-katex.css"> <link rel=stylesheet  href="/julia-tutorial-at-nlesc/css/custom.css"> <link rel=stylesheet  href="/julia-tutorial-at-nlesc/css/dark-mode.css"> <link rel=preconnect  href="https://fonts.gstatic.com"> <link href="https://fonts.googleapis.com/css2?family=Cinzel&family=Montserrat&display=swap" rel=stylesheet > <title>Installation and preparation</title> <meta property="og:title" content="Julia Tutorial at NLeSC"> <meta name="twitter:title" content="Julia Tutorial at NLeSC"> <meta property="og:description" content="Installation and preparation"> <meta name="twitter:description" content="Installation and preparation"> <meta property="og:image" content="https://abelsiqueira.github.io/images/abel-banner.jpg"> <meta name="twitter:image" content="https://abelsiqueira.github.io/images/abel-banner.jpg"> <meta property="og:url" content=abelsiqueira.github.io > <meta name="twitter:card" content=summary_large_image > <header> <nav class="navbar navbar-expand-lg"> <div class=container-fluid > <a class="navbar-brand text-end" href="/julia-tutorial-at-nlesc/"></a> <button class=navbar-toggler  type=button  data-bs-toggle=collapse  data-bs-target="#navbarSupportedContent" aria-controls=navbarSupportedContent  aria-expanded=false  aria-label="Toggle navigation"> <span class=navbar-toggler-icon ></span> </button> <div class="collapse navbar-collapse" id=navbarSupportedContent > <ul class="navbar-nav ms-auto mb-2 mb-lg-0"> <li class=nav-item ><a class=nav-link  href="/julia-tutorial-at-nlesc/">Home</a> <li class=nav-item ><a class=nav-link  href="/julia-tutorial-at-nlesc/blog/">Blog</a> <li class=nav-item ><a class=nav-link  href="/julia-tutorial-at-nlesc/julia/">Julia</a> <li class=nav-item ><a class=nav-link  href="/julia-tutorial-at-nlesc/research/">Research</a> <li class=nav-item ><a class=nav-link  href="/julia-tutorial-at-nlesc/ufpr/">UFPR</a> </ul> <div class="dark-switch form-check form-switch"> <input type=checkbox  class=form-check-input  id=darkSwitch  /> <label class=custom-control-label  for=darkSwitch >Dark Mode</label> </div> <script src="/julia-tutorial-at-nlesc/libs/dark-mode-switch.min.js"></script> </div> </div> </nav> </header> <div class=container-fluid > <div class="container main-text"> <div class=franklin-content ><h1 id=fill_title ><a href="#fill_title" class=header-anchor >Installation and preparation</a></h1> <div class=franklin-toc ><ol><li><a href="#binary_executable">Binary executable</a><li><a href="#jupyter_notebook_julias_kernel">Jupyter notebook &#40;Julia&#39;s kernel&#41;</a><li><a href="#editoride">Editor/IDE</a><li><a href="#pkg_-_install_packages">Pkg - Install packages</a></ol></div> <p>In this tutorial we&#39;ll use Julia in two or three ways:</p> <ul> <li><p>On the interactive terminal &#40;called REPL&#41;; and/or</p> <li><p>On a Jupyter notebook; and</p> <li><p>On an editor for the package development.</p> </ul> <p>All of them need you to have a binary <code>julia</code> or <code>julia.exe</code> accessible.</p> <p><strong>Please download version 1.6.X</strong></p> <h2 id=binary_executable ><a href="#binary_executable" class=header-anchor >Binary executable</a></h2> <details> <summary><span class=details-summary > Windows</span></summary> <p>The easiest way of probably to download the installer on the <a href="https://julialang.org/downloads/">Julia Downloads page</a>.</p> <p> </details> <details> <summary><span class=details-summary > MacOS and Linux</span></summary> </p> <p>For MacOS and Linux, you could also follow the <a href="https://julialang.org/downloads/">Julia Downloads page</a>, but I also maintain a installer called <a href="https://github.com/abelsiqueira/jill">Jill</a>. You can download it with</p> <pre><code class=language-julia >curl -fsSL https://raw.githubusercontent.com/abelsiqueira/jill/master/jill.sh &gt; jill.sh</code></pre>
+<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/julia-tutorial-at-nlesc/libs/highlight/github.min.css"> <link href="/julia-tutorial-at-nlesc/css/bootstrap.min.css" rel=stylesheet  crossorigin=anonymous > <link rel=icon  href="/julia-tutorial-at-nlesc/images/logo.png"> <link rel=stylesheet  href="/julia-tutorial-at-nlesc/css/code-katex.css"> <link rel=stylesheet  href="/julia-tutorial-at-nlesc/css/custom.css"> <link rel=stylesheet  href="/julia-tutorial-at-nlesc/css/dark-mode.css"> <link rel=preconnect  href="https://fonts.gstatic.com"> <link href="https://fonts.googleapis.com/css2?family=Cinzel&family=Montserrat&display=swap" rel=stylesheet > <title>Installation and preparation</title> <meta property="og:title" content="Julia Tutorial at NLeSC"> <meta name="twitter:title" content="Julia Tutorial at NLeSC"> <meta property="og:description" content="Installation and preparation"> <meta name="twitter:description" content="Installation and preparation"> <meta property="og:image" content="https://abelsiqueira.github.io/images/abel-banner.jpg"> <meta name="twitter:image" content="https://abelsiqueira.github.io/images/abel-banner.jpg"> <meta property="og:url" content=abelsiqueira.github.io > <meta name="twitter:card" content=summary_large_image > <header> <nav class="navbar navbar-expand-lg"> <div class=container-fluid > <a class="navbar-brand text-end" href="/julia-tutorial-at-nlesc/"></a> <button class=navbar-toggler  type=button  data-bs-toggle=collapse  data-bs-target="#navbarSupportedContent" aria-controls=navbarSupportedContent  aria-expanded=false  aria-label="Toggle navigation"> <span class=navbar-toggler-icon ></span> </button> <div class="collapse navbar-collapse" id=navbarSupportedContent > <ul class="navbar-nav ms-auto mb-2 mb-lg-0"> <li class=nav-item ><a class=nav-link  href="/julia-tutorial-at-nlesc/">Home</a> <li class=nav-item ><a class=nav-link  href="/julia-tutorial-at-nlesc/blog/">Blog</a> <li class=nav-item ><a class=nav-link  href="/julia-tutorial-at-nlesc/julia/">Julia</a> <li class=nav-item ><a class=nav-link  href="/julia-tutorial-at-nlesc/research/">Research</a> <li class=nav-item ><a class=nav-link  href="/julia-tutorial-at-nlesc/ufpr/">UFPR</a> </ul> <div class="dark-switch form-check form-switch"> <input type=checkbox  class=form-check-input  id=darkSwitch  /> <label class=custom-control-label  for=darkSwitch >Dark Mode</label> </div> <script src="/julia-tutorial-at-nlesc/libs/dark-mode-switch.min.js"></script> </div> </div> </nav> </header> <div class=container-fluid > <div class="container main-text"> <div class=franklin-content ><h1 id=fill_title ><a href="#fill_title" class=header-anchor >Installation and preparation</a></h1> <div class=franklin-toc ><ol><li><a href="#binary_executable">Binary executable</a><li><a href="#jupyter_notebook_julias_kernel">Jupyter notebook &#40;Julia&#39;s kernel&#41;</a><li><a href="#editoride">Editor/IDE</a><li><a href="#pkg_-_install_packages">Pkg - Install packages</a></ol></div> <p>In this tutorial we&#39;ll use Julia in two or three ways:</p> <ul> <li><p>On the interactive terminal &#40;called REPL&#41;; and/or</p> <li><p>On a Jupyter notebook; and</p> <li><p>On an editor for the package development.</p> </ul> <p>All of them need you to have a binary <code>julia</code> or <code>julia.exe</code> accessible.</p> <p><strong>And please download version 1.6.X</strong></p> <h2 id=binary_executable ><a href="#binary_executable" class=header-anchor >Binary executable</a></h2> <details> <summary><span class=details-summary > Windows</span></summary> <p>Probably the easiest way is to download the installer on the <a href="https://julialang.org/downloads/">Julia Downloads page</a>.</p> <p> </details> <details> <summary><span class=details-summary > MacOS and Linux</span></summary> </p> <p>For MacOS and Linux, you could also follow the <a href="https://julialang.org/downloads/">Julia Downloads page</a>. But I also maintain an installer called <a href="https://github.com/abelsiqueira/jill">Jill</a>, which you can download using</p> <pre><code class=language-julia >curl -fsSL https://raw.githubusercontent.com/abelsiqueira/jill/master/jill.sh &gt; jill.sh</code></pre>
 <p>And enter</p>
 <pre><code class=language-julia >sudo bash jill.sh -v 1.6-latest</code></pre>
-<p>Test that the installation is succesful with</p>
+<p>Check if the installation was successful with</p>
 <pre><code class=language-julia >julia -v</code></pre>
-<p>Your package manager might also have <code>julia</code> available, but make sure the version is updated.</p>
+<p>Your package manager might also have <code>julia</code> available, but make sure the version to be installed is the newest one.</p>
 
   </details>
   
 <h2 id=jupyter_notebook_julias_kernel ><a href="#jupyter_notebook_julias_kernel" class=header-anchor >Jupyter notebook &#40;Julia&#39;s kernel&#41;</a></h2>
-<p>You can install Julia for Jupyter in two ways:</p>
+<p>You can run Julia in Jupyter in two ways:</p>
 <ul>
 <li><p>Using your existing Python &#43; Jupyter installation;</p>
 
-<li><p>Install a standalone Julia Jupyter installation.</p>
+<li><p>Installing a standalone Julia Jupyter installation.</p>
 
 </ul>
 
   <details>
   <summary><span class=details-summary > Existing Python + Jupyter installation</span></summary>
   
-<p>I&#39;m assuming that you have <code>python</code> and the Jupyter notebook for <code>python</code> working properly, so that you only need to install Julia&#39;s kernel. Open <code>julia</code>. You should see a welcome text and a prompty like <code>julia&gt;</code>.</p>
+<p>I&#39;m assuming that you have <code>python</code> and the Jupyter notebook for <code>python</code> working properly, so that you only need to install Julia&#39;s kernel. Open <code>julia</code>. Then you should see a welcome text and a prompt like <code>julia&gt;</code>.</p>
 <ul>
 <li><p>Enter <code>ENV&#91;&quot;PYTHON&quot;&#93; &#61; &quot;...&quot;</code> where <code>...</code> should be the path to your python installation.</p>
 <ul>
@@ -38,9 +38,9 @@
   <details>
   <summary><span class=details-summary > Standalone</span></summary>
   </p>
-<p>Open <code>julia</code>. You should see a welcome text and a prompty like <code>julia&gt;</code>.</p>
+<p>Open <code>julia</code>. You should see a welcome text and a prompt like <code>julia&gt;</code>.</p>
 <ul>
-<li><p>Press <code>&#93;</code>. This should change the prompt to <code>&#40;@v1.6&#41; pkg&gt;</code>.</p>
+<li><p>Press <code>&#93;</code> and the command prompt will change to <code>&#40;@v1.6&#41; pkg&gt;</code>.</p>
 
 <li><p>Enter <code>add IJulia</code> &#40;Capital i and capital j&#41;.</p>
 <ul>
@@ -55,10 +55,10 @@
   </details>
   
 <h2 id=editoride ><a href="#editoride" class=header-anchor >Editor/IDE</a></h2>
-<p>Julia is supported by a few editors and IDEs. A possibly incomplete list is available on the <a href="https://julialang.org">main page</a>. One of main requirements for an editor to support Julia is the latex-unicode autocompletion feature.</p>
-<p>Since around 2019, the most used and recommended IDE is <a href="https://www.julia-vscode.org/">VS Code</a> &#40;see also <a href="https://code.visualstudio.com/docs/languages/julia">the official visualstudio docs</a>.&#41;</p>
+<p>Julia is supported by a few editors and IDEs. An incomplete list of editors is available on the <a href="https://julialang.org">main page</a>. One of the main requirements for an editor to support Julia is the latex-unicode autocompletion feature.</p>
+<p>Since 2019, the most used and recommended IDE is <a href="https://www.julia-vscode.org/">VS Code</a> &#40;see also <a href="https://code.visualstudio.com/docs/languages/julia">the official visualstudio docs</a>.&#41;</p>
 <p>On your VSCode, you just have to search for the <code>julia</code> extension. If your <code>julia</code> executable is not on the PATH, then you also have to inform its path on the <strong>&quot;Julia: Executable Path&quot;</strong> setting.</p>
-<p>Alternatively, the four options below are common:</p>
+<p>Alternatively, the other four common options are:</p>
 <ul>
 <li><p><a href="https://github.com/JuliaEditorSupport/julia-vim">Vim</a></p>
 
@@ -73,9 +73,9 @@
   <details>
   <summary><span class=details-summary > More on VSCode</span></summary>
   
-<p>If you choose to use VSCode, you should test the following:</p>
+<p>If you choose to use VSCode, you should make some tests, like:</p>
 <ul>
-<li><p>Open a Julia terminal</p>
+<li><p>Opening a Julia terminal</p>
 <ul>
 <li><p>Open the &quot;Command Palette&quot; &#40;<code>Ctrl&#43;Shift&#43;P</code>&#41;;</p>
 
@@ -83,7 +83,7 @@
 
 </ul>
 
-<li><p>Send commands to that REPL</p>
+<li><p>Sending commands to REPL</p>
 <ul>
 <li><p>Create a new file and save as <code>.jl</code>;</p>
 
@@ -96,16 +96,28 @@
 </ul>
 
 </ul>
-<p>The first time you try to run commands on the Julia VSCode, it will prepare the language server, and that might take a while.</p>
+<p>The first time you try to run commands on Julia VSCode, it will prepare the language server, and that might take a while.</p>
 <p>When you open a Julia project folder, the environment should be automatically set. You can change it on the <code>julia env</code> toolbar option.</p>
 
   </details>
   
 <h2 id=pkg_-_install_packages ><a href="#pkg_-_install_packages" class=header-anchor >Pkg - Install packages</a></h2>
-<p>Julia comes with a built-in package manager: <code>Pkg</code>. <code>Pkg</code> is itself a package, but it&#39;s part of the stdlib, so it&#39;s always available. It is a very robust manager, that deals with conflicts and can handle environments. <code>Pkg</code> connects to the official Julia registry to resolve package names. However, it also allows for unregistered packages to be installed.</p>
-<p>To access the package manager, open the Julia terminal and press <code>&#93;</code>. You should see a prompt like <code>&#40;@v1.6&#41; pkg&gt;</code>. Enter <code>help</code> for a list of commands. Here are some: The following will be useful in this tutorial:</p>
+<p>Julia comes with a built-in package manager: <code>Pkg</code>.</p>
 <ul>
-<li><p><code>activate</code>: set the primary environment the package manager manipulates</p>
+<li><p><code>Pkg</code> is itself a package;</p>
+
+<li><p>it&#39;s always available because it&#39;s part of the stdlib;</p>
+
+<li><p>it&#39;s a very robust manager, that deals with conflicts and can handle environments;</p>
+
+<li><p>it connects to the official Julia registry to resolve package names;</p>
+
+<li><p>it also allows for unregistered packages to be installed.</p>
+
+</ul>
+<p>To access the package manager, open the Julia terminal and press <code>&#93;</code>. You should see a prompt like <code>&#40;@v1.6&#41; pkg&gt;</code>. Enter <code>help</code> for a list of commands. Here are some commands that will be useful in this tutorial:</p>
+<ul>
+<li><p><code>activate</code>: set the primary environment that the package manager manipulates</p>
 
 </ul>
 <p>When you <code>activate</code> a different environment, you can see it before the <code>pkg</code> prompt. E.g.:</p>
@@ -122,14 +134,14 @@
 <ul>
 <li><p><code>remove</code>, rm: remove packages from project or manifest</p>
 
-<li><p><code>status</code>, st: summarize contents of and changes to environment</p>
+<li><p><code>status</code>, st: summarize contents of and changes to the environment</p>
 
 <li><p><code>test</code>: run tests for packages</p>
 
 <li><p><code>update</code>, up: update packages in manifest</p>
 
 </ul>
-<p>In this tutorial, we&#39;ll need to install several packages. You can copy paste the following command:</p>
+<p>In this tutorial, we&#39;ll need to install several packages. You can copy and paste the following command:</p>
 <pre><code class=language-julia >pkg&gt; add BenchmarkTools, CSV, DataFrames, JuMP, Plots, Revise, Unitful, UnitfulRecipes</code></pre>
 </div>
 </div>
